@@ -1,0 +1,6 @@
+inst/doc
+.Rhistory
+.RData
+.Rproj.user
+.httr-oauth
+test.R

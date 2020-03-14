@@ -1,0 +1,27 @@
+Package: todoist
+Title: Call API todoist
+Version: 0.0.1
+Authors@R: c(person(given = "Cervan",family = "Girard",role = c("aut", "cre"),email = "cervan@thinkr.fr"), person("Vincent",  "Guyader", email = "vincent@thinkr.fr",role = c("aut"), comment = c(ORCID = "0000-0003-0671-9270")),person("ThinkR", role = c("cph", "fnd")))
+Description: package to call the todoist api.
+License: MIT + file LICENSE
+Depends: 
+    R (>= 3.5.0)
+Imports: 
+    assertthat,
+    digest,
+    dplyr,
+    getPass,
+    glue,
+    httr,
+    keyring,
+    magrittr,
+    purrr,
+    rstudioapi
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: 
+    knitr
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1

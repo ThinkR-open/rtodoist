@@ -1,0 +1,6 @@
+^test\.R$
+^LICENSE\.md$
+^devtools_history\.R$
+^todoist\.Rproj$
+^\.Rproj\.user$
+^\.httr-oauth$
