@@ -4,3 +4,6 @@
 ^todoist\.Rproj$
 ^\.Rproj\.user$
 ^\.httr-oauth$
+^CODE_OF_CONDUCT\.md$
+^README\.Rmd$
+^todoist2020\.Rproj$

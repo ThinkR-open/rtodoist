@@ -2,11 +2,11 @@
 % Please edit documentation in R/form_presta.R
 \name{init_presta_admin}
 \alias{init_presta_admin}
-\title{Title}
+\title{Init presta admin}
 \usage{
 init_presta_admin(
   project_id,
-  tasks_list = list("Facturer", "Etre Payé"),
+  tasks_list = list("Facturer", "Etre Pay\\\\u00E9"),
   try_again = 3,
   time_try_again = 3,
   verbose = TRUE,
@@ -15,11 +15,20 @@ init_presta_admin(
 )
 }
 \arguments{
-\item{token}{}
-}
-\value{
+\item{project_id}{id of project}
 
+\item{tasks_list}{lists of tasks}
+
+\item{try_again}{try again the http request}
+
+\item{time_try_again}{number of tries}
+
+\item{verbose}{make the function verbose}
+
+\item{responsible}{add people in project}
+
+\item{token}{token}
 }
 \description{
-Title
+Init presta admin
 }

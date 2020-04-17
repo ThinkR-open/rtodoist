@@ -2,17 +2,12 @@
 #'
 #' @param mail mail of the person
 #' @param token token
-#'
-#' @importFrom purrr pluck map_df
 #' @importFrom dplyr filter pull
-#'
 #' @return id of user
 #' @export
-#'
 get_user_id <- function(mail,
                         token = get_todoist_api_token()) {
-  POST(
-    "https://todoist.com/api/v8/sync",
+call_api(
     body = list(
       "token" = token,
       "sync_token" = "*",
@@ -34,7 +29,6 @@ get_user_id <- function(mail,
 #' @param verbose make it talk
 #'
 #' @export
-#' @importFrom httr POST
 #' @importFrom glue glue
 
 add_user_in_project <- function(project_id,
@@ -45,7 +39,7 @@ add_user_in_project <- function(project_id,
     message(glue::glue("add {mail} in the {project_id} project"))
   }
 
-  POST("https://todoist.com/api/v8/sync",
+  call_api(
     body = list(
       token = token,
       commands = glue(
@@ -70,14 +64,9 @@ add_user_in_project <- function(project_id,
 #' @param project_id id of project
 #' @param list_of_users list of mails
 #' @param verbose make it talk
-#'
 #' @export
 #'
-#' @importFrom httr POST
 #' @importFrom glue glue
-#' @importFrom purrr map
-#'
-
 add_users_in_project <- function(project_id,
                                  list_of_users,
                                  verbose = TRUE,

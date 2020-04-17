@@ -21,7 +21,11 @@ add_tasks_in_project(
 
 \item{try_again}{start again the request}
 
+\item{time_try_again}{number of tries}
+
 \item{verbose}{make it talk}
+
+\item{responsible}{add people in project}
 
 \item{token}{token}
 }

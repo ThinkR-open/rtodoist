@@ -15,3 +15,6 @@ list of all objects
 \description{
 Get all objects inside a list
 }
+\examples{
+get_all()
+}

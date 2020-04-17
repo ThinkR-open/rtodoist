@@ -10,8 +10,11 @@ get_projects(token = get_todoist_api_token())
 \item{token}{token}
 }
 \value{
-list of all objects
+list of all projects
 }
 \description{
 List of projects
+}
+\examples{
+get_projects()
 }

@@ -20,25 +20,6 @@ knitr::opts_chunk$set(eval=FALSE,
 
 We have to get back our todoist token.
 
-*2 options :*
-
-## ask for an app dedicated token
-
-
-Go to the [Manage app console](https://developer.todoist.com/appconsole.html) and create a new app. Give a name and click on create app. 
-
-A page opens with the Client ID and the Secret Client to use for the get_token function. Add ()[http://localhost:1410] to the "OAuth redirect URL".
-
-Now, get the token: 
-```{r}
-library(todoist)
-token <- get_todoist_api_token()
-```
-
-
-
-Be careful, the function ask if you want to copy the result into an .httr-oauth file. If you agree, do not forget to put this file in the `.gitgnore` file.
-
 ## get the token from the todoist website
 ```{r}
 library(todoist)
@@ -49,11 +30,9 @@ token <- "YOURTOKEN" # copied and pasted from website
 
 ## Now save your token securly into R (one time per computer)
 
-
 ```{r}
 set_todoist_api_token(token)
 ```
-
 
 
 # 2 - Now, let's play !

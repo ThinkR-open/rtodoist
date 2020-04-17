@@ -7,7 +7,7 @@
 init_forma_formateur(
   project_id,
   tasks_list = list("f_S'assurer d'avoir logistique OK",
-    "f_Créer le contenu de la formation", "f_Imprimer des feuilles d'emargement",
+    "f_Cr\\\\u00E9er le contenu de la formation", "f_Imprimer des feuilles d'emargement",
     "f_S'assurer d'avoir son materiel complet", "f_Remplir notes de frais",
     "f_Scanner feuille d'emargement", "f_transferer feuille d'emargement"),
   try_again = 3,
@@ -18,13 +18,17 @@ init_forma_formateur(
 )
 }
 \arguments{
-\item{project_id}{project id}
+\item{project_id}{id of project}
 
-\item{tasks_list}{list of tasks}
+\item{tasks_list}{lists of tasks}
 
-\item{try_again}{start again the request}
+\item{try_again}{try again the http request}
 
-\item{verbose}{make it talk}
+\item{time_try_again}{number of tries}
+
+\item{verbose}{make the function verbose}
+
+\item{responsible}{add people in project}
 
 \item{token}{token}
 }

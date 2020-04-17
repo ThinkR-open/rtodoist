@@ -11,7 +11,6 @@ get_todoist_api_token <- function(ask = TRUE) {
 
   suppressWarnings(try(token <- key_get(service = "todoist_api_token"), silent = TRUE))
 
-
   if (is.null(token) & ask) {
     delete_todoist_api_token()
     token <- ask_todoist_api_token()

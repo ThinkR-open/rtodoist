@@ -15,3 +15,6 @@ list of all tasks
 \description{
 List of tasks
 }
+\examples{
+get_tasks()
+}

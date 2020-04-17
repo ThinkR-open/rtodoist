@@ -1,16 +1,15 @@
 #' Get all objects inside a list
-#'
+#' 
 #' @param token token
-#'
+#' 
 #' @return list of all objects
+#' 
 #' @export
-#'
-#' @importFrom httr POST content
-#'
-
+#' 
+#' @examples 
+#' get_all()
 get_all <- function(token = get_todoist_api_token()) {
-  POST(
-    "https://todoist.com/api/v8/sync",
+  call_api(
     body = list(
       token = token,
       sync_token = "*",
@@ -21,17 +20,17 @@ get_all <- function(token = get_todoist_api_token()) {
 }
 
 #' List of projects
-#'
+#' 
 #' @param token token
-#'
-#' @return list of all objects
+#' 
+#' @return list of all projects
+#' 
 #' @export
-#'
-#' @importFrom httr POST content
-#'
+#' 
+#' @examples
+#'get_projects()
 get_projects <- function(token = get_todoist_api_token()) {
-  POST(
-    "https://todoist.com/api/v8/sync",
+  call_api(
     body = list(
       token = token,
       sync_token = "*",
@@ -40,20 +39,16 @@ get_projects <- function(token = get_todoist_api_token()) {
   ) %>%
     content()
 }
-
-
 #' List of tasks
 #'
 #' @param token token
 #'
 #' @return list of all tasks
 #' @export
-#'
-#' @importFrom httr POST content
-#'
+#' @examples 
+#' get_tasks()
 get_tasks <- function(token = get_todoist_api_token()) {
-  POST(
-    "https://todoist.com/api/v8/sync",
+  call_api(
     body = list(
       token = token,
       sync_token = "*",

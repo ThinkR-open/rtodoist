@@ -21,7 +21,11 @@ init_project(
 
 \item{try_again}{try again the http request}
 
+\item{time_try_again}{number of tries}
+
 \item{verbose}{make the function verbose}
+
+\item{responsible}{add people in project}
 
 \item{token}{token}
 }

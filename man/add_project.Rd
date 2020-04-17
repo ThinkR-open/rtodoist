@@ -19,3 +19,6 @@ id of the new project
 \description{
 Add a new project
 }
+\examples{
+add_project("my_proj")
+}

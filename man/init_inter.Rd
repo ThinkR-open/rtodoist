@@ -24,13 +24,15 @@ init_inter(
 )
 }
 \arguments{
-\item{project_id}{project id}
+\item{project_id}{id of project}
 
-\item{tasks_list}{list pf tasks}
+\item{tasks_list}{lists of tasks}
 
-\item{try_again}{start again the request}
+\item{try_again}{try again the http request}
 
-\item{verbose}{make it talk}
+\item{time_try_again}{number of tries}
+
+\item{verbose}{make the function verbose}
 
 \item{token}{token}
 }

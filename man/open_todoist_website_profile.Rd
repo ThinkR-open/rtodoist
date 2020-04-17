@@ -2,7 +2,7 @@
 % Please edit documentation in R/open_todoist_website.R
 \name{open_todoist_website_profile}
 \alias{open_todoist_website_profile}
-\title{open todoist website}
+\title{Open todoist website}
 \usage{
 open_todoist_website_profile(verbose = TRUE)
 }
@@ -13,5 +13,8 @@ open_todoist_website_profile(verbose = TRUE)
 open a webpage
 }
 \description{
-open todoist website
+Open todoist website
+}
+\examples{
+open_todoist_website_profile()
 }

@@ -2,12 +2,12 @@
 % Please edit documentation in R/form_presta.R
 \name{init_forma_manager}
 \alias{init_forma_manager}
-\title{Title}
+\title{Init formation manager}
 \usage{
 init_forma_manager(
   project_id,
   tasks_list = list("Envoi du devis + contenu",
-    "Assigner au formateur les taches du formateur", "Etre Payé"),
+    "Assigner au formateur les taches du formateur", "Etre Pay\\\\u00E9"),
   try_again = 3,
   time_try_again = 3,
   verbose = TRUE,
@@ -16,11 +16,20 @@ init_forma_manager(
 )
 }
 \arguments{
-\item{token}{}
-}
-\value{
+\item{project_id}{id of project}
 
+\item{tasks_list}{lists of tasks}
+
+\item{try_again}{try again the http request}
+
+\item{time_try_again}{number of tries}
+
+\item{verbose}{make the function verbose}
+
+\item{responsible}{add people in project}
+
+\item{token}{token}
 }
 \description{
-Title
+Init formation manager
 }

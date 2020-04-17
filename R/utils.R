@@ -17,3 +17,14 @@ random_key <- function() {
 
   digest(glue("{Sys.time()}{mdp}"))
 }
+
+#' Call the good version of API
+#'
+#' @param ... any params of POST request
+#'
+#' @return list
+call_api <- function(...){
+  POST(
+    "https://todoist.com/api/v8/sync",
+    ...)
+}

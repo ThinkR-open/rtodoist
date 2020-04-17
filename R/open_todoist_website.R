@@ -1,4 +1,4 @@
-#' open todoist website
+#' Open todoist website
 #'
 #' @param verbose make it talk
 #'
@@ -6,7 +6,8 @@
 #'
 #' @return open a webpage
 #' @export
-#'
+#' @examples 
+#' open_todoist_website_profile()
 open_todoist_website_profile <- function(verbose = TRUE) {
   if (verbose) {
     message("opening https://todoist.com/prefs/integrations")

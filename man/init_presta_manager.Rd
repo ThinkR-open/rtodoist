@@ -2,7 +2,7 @@
 % Please edit documentation in R/form_presta.R
 \name{init_presta_manager}
 \alias{init_presta_manager}
-\title{Title}
+\title{Init presta manager}
 \usage{
 init_presta_manager(
   project_id,
@@ -18,11 +18,20 @@ init_presta_manager(
 )
 }
 \arguments{
-\item{token}{}
-}
-\value{
+\item{project_id}{id of project}
 
+\item{tasks_list}{lists of tasks}
+
+\item{try_again}{try again the http request}
+
+\item{time_try_again}{number of tries}
+
+\item{verbose}{make the function verbose}
+
+\item{responsible}{add people in project}
+
+\item{token}{token}
 }
 \description{
-Title
+Init presta manager
 }

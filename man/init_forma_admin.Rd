@@ -2,19 +2,20 @@
 % Please edit documentation in R/form_presta.R
 \name{init_forma_admin}
 \alias{init_forma_admin}
-\title{Title}
+\title{Init forma admin}
 \usage{
 init_forma_admin(
   project_id,
   tasks_list = list("recevoir nom/prenom et mail des stagiaires",
-    "envoyer test de préévaluation", "mettre les echeances aux taches suivantes",
-    "envoyer convention", "vérifier retour convention",
+    "envoyer test de pr\\\\u00E9\\\\u00E9valuation",
+    "mettre les echeances aux taches suivantes", "envoyer convention",
+    "v\\\\u00E9rifier retour convention",
     "s'assurer que la logistique du formateur est OK",
-    "envoyer convocation aux stagiaires", "upload feuille emmargement",
-    "envoyer facture", "verifier que la facture est bien dans le bon projet axonaut",
-    "envoyer attestation", "envoyer evaluation a chaud",
-    "plannifier l'evaluation a froid", "verifie retour eval a cahud",     
-    "verifie retour eval à froid", "mail retour de qualité + audt besoin"),
+    "envoyer convocation aux stagiaires", "upload feuille emmargement", "envoyer facture",
+    "verifier que la facture est bien dans le bon projet axonaut", "envoyer attestation",
+    "envoyer evaluation a chaud", "plannifier l'evaluation a froid",
+    "verifie retour eval a cahud",      "verifie retour eval \\\\u00E0 froid",
+    "mail retour de qualit\\\\u00E9 + audt besoin"),
   try_again = 3,
   time_try_again = 3,
   verbose = TRUE,
@@ -23,11 +24,20 @@ init_forma_admin(
 )
 }
 \arguments{
-\item{token}{}
-}
-\value{
+\item{project_id}{id of project}
 
+\item{tasks_list}{lists of tasks}
+
+\item{try_again}{try again the http request}
+
+\item{time_try_again}{number of tries}
+
+\item{verbose}{make the function verbose}
+
+\item{responsible}{add people in project}
+
+\item{token}{token}
 }
 \description{
-Title
+Init forma admin
 }

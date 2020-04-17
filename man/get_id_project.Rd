@@ -12,8 +12,14 @@ get_id_project(object, project_name)
 \item{project_name}{name of the project}
 }
 \value{
-id
+id of project (character vector)
 }
 \description{
 Get id of project
+}
+\examples{
+\dontrun{
+get_projects() \%>\%
+    get_id_project("test")
+}
 }

@@ -1,7 +1,18 @@
 Package: todoist
 Title: Call API todoist
 Version: 0.0.2
-Authors@R: c(person(given = "Cervan",family = "Girard",role = c("aut", "cre"),email = "cervan@thinkr.fr"), person("Vincent",  "Guyader", email = "vincent@thinkr.fr",role = c("aut"), comment = c(ORCID = "0000-0003-0671-9270")),person("ThinkR", role = c("cph", "fnd")))
+Authors@R: 
+    c(person(given = "Cervan",
+             family = "Girard",
+             role = c("aut", "cre"),
+             email = "cervan@thinkr.fr"),
+      person(given = "Vincent",
+             family = "Guyader",
+             role = "aut",
+             email = "vincent@thinkr.fr",
+             comment = c(ORCID = "0000-0003-0671-9270")),
+      person(given = "ThinkR",
+             role = c("cph", "fnd")))
 Description: package to call the todoist api.
 License: MIT + file LICENSE
 Depends: 
@@ -16,7 +27,7 @@ Imports:
     keyring,
     magrittr,
     purrr,
-    rstudioapi
+    utils
 Suggests: 
     knitr,
     rmarkdown
