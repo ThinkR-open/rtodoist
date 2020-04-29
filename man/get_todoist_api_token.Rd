@@ -2,13 +2,21 @@
 % Please edit documentation in R/token.R
 \name{get_todoist_api_token}
 \alias{get_todoist_api_token}
-\title{get_todoist_api_token}
+\title{Get token stored by keyring}
 \usage{
 get_todoist_api_token(ask = TRUE)
 }
 \arguments{
 \item{ask}{booleen do we have to ask if missing}
 }
+\value{
+token (character vector)
+}
 \description{
-return the todoiste api token
+Return the todoist api token. If this is the first time, you will need to setup your token.
+}
+\examples{
+\dontrun{
+get_todoist_api_token()
+}
 }

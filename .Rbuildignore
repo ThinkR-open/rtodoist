@@ -7,3 +7,6 @@
 ^CODE_OF_CONDUCT\.md$
 ^README\.Rmd$
 ^todoist2020\.Rproj$
+^\.github$
+^pkgdown$
+^docs$

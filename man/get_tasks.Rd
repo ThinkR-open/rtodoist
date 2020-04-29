@@ -16,5 +16,10 @@ list of all tasks
 List of tasks
 }
 \examples{
-get_tasks()
+\dontrun{
+# Set API key first
+set_todoist_api_token()
+# Get all tasks
+tasks <- get_tasks()
+}
 }

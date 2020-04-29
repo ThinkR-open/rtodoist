@@ -20,5 +20,7 @@ id of the new project
 Add a new project
 }
 \examples{
+\dontrun{
 add_project("my_proj")
+}
 }

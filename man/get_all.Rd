@@ -13,8 +13,14 @@ get_all(token = get_todoist_api_token())
 list of all objects
 }
 \description{
-Get all objects inside a list
+Collect all the objects in a list.
+This allows you to explore your to-do list.
 }
 \examples{
-get_all()
+\dontrun{
+# Set API key first
+set_todoist_api_token()
+# Get all objects
+objects <- get_all()
+}
 }

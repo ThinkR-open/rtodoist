@@ -7,7 +7,7 @@
 get_id_project(object, project_name)
 }
 \arguments{
-\item{object}{result of get_project}
+\item{object}{result of get_projects}
 
 \item{project_name}{name of the project}
 }
@@ -15,7 +15,7 @@ get_id_project(object, project_name)
 id of project (character vector)
 }
 \description{
-Get id of project
+This function gives you the id of a project by name, which is useful for adding tasks or people to the project.
 }
 \examples{
 \dontrun{

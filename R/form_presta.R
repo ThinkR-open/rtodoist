@@ -1,5 +1,4 @@
-#' init project
-#'
+#' Init project
 #' @param project_id id of project
 #' @param tasks_list lists of tasks
 #' @param try_again try again the http request
@@ -7,7 +6,6 @@
 #' @param time_try_again number of tries
 #' @param responsible add people in project
 #' @param token token
-#'
 #' @export
 init_project <- function(project_id,
                          tasks_list,
@@ -19,7 +17,7 @@ init_project <- function(project_id,
   if (!is.list(tasks_list)) {
     # allow user to pass a vector
     tasks_list <- as.list(tasks_list)
-  } 
+  }
   add_tasks_in_project(
     project_id = project_id,
     token = token,
@@ -69,8 +67,7 @@ init_presta <- function(project_id,
 #'
 #' @export
 init_presta_admin <- function(project_id,
-                              tasks_list = list(
-                                "Facturer","Etre Pay\\u00E9"),
+                              tasks_list = list("Facturer", "Etre Pay\\u00E9"),
                               try_again = 3,
                               time_try_again = 3,
                               verbose = TRUE,
@@ -116,9 +113,6 @@ init_presta_manager <- function(project_id,
   )
 }
 
-
-
-
 #' Init project with forma template
 #'
 #' @inheritParams init_project
@@ -142,7 +136,8 @@ init_forma_formateur <- function(project_id,
   init_project(
     project_id = project_id,
     token = token,
-    verbose = verbose,time_try_again = time_try_again,
+    verbose = verbose, 
+    time_try_again = time_try_again,
     try_again = try_again,
     responsible = responsible,
     tasks_list = tasks_list
@@ -167,8 +162,9 @@ init_forma_manager <- function(project_id,
                                token = get_todoist_api_token()) {
   init_project(
     project_id = project_id,
-    token = token,
-    verbose = verbose,time_try_again = time_try_again,
+    token = token, 
+    verbose = verbose,
+    time_try_again = time_try_again,
     try_again = try_again,
     responsible = responsible,
     tasks_list = tasks_list
@@ -208,7 +204,7 @@ init_inter <- function(project_id,
                        token = get_todoist_api_token()) {
   init_project(
     project_id = project_id,
-    token = token,
+    token = token, 
     verbose = verbose,time_try_again = time_try_again,
     try_again = try_again,
     tasks_list = tasks_list
@@ -245,7 +241,7 @@ init_forma_admin <- function(project_id,
   init_project(
     project_id = project_id,
     token = token,
-    verbose = verbose,
+    verbose = verbose, 
     try_again = try_again,time_try_again = time_try_again,
     responsible = responsible,
     tasks_list = tasks_list

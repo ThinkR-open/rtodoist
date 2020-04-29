@@ -4,9 +4,17 @@
 \name{todoist-package}
 \alias{todoist}
 \alias{todoist-package}
-\title{todoist: Call API todoist}
+\title{todoist: Call API Todoist}
 \description{
-package to call the todoist api.
+Package to call the todoist api.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/VincentGuyader/todoist}
+  \item Report bugs at \url{https://github.com/VincentGuyader/todoist/issues}
+}
+
 }
 \author{
 \strong{Maintainer}: Cervan Girard \email{cervan@thinkr.fr}

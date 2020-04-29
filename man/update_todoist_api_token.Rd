@@ -2,10 +2,10 @@
 % Please edit documentation in R/token.R
 \name{update_todoist_api_token}
 \alias{update_todoist_api_token}
-\title{update_todoist_api_token}
+\title{Update Todoist Api Token}
 \usage{
 update_todoist_api_token()
 }
 \description{
-update the todoiste api token
+Remove the old token and register a new one.
 }

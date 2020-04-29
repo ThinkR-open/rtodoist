@@ -23,3 +23,9 @@ add_user_in_project(
 \description{
 Add one user
 }
+\examples{
+\dontrun{
+get_id_project("test") \%>\% 
+   add_user_in_project("jean@mail.fr")
+}
+}

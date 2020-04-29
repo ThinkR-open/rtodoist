@@ -4,9 +4,10 @@
 #'
 #' @importFrom utils browseURL
 #'
-#' @return open a webpage
+#' @return open integration webpage from todoist website
 #' @export
-#' @examples 
+#'
+#' @examples
 #' open_todoist_website_profile()
 open_todoist_website_profile <- function(verbose = TRUE) {
   if (verbose) {

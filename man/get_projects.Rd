@@ -16,5 +16,10 @@ list of all projects
 List of projects
 }
 \examples{
-get_projects()
+\dontrun{
+# Set API key first
+set_todoist_api_token()
+# Get all projects
+projects <- get_projects()
+}
 }

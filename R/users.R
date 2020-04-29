@@ -1,3 +1,32 @@
+#' Get users
+#' 
+#' Get a tibble with emails and ids of users
+#' 
+#' @param token token
+#' 
+#' @importFrom dplyr filter pull
+#' 
+#' @return tibble of users
+#' 
+#' @export
+#' 
+#' @examples 
+#' \dontrun{
+#' get_users()
+#' }
+get_users <- function(token = get_todoist_api_token()) {
+  call_api(
+    body = list(
+      "token" = token,
+      "sync_token" = "*",
+      resource_types = '["collaborators"]'
+    )
+  ) %>%
+    content() %>%
+    pluck("collaborators") %>%
+    map_df(`[`, c("email", "id"))
+}
+
 #' Get user id
 #'
 #' @param mail mail of the person
@@ -30,13 +59,18 @@ call_api(
 #'
 #' @export
 #' @importFrom glue glue
+#' @examples 
+#' \dontrun{
+#' get_id_project("test") %>% 
+#'    add_user_in_project("jean@mail.fr")
+#' }
 
 add_user_in_project <- function(project_id,
                                 mail,
                                 verbose = TRUE,
                                 token = get_todoist_api_token()) {
   if (verbose) {
-    message(glue::glue("add {mail} in the {project_id} project"))
+    message(glue::glue("Add {mail} in the {project_id} project"))
   }
 
   call_api(
@@ -64,6 +98,7 @@ add_user_in_project <- function(project_id,
 #' @param project_id id of project
 #' @param list_of_users list of mails
 #' @param verbose make it talk
+#' 
 #' @export
 #'
 #' @importFrom glue glue
