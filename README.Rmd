@@ -41,7 +41,6 @@ library(todoist)
 
 add_project("test") %>%
   add_task_in_project("my_task")
-## basic example code
 ```
 
 To find more details about the features, look at the 'How it works' article.
