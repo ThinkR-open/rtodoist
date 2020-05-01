@@ -10,7 +10,7 @@ open_todoist_website_profile(verbose = TRUE)
 \item{verbose}{make it talk}
 }
 \value{
-open a webpage
+open integration webpage from todoist website
 }
 \description{
 Open todoist website

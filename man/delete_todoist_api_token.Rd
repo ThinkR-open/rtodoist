@@ -2,10 +2,10 @@
 % Please edit documentation in R/token.R
 \name{delete_todoist_api_token}
 \alias{delete_todoist_api_token}
-\title{delete_todoist_api_token}
+\title{Delete todoist api token}
 \usage{
 delete_todoist_api_token()
 }
 \description{
-delete the todoiste api token
+Delete todoist api token
 }

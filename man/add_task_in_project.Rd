@@ -12,7 +12,7 @@ add_task_in_project(
   verbose = TRUE,
   responsible = NULL,
   token = get_todoist_api_token(),
-  les_taches = get_tasks(token = token)
+  exiting_tasks = get_tasks(token = token)
 )
 }
 \arguments{
@@ -26,15 +26,21 @@ add_task_in_project(
 
 \item{verbose}{make it talk}
 
-\item{responsible}{add people in project}
+\item{responsible}{add people in project with email. To know user email, use \code{\link{get_users}}.}
 
 \item{token}{token}
 
-\item{les_taches}{list of tasks already in the project}
+\item{exiting_tasks}{list of tasks already in the project}
 }
 \value{
-message
+project id
 }
 \description{
-Add task in project
+To work, it needs a project id.
+}
+\examples{
+\dontrun{
+add_project("my_proj") \%>\%
+   add_task_in_project("Add tasks")
+}
 }

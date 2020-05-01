@@ -1,30 +1,37 @@
-#' @title get_todoist_api_token
-#' @description  return the todoiste api token
+#' Get token stored by keyring
+#' 
+#' Return the todoist api token. If this is the first time, you will need to setup your token.
+#' 
 #' @param ask booleen do we have to ask if missing
 #' @importFrom magrittr %>%
-#' @importFrom  keyring key_set_with_value
-#' @import keyring
 #'
 #' @export
+#' @return token (character vector)
+#' @examples 
+#' \dontrun{
+#' get_todoist_api_token()
+#' }
 get_todoist_api_token <- function(ask = TRUE) {
   token <- NULL
-
+  
   suppressWarnings(try(token <- key_get(service = "todoist_api_token"), silent = TRUE))
-
+  
   if (is.null(token) & ask) {
     delete_todoist_api_token()
     token <- ask_todoist_api_token()
-    token %>% key_set_with_value(service = "todoist_api_token", password = .)
+    token %>% 
+      key_set_with_value(service = "todoist_api_token",
+                         password = .)
   }
   token
 }
 
 
-#' @title set_todoist_api_token
-#' @description  set the todoiste api token
+#' Set todoist api token
+#' 
+#' This function use keyring to store your token from your todoist profile. To find your token from todoist website, use \code{\link{open_todoist_website_profile}}
 #' @param token todoist api token
 #' @importFrom magrittr %>%
-#' @import assertthat
 #' @export
 set_todoist_api_token <- function(token) {
   if (missing(token)) {
@@ -33,39 +40,46 @@ set_todoist_api_token <- function(token) {
   if (is.null(token)) {
     return(invisible(NULL))
   }
-
+  
   delete_todoist_api_token()
-  assert_that(is.character(token))
-  token %>% key_set_with_value(service = "todoist_api_token", password = .)
-
+  if (is.character(token)) {
+    token %>% 
+      key_set_with_value(service = "todoist_api_token",
+                         password = .)
+  }else{
+    stop("Token must be a character vector.")
+  }
   token
 }
 
-#' @title update_todoist_api_token
-#' @description  update the todoiste api token
+#' Update Todoist Api Token
+#' 
+#' @description  Remove the old token and register a new one.
+#' 
 #' @importFrom magrittr %>%
 #' @export
 update_todoist_api_token <- function() {
   delete_todoist_api_token()
-  ask_todoist_api_token() %>% key_set_with_value(service = "todoist_api_token", password = .)
+  ask_todoist_api_token() %>%
+    key_set_with_value(service = "todoist_api_token", password = .)
 }
 
-#' @title delete_todoist_api_token
-#' @description  delete the todoiste api token
+#' Delete todoist api token
+#' 
 #' @export
 delete_todoist_api_token <- function() {
   try(key_delete("todoist_api_token"), silent = TRUE)
 }
 
 
-#' @title ask_todoist_api_token
-#' @param msg the message
-#' @description  ask for the todoiste api token
-#' @import getPass
+#' Pop-up to save the token
+#' 
+#' @param msg message to print in the pop-up
+#' @importFrom getPass getPass
 #' @export
-ask_todoist_api_token <- function(msg = "todoist api token") {
+ask_todoist_api_token <- function(msg = "Register Todoist Api Token") {
   passwd <- tryCatch({
-    newpass <- getPass::getPass(msg)
+    newpass <- getPass(msg)
   }, interrupt = NULL)
   if (!length(passwd) || !nchar(passwd)) {
     return(NULL)

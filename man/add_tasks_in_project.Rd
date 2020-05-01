@@ -32,3 +32,12 @@ add_tasks_in_project(
 \description{
 Add a list of tasks
 }
+\examples{
+\dontrun{
+add_project("my_proj") \%>\%
+   add_tasks_in_project(list("First task", "Second task"))
+}
+}
+\seealso{
+[add_task_in_project()]
+}

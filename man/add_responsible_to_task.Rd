@@ -17,7 +17,7 @@ add_responsible_to_task(
 
 \item{add_responsible}{add someone to this task with mail}
 
-\item{task}{the all name of the task}
+\item{task}{the full name of the task}
 
 \item{verbose}{make the function verbose}
 

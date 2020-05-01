@@ -2,7 +2,7 @@
 % Please edit documentation in R/form_presta.R
 \name{init_project}
 \alias{init_project}
-\title{init project}
+\title{Init project}
 \usage{
 init_project(
   project_id,
@@ -30,5 +30,5 @@ init_project(
 \item{token}{token}
 }
 \description{
-init project
+Init project
 }

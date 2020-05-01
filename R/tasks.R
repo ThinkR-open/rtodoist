@@ -1,4 +1,6 @@
 #' Add task in project
+#' 
+#' To work, it needs a project id. 
 #'
 #' @param project_id id of a project
 #' @param token token
@@ -6,12 +8,17 @@
 #' @param try_again start again the request
 #' @param verbose make it talk
 #' @param time_try_again number of tries
-#' @param responsible add people in project
-#' @param les_taches list of tasks already in the project
+#' @param responsible add people in project with email. To know user email, use \code{\link{get_users}}.
+#' @param exiting_tasks list of tasks already in the project
 #'
-#' @return message
+#' @return project id
 #' @export
-#'
+#' 
+#' @examples 
+#' \dontrun{
+#' add_project("my_proj") %>%
+#'    add_task_in_project("Add tasks")
+#'}
 add_task_in_project <- function(project_id,
                                 task,
                                 try_again = 3,
@@ -19,7 +26,7 @@ add_task_in_project <- function(project_id,
                                 verbose = TRUE,
                                 responsible = NULL,
                                 token = get_todoist_api_token(),
-                                les_taches = get_tasks(token = token)) {
+                                exiting_tasks = get_tasks(token = token)) {
   if (verbose) {
     message(glue::glue("create {task} in the {project_id} project"))
   }
@@ -32,10 +39,10 @@ add_task_in_project <- function(project_id,
     id_user <- "null"
   }
   
-  tache <- les_taches %>%
+  tache <- exiting_tasks %>%
     flatten() %>%
     map(`[`, c("content", "project_id"))
-  tache_project <- map_lgl( c(1:length(tache)),
+  tache_project <- map_lgl( seq_along(tache),
                             ~ tache[[.x]]["project_id"] == project_id)
   tache <- keep(tache, tache_project) %>%
     map_chr("content")
@@ -102,6 +109,14 @@ add_task_in_project <- function(project_id,
 #' @param responsible add people in project
 #'
 #' @export
+#' 
+#' @seealso [add_task_in_project()]
+#' 
+#' @examples 
+#' \dontrun{
+#' add_project("my_proj") %>%
+#'    add_tasks_in_project(list("First task", "Second task"))
+#' }
 add_tasks_in_project <- function(project_id,
                                  tasks_list,
                                  try_again = 3,
@@ -110,13 +125,14 @@ add_tasks_in_project <- function(project_id,
                                  responsible = NULL,
                                  token = get_todoist_api_token()) {
   
-  les_taches <- get_tasks(token = token) # on le sort ici pour ne pas l'appeler a chaque nouvelle tache
+  exiting_tasks <- get_tasks(token = token) 
   
   # on devrait virer ici de tasks_list ce qui est deja dans le projet
-  tache <- les_taches %>%
+  tache <- exiting_tasks %>%
     flatten() %>%
     map(`[`, c("content", "project_id"))
-  tache_project <- map_lgl(c(1:length(tache)), 
+  
+  tache_project <- map_lgl(seq_along(tache), 
                            ~ tache[[.x]]["project_id"] == project_id)
   tache <- keep(tache, tache_project) %>%
     map_chr("content")
@@ -130,7 +146,7 @@ add_tasks_in_project <- function(project_id,
         task = .x,
         responsible = responsible,
         verbose = verbose,
-        les_taches = les_taches
+        exiting_tasks = exiting_tasks
       )
     )
   invisible(project_id)
@@ -139,7 +155,7 @@ add_tasks_in_project <- function(project_id,
 #' Add responsible to a task
 #'
 #' @param project_id id of the project
-#' @param task the all name of the task
+#' @param task the full name of the task
 #' @param verbose make the function verbose
 #' @param token token
 #' @param add_responsible add someone to this task with mail

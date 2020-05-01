@@ -16,7 +16,8 @@ knitr::opts_chunk$set(
 # todoist
 
 <!-- badges: start -->
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![R build status](https://github.com/VincentGuyader/todoist/workflows/R-CMD-check/badge.svg)](https://github.com/VincentGuyader/todoist/actions)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 <!-- badges: end -->
 
 This package allows to use the todoist API. You will be able to add projects and tasks to your todoist account. 
@@ -35,10 +36,11 @@ remotes::install_github("VincentGuyader/todoist")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
+```{r example, eval=FALSE}
 library(todoist)
-## basic example code
+
+add_project("test") %>%
+  add_task_in_project("my_task")
 ```
 
+To find more details about the features, look at the 'How it works' article.

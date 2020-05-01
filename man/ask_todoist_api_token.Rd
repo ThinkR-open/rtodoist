@@ -2,13 +2,13 @@
 % Please edit documentation in R/token.R
 \name{ask_todoist_api_token}
 \alias{ask_todoist_api_token}
-\title{ask_todoist_api_token}
+\title{Pop-up to save the token}
 \usage{
-ask_todoist_api_token(msg = "todoist api token")
+ask_todoist_api_token(msg = "Register Todoist Api Token")
 }
 \arguments{
-\item{msg}{the message}
+\item{msg}{message to print in the pop-up}
 }
 \description{
-ask for the todoiste api token
+Pop-up to save the token
 }

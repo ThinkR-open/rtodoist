@@ -1,7 +1,7 @@
 #' @keywords internal
 #' @importFrom httr POST content
-#' @importFrom httr POST content
 #' @import purrr
+#' @import keyring
 "_PACKAGE"
 
 # The following block is used by usethis to automatically manage

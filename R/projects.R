@@ -1,12 +1,15 @@
 #' Get id of project
 #'
-#' @param object result of get_project
+#' This function gives you the id of a project by name, which is useful for adding tasks or people to the project.
+#'
+#'@param object result of get_projects
 #' @param project_name name of the project
 #'
 #' @importFrom dplyr filter pull
 #'
 #' @return id of project (character vector)
 #' @export
+#'
 #' @examples 
 #' \dontrun{
 #' get_projects() %>%
@@ -37,8 +40,11 @@ get_id_project <- function(object, project_name) {
 #'
 #' @return id of the new project
 #' @export
-#' @examples 
+#'
+#' @examples
+#' \dontrun{
 #' add_project("my_proj")
+#' }
 add_project <- function(project_name,
                         verbose = TRUE,
                         token = get_todoist_api_token()) {
@@ -52,7 +58,7 @@ add_project <- function(project_name,
     message("This project already exists")
     return(get_id_project(object = get_projects(), project_name = project_name))
   } else {
-call_api(
+    call_api(
       body = list(
         "token" = token,
         "sync_token" = "*",
