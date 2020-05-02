@@ -6,7 +6,7 @@
 <!-- badges: start -->
 
 [![R build
-status](https://github.com/VincentGuyader/todoist/workflows/R-CMD-check/badge.svg)](https://github.com/VincentGuyader/todoist/actions)
+status](https://github.com/ThinkR-open/todoist/workflows/R-CMD-check/badge.svg)](https://github.com/ThinkR-open/todoist/actions)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 <!-- badges: end -->
@@ -23,7 +23,7 @@ To find information about todoist API :
 You can install the development version of todoist with:
 
 ``` r
-remotes::install_github("VincentGuyader/todoist")
+remotes::install_github("ThinkR-open/todoist")
 ```
 
 ## Example
@@ -36,4 +36,4 @@ add_project("test") %>%
 ```
 
 To find more details about the features, look at the ‘How it works’
-article.
+vignette.
