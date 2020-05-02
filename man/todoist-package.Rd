@@ -4,20 +4,21 @@
 \name{todoist-package}
 \alias{todoist}
 \alias{todoist-package}
-\title{todoist: Call API Todoist}
+\title{todoist: Create and manage todolist using 'Todoist.com' Api}
 \description{
-Package to call the todoist api.
+'Todoist' <https://todoist.com/> provides an online task manager service for teams.
+    Functions are provided that make it possible to interact with the 'Todoist' platform 'API'.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/VincentGuyader/todoist}
-  \item Report bugs at \url{https://github.com/VincentGuyader/todoist/issues}
+  \item \url{https://github.com/ThinkR-open/todoist}
+  \item Report bugs at \url{https://github.com/ThinkR-open/todoist/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Cervan Girard \email{cervan@thinkr.fr}
+\strong{Maintainer}: Cervan Girard \email{cervan@thinkr.fr} (\href{https://orcid.org/0000-0002-4816-4624}{ORCID})
 
 Authors:
 \itemize{

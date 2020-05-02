@@ -1,5 +1,5 @@
 Package: todoist
-Title: Create and manage todolist using 'Todoist.com' Api
+Title: Create and Manage Todolist using 'Todoist.com' Api'
 Version: 0.1.0
 Authors@R: 
     c(person(given = "Cervan",

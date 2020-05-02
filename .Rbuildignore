@@ -10,3 +10,5 @@
 ^\.github$
 ^pkgdown$
 ^docs$
+^CRAN-RELEASE$
+^cran-comments\.md$
