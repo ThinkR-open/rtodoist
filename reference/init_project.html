@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Init project — init_project" />
-<meta property="og:description" content="Init project" />
+<meta property="og:description" content="Create a project with a specific to-do list for different people" />
 
 
 
@@ -126,12 +126,111 @@
     </div>
 
     <div class="ref-description">
-    <p>Init project</p>
+    <p>Create a project with a specific to-do list for different people</p>
     </div>
 
     <pre class="usage"><span class='fu'>init_project</span>(
   <span class='no'>project_id</span>,
   <span class='no'>tasks_list</span>,
+  <span class='kw'>try_again</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>time_try_again</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>responsible</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='get_todoist_api_token.html'>get_todoist_api_token</a></span>()
+)
+
+<span class='fu'>init_presta</span>(
+  <span class='no'>project_id</span>,
+  <span class='kw'>tasks_list</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"Reunions"</span>, <span class='st'>"Proposition - Devis"</span>, <span class='st'>"Gestion projet"</span>, <span class='st'>"Code"</span>,
+    <span class='st'>"S'assurer d'avoir un nom de projet coherent avec Slack"</span>,
+    <span class='st'>"S'assigner et mettre des dates sur certaines taches pour pas les oublier"</span>,
+    <span class='st'>"Facturer"</span>, <span class='st'>"Rediger la reference de la mission dans {reference}"</span>, <span class='st'>"Paye"</span>),
+  <span class='kw'>try_again</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>time_try_again</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>responsible</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='get_todoist_api_token.html'>get_todoist_api_token</a></span>()
+)
+
+<span class='fu'>init_presta_admin</span>(
+  <span class='no'>project_id</span>,
+  <span class='kw'>tasks_list</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"Facturer"</span>, <span class='st'>"Etre Pay\\u00E9"</span>),
+  <span class='kw'>try_again</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>time_try_again</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>responsible</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='get_todoist_api_token.html'>get_todoist_api_token</a></span>()
+)
+
+<span class='fu'>init_presta_manager</span>(
+  <span class='no'>project_id</span>,
+  <span class='kw'>tasks_list</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"Proposition - Devis"</span>, <span class='st'>"Gestion projet"</span>,
+    <span class='st'>"S'assurer d'avoir un nom de projet coherent avec Slack"</span>,
+    <span class='st'>"S'assigner et mettre des dates sur certaines taches pour pas les oublier"</span>,
+    <span class='st'>"Rediger la reference de la mission dans {reference}"</span>),
+  <span class='kw'>try_again</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>time_try_again</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>responsible</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='get_todoist_api_token.html'>get_todoist_api_token</a></span>()
+)
+
+<span class='fu'>init_forma_formateur</span>(
+  <span class='no'>project_id</span>,
+  <span class='kw'>tasks_list</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"f_S'assurer d'avoir logistique OK"</span>,
+    <span class='st'>"f_Cr\\u00E9er le contenu de la formation"</span>, <span class='st'>"f_Imprimer des feuilles d'emargement"</span>,
+    <span class='st'>"f_S'assurer d'avoir son materiel complet"</span>, <span class='st'>"f_Remplir notes de frais"</span>,
+    <span class='st'>"f_Scanner feuille d'emargement"</span>, <span class='st'>"f_transferer feuille d'emargement"</span>),
+  <span class='kw'>try_again</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>time_try_again</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>responsible</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='get_todoist_api_token.html'>get_todoist_api_token</a></span>()
+)
+
+<span class='fu'>init_forma_manager</span>(
+  <span class='no'>project_id</span>,
+  <span class='kw'>tasks_list</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"Envoi du devis + contenu"</span>,
+    <span class='st'>"Assigner au formateur les taches du formateur"</span>, <span class='st'>"Etre Pay\\u00E9"</span>),
+  <span class='kw'>try_again</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>time_try_again</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>responsible</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='get_todoist_api_token.html'>get_todoist_api_token</a></span>()
+)
+
+<span class='fu'>init_inter</span>(
+  <span class='no'>project_id</span>,
+  <span class='kw'>tasks_list</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"S'assurer d'avoir un nom de projet coherent avec Slack"</span>,
+    <span class='st'>"S'assigner et mettre des dates sur certaines taches pour pas les oublier"</span>,
+    <span class='st'>"Envoyer les questionnaires"</span>, <span class='st'>"Envoi du devis + contenu"</span>,
+    <span class='st'>"Envoi des conventions de formation"</span>, <span class='st'>"Envoi des convocations"</span>,
+    <span class='st'>"Creer le contenu de la formation"</span>, <span class='st'>"Reserver salle"</span>,
+    <span class='st'>"Envoi des liens d'installations"</span>, <span class='st'>"Imprimer des feuilles d'emargement"</span>,
+    <span class='st'>"S'assurer d'avoir son materiel complet"</span>, <span class='st'>"Reserver Resto"</span>,
+    <span class='st'>"Remplir ses notes de frais"</span>, <span class='st'>"Scanner la feuille d'emargement"</span>,
+    <span class='st'>"Enregistrer son temps de formation dans Toggl"</span>,
+    <span class='st'>"Envoyer le questionnaire de satisfaction"</span>,
+    <span class='st'>"Envoyer questionnaire de satisfaction a froid"</span>, <span class='st'>"Facturer"</span>, <span class='st'>"Paye"</span>),
+  <span class='kw'>try_again</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>time_try_again</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>token</span> <span class='kw'>=</span> <span class='fu'><a href='get_todoist_api_token.html'>get_todoist_api_token</a></span>()
+)
+
+<span class='fu'>init_forma_admin</span>(
+  <span class='no'>project_id</span>,
+  <span class='kw'>tasks_list</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"recevoir nom/prenom et mail des stagiaires"</span>,
+    <span class='st'>"envoyer test de pr\\u00E9\\u00E9valuation"</span>,
+    <span class='st'>"mettre les echeances aux taches suivantes"</span>, <span class='st'>"envoyer convention"</span>,
+    <span class='st'>"v\\u00E9rifier retour convention"</span>,
+    <span class='st'>"s'assurer que la logistique du formateur est OK"</span>,
+    <span class='st'>"envoyer convocation aux stagiaires"</span>, <span class='st'>"upload feuille emmargement"</span>,
+    <span class='st'>"envoyer facture"</span>, <span class='st'>"verifier que la facture est bien dans le bon projet axonaut"</span>,
+    <span class='st'>"envoyer attestation"</span>, <span class='st'>"envoyer evaluation a chaud"</span>,
+    <span class='st'>"plannifier l'evaluation a froid"</span>, <span class='st'>"verifie retour eval a cahud"</span>,
+    <span class='st'>"verifie retour eval \\u00E0 froid"</span>,
+    <span class='st'>"mail retour de qualit\\u00E9 + audt besoin"</span>),
   <span class='kw'>try_again</span> <span class='kw'>=</span> <span class='fl'>3</span>,
   <span class='kw'>time_try_again</span> <span class='kw'>=</span> <span class='fl'>3</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -172,6 +271,9 @@
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>id of project (character vector)</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
