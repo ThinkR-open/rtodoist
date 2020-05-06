@@ -2,12 +2,15 @@
 % Please edit documentation in R/token.R
 \name{set_todoist_api_token}
 \alias{set_todoist_api_token}
-\title{Set todoist api token}
+\title{Set todoist API token}
 \usage{
 set_todoist_api_token(token)
 }
 \arguments{
-\item{token}{todoist api token}
+\item{token}{todoist API token}
+}
+\value{
+token
 }
 \description{
 This function use keyring to store your token from your todoist profile. To find your token from todoist website, use \code{\link{open_todoist_website_profile}}

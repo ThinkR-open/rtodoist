@@ -6,6 +6,9 @@
 \usage{
 lhs \%>\% rhs
 }
+\value{
+using %>% function
+}
 \description{
 See \code{magrittr::\link[magrittr]{\%>\%}} for details.
 }

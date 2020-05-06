@@ -9,6 +9,9 @@ ask_todoist_api_token(msg = "Register Todoist Api Token")
 \arguments{
 \item{msg}{message to print in the pop-up}
 }
+\value{
+password (character vector)
+}
 \description{
 Pop-up to save the token
 }

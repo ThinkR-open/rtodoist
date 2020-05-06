@@ -8,6 +8,8 @@ random_key()
 }
 \value{
 key
+
+random key generate with digest
 }
 \description{
 Random key

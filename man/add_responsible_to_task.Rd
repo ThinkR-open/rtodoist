@@ -23,6 +23,9 @@ add_responsible_to_task(
 
 \item{token}{token}
 }
+\value{
+http request
+}
 \description{
 Add responsible to a task
 }

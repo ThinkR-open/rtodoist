@@ -13,7 +13,7 @@ get_todoist_api_token(ask = TRUE)
 token (character vector)
 }
 \description{
-Return the todoist api token. If this is the first time, you will need to setup your token.
+Return the todoist API token. If this is the first time, you will need to setup your token.
 }
 \examples{
 \dontrun{

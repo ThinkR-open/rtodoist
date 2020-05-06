@@ -112,6 +112,7 @@ add_task_in_project <- function(project_id,
 #' 
 #' @seealso [add_task_in_project()]
 #' 
+#' @return id of project (character vector)
 #' @examples 
 #' \dontrun{
 #' add_project("my_proj") %>%
@@ -160,6 +161,7 @@ add_tasks_in_project <- function(project_id,
 #' @param token token
 #' @param add_responsible add someone to this task with mail
 #'
+#' @return http request
 #' @export
 add_responsible_to_task <- function(project_id,
                                     add_responsible,

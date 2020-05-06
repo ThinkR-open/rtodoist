@@ -4,10 +4,10 @@
 \name{todoist-package}
 \alias{todoist}
 \alias{todoist-package}
-\title{todoist: Create and manage todolist using 'Todoist.com' Api}
+\title{todoist: Create and Manage Todolist using 'Todoist.com' API}
 \description{
 'Todoist' <https://todoist.com/> provides an online task manager service for teams.
-    Functions are provided that make it possible to interact with the 'Todoist' platform 'API'.
+    Functions are provided that make it possible to interact with the 'Todoist' platform API.
 }
 \seealso{
 Useful links:

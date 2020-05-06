@@ -59,6 +59,8 @@ call_api(
 #'
 #' @export
 #' @importFrom glue glue
+#' 
+#' @return id of project (character vector)
 #' @examples 
 #' \dontrun{
 #' get_id_project("test") %>% 
@@ -99,6 +101,7 @@ add_user_in_project <- function(project_id,
 #' @param list_of_users list of mails
 #' @param verbose make it talk
 #' 
+#' @return id of project (character vector)
 #' @export
 #'
 #' @importFrom glue glue

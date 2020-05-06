@@ -6,6 +6,9 @@
 \usage{
 update_todoist_api_token()
 }
+\value{
+nothing, storing your token
+}
 \description{
 Remove the old token and register a new one.
 }

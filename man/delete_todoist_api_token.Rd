@@ -6,6 +6,9 @@
 \usage{
 delete_todoist_api_token()
 }
+\value{
+nothing, delete the api token
+}
 \description{
 Delete todoist api token
 }

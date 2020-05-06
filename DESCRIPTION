@@ -1,5 +1,5 @@
 Package: todoist
-Title: Create and Manage Todolist using 'Todoist.com' Api'
+Title: Create and Manage Todolist using 'Todoist.com' API
 Version: 0.1.0
 Authors@R: 
     c(person(given = "Cervan",
@@ -15,7 +15,7 @@ Authors@R:
       person(given = "ThinkR",
              role = c("cph", "fnd")))
 Description: 'Todoist' <https://todoist.com/> provides an online task manager service for teams.
-    Functions are provided that make it possible to interact with the 'Todoist' platform 'API'.
+    Functions are provided that make it possible to interact with the 'Todoist' platform API.
 License: MIT + file LICENSE
 Depends: 
     R (>= 3.5.0)

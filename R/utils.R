@@ -4,8 +4,7 @@
 #'
 #' @importFrom digest digest
 #' @importFrom glue glue
-#'
-
+#' @return random key generate with digest
 random_key <- function() {
   # create a random key
   mdp <- paste0(sample(letters,

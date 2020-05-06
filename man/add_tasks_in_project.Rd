@@ -29,6 +29,9 @@ add_tasks_in_project(
 
 \item{token}{token}
 }
+\value{
+id of project (character vector)
+}
 \description{
 Add a list of tasks
 }

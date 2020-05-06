@@ -1,4 +1,7 @@
 #' Init project
+#' 
+#' Create a project with a specific to-do list for different people
+#' 
 #' @param project_id id of project
 #' @param tasks_list lists of tasks
 #' @param try_again try again the http request
@@ -6,6 +9,8 @@
 #' @param time_try_again number of tries
 #' @param responsible add people in project
 #' @param token token
+#' 
+#' @return id of project (character vector)
 #' @export
 init_project <- function(project_id,
                          tasks_list,
@@ -29,9 +34,7 @@ init_project <- function(project_id,
   )
 }
 
-#' Init project with presta template
-#' @inheritParams init_project
-#'
+#' @rdname init_project
 #' @export
 init_presta <- function(project_id,
                         tasks_list = list(
@@ -61,9 +64,7 @@ init_presta <- function(project_id,
   )
 }
 
-#' Init presta admin
-#'
-#' @inheritParams init_project
+#' @rdname init_project
 #'
 #' @export
 init_presta_admin <- function(project_id,
@@ -84,9 +85,7 @@ init_presta_admin <- function(project_id,
   )
 }
 
-#' Init presta manager
-#'
-#' @inheritParams init_project
+#' @rdname init_project
 #'
 #' @export
 init_presta_manager <- function(project_id,
@@ -113,9 +112,7 @@ init_presta_manager <- function(project_id,
   )
 }
 
-#' Init project with forma template
-#'
-#' @inheritParams init_project
+#' @rdname init_project
 #'
 #' @export
 init_forma_formateur <- function(project_id,
@@ -144,9 +141,7 @@ init_forma_formateur <- function(project_id,
   )
 }
 
-#' Init formation manager
-#'
-#' @inheritParams init_project
+#' @rdname init_project
 #'
 #' @export
 init_forma_manager <- function(project_id,
@@ -171,9 +166,7 @@ init_forma_manager <- function(project_id,
   )
 }
 
-#' Init project with inter template
-#'
-#' @inheritParams init_project
+#' @rdname init_project
 #'
 #' @export
 init_inter <- function(project_id,
@@ -211,9 +204,7 @@ init_inter <- function(project_id,
   )
 }
 
-#' Init forma admin
-#'
-#' @inheritParams init_project
+#' @rdname init_project
 #'
 #' @export
 init_forma_admin <- function(project_id,

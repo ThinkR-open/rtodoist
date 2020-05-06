@@ -1,6 +1,6 @@
 #' Get token stored by keyring
 #' 
-#' Return the todoist api token. If this is the first time, you will need to setup your token.
+#' Return the todoist API token. If this is the first time, you will need to setup your token.
 #' 
 #' @param ask booleen do we have to ask if missing
 #' @importFrom magrittr %>%
@@ -27,11 +27,13 @@ get_todoist_api_token <- function(ask = TRUE) {
 }
 
 
-#' Set todoist api token
+#' Set todoist API token
 #' 
 #' This function use keyring to store your token from your todoist profile. To find your token from todoist website, use \code{\link{open_todoist_website_profile}}
-#' @param token todoist api token
+#' @param token todoist API token
 #' @importFrom magrittr %>%
+#' 
+#' @return token
 #' @export
 set_todoist_api_token <- function(token) {
   if (missing(token)) {
@@ -57,6 +59,8 @@ set_todoist_api_token <- function(token) {
 #' @description  Remove the old token and register a new one.
 #' 
 #' @importFrom magrittr %>%
+#' 
+#' @return nothing, storing your token
 #' @export
 update_todoist_api_token <- function() {
   delete_todoist_api_token()
@@ -66,6 +70,7 @@ update_todoist_api_token <- function() {
 
 #' Delete todoist api token
 #' 
+#' @return nothing, delete the api token
 #' @export
 delete_todoist_api_token <- function() {
   try(key_delete("todoist_api_token"), silent = TRUE)
@@ -76,6 +81,8 @@ delete_todoist_api_token <- function() {
 #' 
 #' @param msg message to print in the pop-up
 #' @importFrom getPass getPass
+#' 
+#' @return password (character vector)
 #' @export
 ask_todoist_api_token <- function(msg = "Register Todoist Api Token") {
   passwd <- tryCatch({
