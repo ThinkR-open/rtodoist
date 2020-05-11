@@ -1,12 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# todoist
+# rtodoist
 
 <!-- badges: start -->
 
 [![R build
-status](https://github.com/ThinkR-open/todoist/workflows/R-CMD-check/badge.svg)](https://github.com/ThinkR-open/todoist/actions)
+status](https://github.com/ThinkR-open/rtodoist/workflows/R-CMD-check/badge.svg)](https://github.com/ThinkR-open/rtodoist/actions)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 <!-- badges: end -->
@@ -23,7 +23,7 @@ To find information about todoist API :
 You can install the development version of todoist with:
 
 ``` r
-remotes::install_github("ThinkR-open/todoist")
+remotes::install_github("ThinkR-open/rtodoist")
 ```
 
 ## Example
