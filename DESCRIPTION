@@ -14,7 +14,7 @@ Authors@R:
              comment = c(ORCID = "0000-0003-0671-9270")),
       person(given = "ThinkR",
              role = c("cph", "fnd")))
-Description: This package allows to interact with the API of the "Todoist" platform.
+Description: Allows you to interact with the API of the "Todoist" platform.
     'Todoist' <https://todoist.com/> provides an online task manager service for teams.
 License: MIT + file LICENSE
 Depends: 
