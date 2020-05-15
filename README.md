@@ -9,6 +9,8 @@
 status](https://github.com/ThinkR-open/rtodoist/workflows/R-CMD-check/badge.svg)](https://github.com/ThinkR-open/rtodoist/actions)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/rtodoist)](https://CRAN.R-project.org/package=rtodoist)
 <!-- badges: end -->
 
 This package allows to use the todoist API. You will be able to add
@@ -20,7 +22,13 @@ To find information about todoist API :
 
 ## Installation
 
-You can install the development version of todoist with:
+You can install from CRAN :
+
+``` r
+install.packages("rtodoist")
+```
+
+You can install the development version of rtodoist with:
 
 ``` r
 remotes::install_github("ThinkR-open/rtodoist")
