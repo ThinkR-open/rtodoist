@@ -37,7 +37,7 @@ remotes::install_github("ThinkR-open/rtodoist")
 ## Example
 
 ``` r
-library(todoist)
+library(rtodoist)
 
 add_project("test") %>%
   add_task_in_project("my_task")
