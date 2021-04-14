@@ -9,8 +9,9 @@ add_tasks_in_project(
   tasks_list,
   try_again = 3,
   time_try_again = 3,
-  verbose = TRUE,
   responsible = NULL,
+  due = NULL,
+  section_id = NULL,
   token = get_todoist_api_token()
 )
 }
@@ -23,11 +24,11 @@ add_tasks_in_project(
 
 \item{time_try_again}{number of tries}
 
-\item{verbose}{make it talk}
-
 \item{responsible}{add people in project}
 
 \item{token}{token}
+
+\item{verbose}{make it talk}
 }
 \value{
 id of project (character vector)

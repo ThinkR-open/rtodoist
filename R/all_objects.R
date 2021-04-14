@@ -74,3 +74,4 @@ get_tasks <- function(token = get_todoist_api_token()) {
   ) %>%
     content()
 }
+

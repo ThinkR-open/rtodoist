@@ -25,6 +25,8 @@ add_task_in_project <- function(project_id,
                                 time_try_again = 3,
                                 verbose = TRUE,
                                 responsible = NULL,
+                                due = NULL,
+                                section_id = NULL, 
                                 token = get_todoist_api_token(),
                                 exiting_tasks = get_tasks(token = token)) {
   if (verbose) {
@@ -37,6 +39,16 @@ add_task_in_project <- function(project_id,
     add_user_in_project(project_id = proj_id, mail = responsible)
   } else {
     id_user <- "null"
+  }
+  
+  if(is.null(due)){
+    due <- "null"
+  }else{
+    due <- paste0("\"",due,"\"")
+  }
+  
+  if(is.null(section_id)){
+    section_id <- "null"
   }
   
   tache <- exiting_tasks %>%
@@ -60,7 +72,8 @@ add_task_in_project <- function(project_id,
           '[{ "type": "item_add",
             "temp_id": "<random_key()>",
             "uuid": "<random_key()>",
-            "args": { "project_id": "<project_id>", "content": "<task>", "responsible_uid" : <id_user>}]',
+            "args": { "project_id": "<project_id>", "content": "<task>", "responsible_uid" : <id_user>, "due" : {"date" : <due>}, "section_id" : <section_id> } 
+          }]',
           .open = "<",
           .close = ">"
         )
@@ -83,7 +96,8 @@ add_task_in_project <- function(project_id,
             '[{ "type": "item_add",
               "temp_id": "<random_key()>",
               "uuid": "<random_key()>",
-              "args": { "project_id": "<project_id>", "content": "<task>", "responsible_uid" : <id_user> } }]',
+              "args": { "project_id": "<project_id>", "content": "<task>", "responsible_uid" : <id_user>, "due" : {"date" : "<due>"}, "section_id" : <section_id> }  
+            }]',
             .open = "<",
             .close = ">"
           )
@@ -122,11 +136,30 @@ add_tasks_in_project <- function(project_id,
                                  tasks_list,
                                  try_again = 3,
                                  time_try_again = 3,
-                                 verbose = TRUE,
+                                 # verbose = TRUE,
                                  responsible = NULL,
+                                 due = NULL,
+                                 section_id = NULL,
                                  token = get_todoist_api_token()) {
   
   exiting_tasks <- get_tasks(token = token) 
+  
+  
+  if (!is.null(responsible)) {
+    proj_id <- project_id
+    id_user <- get_user_id(mail = responsible)
+    add_user_in_project(project_id = proj_id, mail = responsible)
+  } else {
+    id_user <- "null"
+  }
+  
+  if(is.null(due)){
+    due <- "null"
+  }
+  
+  if(is.null(section_id)){
+    section_id <- "null"
+  }
   
   # on devrait virer ici de tasks_list ce qui est deja dans le projet
   tache <- exiting_tasks %>%
@@ -138,18 +171,30 @@ add_tasks_in_project <- function(project_id,
   tache <- keep(tache, tache_project) %>%
     map_chr("content")
   
-  setdiff(unlist(tasks_list), tache) %>%
-    map(
-      ~ add_task_in_project(
-        project_id = project_id,
-        token = token,
-        try_again = try_again,time_try_again = time_try_again,
-        task = .x,
-        responsible = responsible,
-        verbose = verbose,
-        exiting_tasks = exiting_tasks
-      )
+task <- setdiff(unlist(tasks_list), tache)
+  
+all_tasks <- glue::glue_collapse( 
+  pmap(list(task,id_user,due,section_id), function(a,b,c,d){
+    glue('{ "type": "item_add",
+            "temp_id": "<random_key()>",
+            "uuid": "<random_key()>",
+            "args": { "project_id": "<project_id>", "content": "<a>",  "responsible_uid" : <b>, "due" : {"date" : "<c>"}, "section_id" : <d>  } 
+          }',
+         .open = "<",
+         .close = ">")
+  }), sep = ",")
+ 
+ 
+  
+  
+  res <- call_api(
+    body = list(
+      "token" = token,
+      "sync_token" = "*",
+      resource_types = '["projects","items"]',
+      commands = glue("[{all_tasks}]")
     )
+  )
   invisible(project_id)
 }
 

@@ -11,6 +11,8 @@ add_task_in_project(
   time_try_again = 3,
   verbose = TRUE,
   responsible = NULL,
+  due = NULL,
+  section_id = NULL,
   token = get_todoist_api_token(),
   exiting_tasks = get_tasks(token = token)
 )

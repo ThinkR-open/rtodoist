@@ -27,3 +27,14 @@ call_api <- function(...){
     "https://todoist.com/api/v8/sync",
     ...)
 }
+
+#' Call project data
+#'
+#' @param ... any params of POST request
+#'
+#' @return list
+call_api_project_data <- function(...){
+  POST(
+    "https://api.todoist.com/sync/v8/projects/get_data",
+    ...)
+}
