@@ -27,6 +27,29 @@ get_users <- function(token = get_todoist_api_token()) {
     map_df(`[`, c("email", "id"))
 }
 
+
+#' Title
+#'
+#' @param mails 
+#' @param token 
+#'
+#' @return
+#' @export
+get_users_id <- function(mails,
+                         token = get_todoist_api_token()){
+  
+  
+  if (is.null(mails)) {
+   return("null") 
+  }
+  
+  id_user <-  mails %>% map(get_user_id, token=token) #%>% compact()
+  
+  id_user[id_user %>% map(length) == 0 ] <- "null"
+  id_user %>% map_chr(as.character) #%>% unlist()
+  
+}
+
 #' Get user id
 #'
 #' @param mail mail of the person
@@ -109,7 +132,11 @@ add_users_in_project <- function(project_id,
                                  list_of_users,
                                  verbose = TRUE,
                                  token = get_todoist_api_token()) {
-  map(list_of_users, ~ add_user_in_project(project_id = project_id,
+  
+  # ici ca serait bien de pas le faire si la personne est deja enregistré.
+  
+  map(list_of_users %>% set_as_null_if_needed(),
+      ~ add_user_in_project(project_id = project_id,
                                            token = token,
                                            mail = .x,
                                            verbose = verbose))
