@@ -16,9 +16,12 @@ clean_due <- function(due){
 }
 
 set_as_null_if_needed <- function(x){
-  x[x==""] <- NULL
-  x[x==" "] <- NULL
-  x[is.na(x)] <- NULL
+  # x[x==""] <- NULL
+  # x[x==" "] <- NULL
+  # x[is.na(x)] <- NULL
+  # x
+  x<-x[!is.na(x)]
+  x <- x[!x %in% c(""," ")]
   x
 }
 
@@ -27,7 +30,7 @@ clean_section <- function(section_id){
   if(is.null(section_id)){
     section_id <- "null"
   }
-  section_id
+  as.character(section_id)
   
 }
 

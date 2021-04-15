@@ -37,6 +37,9 @@ add_tasks_in_project <- function(project_id,
   
   due <- clean_due(due)
   section_id <- clean_section(section_id)
+  
+  
+  
   task <-  get_tasks_to_add(tasks_list = tasks_list,
                             existing_tasks = existing_tasks,
                             project_id = project_id)
@@ -111,4 +114,89 @@ add_responsible_to_task <- function(project_id,
     )
   )
   invisible(res)
+}
+
+
+
+
+#' Add tasks in project
+#'
+#' @param token todoist API token
+#' @param project_id id of project
+#' @param tasks_list list of tasks
+#' @param verbose make it talk
+#' @param responsible add people in project
+#' @param due due date
+#' @param section_id section id
+#' @param existing_tasks existing tasks
+#'
+#' @export
+#' 
+#' @seealso [add_task_in_project()]
+#' 
+#' @return id of project (character vector)
+
+add_tasks_in_project_from_df <- function(project_id,
+                                 tasks_list,
+                                 verbose = FALSE,
+                                 # responsible = NULL,
+                                 # due = NULL,
+                                 # section_id = NULL,
+                                 existing_tasks = get_tasks(token = token),
+                                 token = get_todoist_api_token()) {
+  
+
+  
+  
+  id_user <- get_users_id(mails = tasks_list$responsible, token = token)
+  
+  tasks_list$responsible %>%
+    as.character() %>% 
+    add_users_in_project(project_id = project_id,
+                         list_of_users = .,
+                         verbose = verbose,token = token)
+  
+  due <- tasks_list$due
+  browser()
+  section_id <- clean_section(tasks_list$section)
+  
+  unique(clean_section(tasks_list$section)) %>% 
+    str_subset("",negate = FALSE)  %>%
+    map(add_section,project_id = project_id)
+  
+  
+  
+   ICI NULL
+  id_section <-clean_section(tasks_list$section) %>% map(get_id_section,project_id = project_id) %>% unlist()
+
+  
+  task <-  get_tasks_to_add(tasks_list = tasks_list$tasks,
+                            existing_tasks = existing_tasks,
+                            project_id = project_id)
+  
+  
+  
+  all_tasks <- glue::glue_collapse( 
+    pmap(list(task,id_user,due,section_id), function(a,b,c,d){
+      glue('{ "type": "item_add",
+            "temp_id": "<random_key()>",
+            "uuid": "<random_key()>",
+            "args": { "project_id": "<project_id>", "content": "<a>", 
+            "responsible_uid" : <b>, "due" : {"date" : <c>},
+            "section_id" : <d>  } 
+          }',
+           .open = "<",
+           .close = ">")
+    }), sep = ",")
+  
+  res <- call_api(
+    body = list(
+      "token" = token,
+      "sync_token" = "*",
+      resource_types = '["projects","items"]',
+      commands = glue("[{all_tasks}]")
+    )
+  )
+  print(res)
+  invisible(project_id)
 }

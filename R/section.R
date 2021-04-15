@@ -6,7 +6,13 @@
 #'
 #' @export
 #'
-add_section <- function(project_id, section_name, token = get_todoist_api_token()){
+add_section <- function(project_id, section_name,force=FALSE, token = get_todoist_api_token()){
+  
+  ii <- get_id_section(project_id, section_name, token)
+  if ( length(ii) >0 & force == FALSE){
+    return(ii)
+  }
+  
   call_api(
     body = list(
       "token" = token,
