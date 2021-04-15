@@ -114,18 +114,61 @@ add_user_in_project <- function(project_id,
 #' @export
 #'
 #' @importFrom glue glue
+#' @importFrom stringr str_detect
 add_users_in_project <- function(project_id,
                                  list_of_users,
                                  verbose = TRUE,
                                  token = get_todoist_api_token()) {
-  
+  if(class(list_of_users) != "list"){
+    stop("list_of_users must be a list")
+  }
   # ici ca serait bien de pas le faire si la personne est deja enregistré.
+  clean_users <- list_of_users %>% set_as_null_if_needed()
+  test <- !stringr::str_detect(clean_users, "@")
+  if(any(test)){
+    sale <- clean_users[!test]
+    stop("adresse mail non valide: ", paste0(sale, collapse = ", "))
+  }
+  #relou!
+  id_of_project <- project_id
+  existe_deja <-  call_api(
+    body = list(
+      token = token,
+      sync_token = "*",
+      resource_types = '["collaborators"]'
+    )
+  ) %>%
+    content()%>%
+    pluck("collaborator_states") %>%
+    map_df(`[`, c("project_id", "user_id")) %>%
+    dplyr::filter(project_id == id_of_project) %>%
+    pull(user_id)
   
-  map(list_of_users %>% set_as_null_if_needed(),
-      ~ add_user_in_project(project_id = project_id,
-                                           token = token,
-                                           mail = .x,
-                                           verbose = verbose))
+  test_if_present <- get_users_id(clean_users) %in% existe_deja
+  mails <- clean_users[!test_if_present]
+  
+  all_users <- glue::glue_collapse( 
+      map(mails, ~ {glue('{"type": "share_project",
+           "temp_id": "<random_key()>",
+           "uuid": "<random_key()>",
+           "args": {"project_id": <project_id>, "email": "<.x>"}
+           }',
+          .open = "<",
+          .close = ">")}) , sep = ",")
+  
+  if(length(mails) != 0){
+    message("Adding ", paste0(mails, collapse = ", "))
+  }else{
+    message("Users are already in this project !")
+  }
+  
+  res <- call_api(
+    body = list(
+      "token" = token,
+      commands = glue("[{all_users}]")
+    )
+  )
+  print(res)
   invisible(project_id)
 }
 
