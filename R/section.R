@@ -9,7 +9,7 @@
 add_section <- function(project_id, section_name,force=FALSE, token = get_todoist_api_token()){
   
   ii <- get_id_section(project_id = project_id,section_name =  section_name,token =  token)
-  if ( length(ii) >0 & force == FALSE){
+  if ( ii != "null" & force == FALSE){
     return(ii)
   }
   

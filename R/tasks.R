@@ -181,7 +181,7 @@ add_tasks_in_project_from_df <- function(project_id,
   
   
   all_tasks <- glue::glue_collapse( 
-    pmap(list(task,id_user,due,section_id), function(a,b,c,d){
+    pmap(list(task,id_user,due,id_section), function(a,b,c,d){
       glue('{ "type": "item_add",
             "temp_id": "<random_key()>",
             "uuid": "<random_key()>",
