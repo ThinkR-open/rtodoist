@@ -157,19 +157,23 @@ add_tasks_in_project_from_df <- function(project_id,
                          verbose = verbose,token = token)
   
   due <- tasks_list$due
-  browser()
   section_id <- clean_section(tasks_list$section)
-  
+  # on fabrique les section une seule fois
   unique(clean_section(tasks_list$section)) %>% 
     str_subset("",negate = FALSE)  %>%
     map(add_section,project_id = project_id)
   
   
   
-   ICI NULL
-  id_section <-clean_section(tasks_list$section) %>% map(get_id_section,project_id = project_id) %>% unlist()
-
+ # browser()
+  # on consturie le vecteur des id_section, dans le bon ordre
+  id_section <-clean_section(tasks_list$section) %>% 
+    map(get_id_section,project_id = project_id) %>%
+    unlist() %>% 
+    as.character()
+# id_section doit etre null si vide
   
+  # ici on n'autoriserais pas plusieur tache dans des sessions différentes, faudra un peu pimper la fonctio pour  autoriser cela.
   task <-  get_tasks_to_add(tasks_list = tasks_list$tasks,
                             existing_tasks = existing_tasks,
                             project_id = project_id)
@@ -183,7 +187,7 @@ add_tasks_in_project_from_df <- function(project_id,
             "uuid": "<random_key()>",
             "args": { "project_id": "<project_id>", "content": "<a>", 
             "responsible_uid" : <b>, "due" : {"date" : <c>},
-            "section_id" : <d>  } 
+            "section_id" : "<d>"  } 
           }',
            .open = "<",
            .close = ">")

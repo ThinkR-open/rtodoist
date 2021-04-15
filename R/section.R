@@ -8,7 +8,7 @@
 #'
 add_section <- function(project_id, section_name,force=FALSE, token = get_todoist_api_token()){
   
-  ii <- get_id_section(project_id, section_name, token)
+  ii <- get_id_section(project_id = project_id,section_name =  section_name,token =  token)
   if ( length(ii) >0 & force == FALSE){
     return(ii)
   }
@@ -39,7 +39,7 @@ add_section <- function(project_id, section_name,force=FALSE, token = get_todois
 #'
 #' @export
 get_id_section <- function(project_id, section_name, token = get_todoist_api_token()){
-  call_api_project_data(
+  tab <- call_api_project_data(
     body = list(
       token = token,
       project_id = project_id
@@ -47,7 +47,13 @@ get_id_section <- function(project_id, section_name, token = get_todoist_api_tok
   ) %>%
     content() %>%
       pluck("sections") %>%
-      map_dfr(`[`, c("id", "name")) %>%
+      map_dfr(`[`, c("id", "name"))
+  
+  if (nrow(tab) == 0) {return("null")}
+  res  <- tab %>%
       filter(name == section_name) %>%
       pull(id)
+  if (length(res) == 0) {return("null")}
+  
+  res 
 }
