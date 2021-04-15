@@ -96,8 +96,8 @@ init_presta_manager <- function(project_id,
                                   "S'assigner et mettre des dates sur certaines taches pour pas les oublier",
                                   "Rediger la reference de la mission dans {reference}"
                                 ),
-                                try_again = 3,
-                                time_try_again = 3,
+                                # try_again = 3,
+                                # time_try_again = 3,
                                 verbose = TRUE,
                                 responsible = NULL,
                                 token = get_todoist_api_token()) {

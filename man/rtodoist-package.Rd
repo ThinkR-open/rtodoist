@@ -6,8 +6,6 @@
 \alias{rtodoist-package}
 \title{rtodoist: Create and Manage Todolist using 'Todoist.com' API}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
-
 Allows you to interact with the API of the
     "Todoist" platform.  'Todoist' <https://todoist.com/> provides an
     online task manager service for teams.
