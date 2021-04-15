@@ -22,9 +22,9 @@ random_key <- function() {
 #' @param ... any params of POST request
 #'
 #' @return list
-call_api <- function(...){
+call_api <- function(...,url= "https://todoist.com/api/v8/sync"){
   POST(
-    "https://todoist.com/api/v8/sync",
+    url,
     ...)
 }
 
@@ -33,8 +33,6 @@ call_api <- function(...){
 #' @param ... any params of POST request
 #'
 #' @return list
-call_api_project_data <- function(...){
-  POST(
-    "https://api.todoist.com/sync/v8/projects/get_data",
-    ...)
+call_api_project_data <- function(..., url="https://api.todoist.com/sync/v8/projects/get_data"){
+  call_api(..., url = url)
 }

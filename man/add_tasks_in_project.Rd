@@ -2,16 +2,18 @@
 % Please edit documentation in R/tasks.R
 \name{add_tasks_in_project}
 \alias{add_tasks_in_project}
-\title{Add a list of tasks}
+\title{Add tasks in project}
 \usage{
 add_tasks_in_project(
   project_id,
   tasks_list,
   try_again = 3,
   time_try_again = 3,
+  verbose = FALSE,
   responsible = NULL,
   due = NULL,
   section_id = NULL,
+  existing_tasks = get_tasks(token = token),
   token = get_todoist_api_token()
 )
 }
@@ -24,17 +26,17 @@ add_tasks_in_project(
 
 \item{time_try_again}{number of tries}
 
+\item{verbose}{make it talk}
+
 \item{responsible}{add people in project}
 
 \item{token}{token}
-
-\item{verbose}{make it talk}
 }
 \value{
 id of project (character vector)
 }
 \description{
-Add a list of tasks
+Add tasks in project
 }
 \examples{
 \dontrun{

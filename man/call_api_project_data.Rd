@@ -4,7 +4,10 @@
 \alias{call_api_project_data}
 \title{Call project data}
 \usage{
-call_api_project_data(...)
+call_api_project_data(
+  ...,
+  url = "https://api.todoist.com/sync/v8/projects/get_data"
+)
 }
 \arguments{
 \item{...}{any params of POST request}

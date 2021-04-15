@@ -1,21 +1,3 @@
-#' Add task in project
-#' 
-#' To work, it needs a project id. 
-#'
-#' @param project_id id of a project
-#' @param token token
-#' @param task a task
-#' @param try_again start again the request
-#' @param verbose make it talk
-#' @param time_try_again number of tries
-#' @param responsible add people in project with email. To know user email, use \code{\link{get_users}}.
-#' @param existing_tasks list of tasks already in the project
-#'
-#' @return project id
-#' @export
-
-add_task_in_project <- add_tasks_in_project
-
 #' Add tasks in project
 #'
 #' @param token token
@@ -73,9 +55,6 @@ all_tasks <- glue::glue_collapse(
          .close = ">")
   }), sep = ",")
  
- 
-  
-  
   res <- call_api(
     body = list(
       "token" = token,
@@ -116,7 +95,7 @@ add_responsible_to_task <- function(project_id,
   my_task <- keep(tasks, get_my_taks) %>% flatten()
   id_task <- as.numeric(my_task[["id"]])
   id_user <- get_user_id(mail = add_responsible)
-  call_api(
+  res <- call_api(
     body = list(
       "token" = token,
       "sync_token" = "*",
@@ -130,4 +109,5 @@ add_responsible_to_task <- function(project_id,
       )
     )
   )
+  invisible(res)
 }

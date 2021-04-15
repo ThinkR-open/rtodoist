@@ -28,50 +28,35 @@ get_users <- function(token = get_todoist_api_token()) {
 }
 
 
-#' Title
+
+get_user_id <- get_users_id
+
+#' Get users id
 #'
-#' @param mails 
-#' @param token 
-#'
-#' @return
-#' @export
+#' @param mails mails of the person
+#' @param token token
+#' @importFrom dplyr filter pull left_join
+#' @return id of users
 get_users_id <- function(mails,
-                         token = get_todoist_api_token()){
+                        token = get_todoist_api_token()) {
   
   
   if (is.null(mails)) {
-   return("null") 
+    return("null") 
   }
   
-  id_user <-  mails %>% map(get_user_id, token=token) #%>% compact()
+tab <- get_users(token = token) %>%
+    filter(`email` %in% mails) 
   
-  id_user[id_user %>% map(length) == 0 ] <- "null"
-  id_user %>% map_chr(as.character) #%>% unlist()
-  
+# pour garantir la coherence d'ordre entre mails et id
+id_user <- data.frame(email = mails) %>% 
+  left_join(tab,by="email") %>% 
+  pull(id)
+
+id_user[is.na(id_user) ] <- "null"
+id_user %>% map_chr(as.character)
 }
 
-#' Get user id
-#'
-#' @param mail mail of the person
-#' @param token token
-#' @importFrom dplyr filter pull
-#' @return id of user
-#' @export
-get_user_id <- function(mail,
-                        token = get_todoist_api_token()) {
-call_api(
-    body = list(
-      "token" = token,
-      "sync_token" = "*",
-      resource_types = '["collaborators"]'
-    )
-  ) %>%
-    content() %>%
-    pluck("collaborators") %>%
-    map_df(`[`, c("email", "id")) %>%
-    filter(`email` == mail) %>%
-    pull(id)
-}
 
 #' Add one user
 #'
@@ -98,7 +83,7 @@ add_user_in_project <- function(project_id,
     message(glue::glue("Add {mail} in the {project_id} project"))
   }
 
-  call_api(
+  res <- call_api(
     body = list(
       token = token,
       commands = glue(
@@ -111,8 +96,10 @@ add_user_in_project <- function(project_id,
         .close = ">"
       )
     )
-  ) %>%
-    print()
+  ) 
+  if (verbose) {
+    print(res)
+  }
   invisible(project_id)
 }
 
@@ -142,3 +129,6 @@ add_users_in_project <- function(project_id,
                                            verbose = verbose))
   invisible(project_id)
 }
+
+
+
