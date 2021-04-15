@@ -32,7 +32,7 @@ clean_section <- function(section_id){
 }
 
 #' @import purrr
-get_tasks_to_add <- function(tasks_list,existing_tasks){
+get_tasks_to_add <- function(tasks_list,existing_tasks,project_id){
   tache <- existing_tasks %>%
     flatten() %>%
     map(`[`, c("content", "project_id"))

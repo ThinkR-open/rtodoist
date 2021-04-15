@@ -48,7 +48,7 @@ tab <- get_users(token = token) %>%
     filter(`email` %in% mails) 
   
 # pour garantir la coherence d'ordre entre mails et id
-id_user <- data.frame(email = mails) %>% 
+id_user <- data.frame(email = unlist(mails)) %>% 
   left_join(tab,by="email") %>% 
   pull(id)
 

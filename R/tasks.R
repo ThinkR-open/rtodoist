@@ -37,7 +37,9 @@ add_tasks_in_project <- function(project_id,
   
   due <- clean_due(due)
   section_id <- clean_section(section_id)
-  task <-  get_tasks_to_add(tasks_list = tasks_list, existing_tasks = existing_tasks)
+  task <-  get_tasks_to_add(tasks_list = tasks_list,
+                            existing_tasks = existing_tasks,
+                            project_id = project_id)
 
 
 
