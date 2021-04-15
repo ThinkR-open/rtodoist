@@ -38,7 +38,7 @@ id_section <- add_section(id_project, "credentials")
 
 
 add_task_in_project(id_project, paste0("admin : ", "formateur_af9055531920-thinkr" ), section_id = id_section)
-add_task_in_project(id_project, paste0("mdp : ", "jXVFB!RsyTY2iE0r" ), section_id = id_section)
+add_task_in_project(id_project, paste0("mdp : ", "xxxx" ), section_id = id_section)
 
 ## emergement
 

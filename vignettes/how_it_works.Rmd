@@ -24,8 +24,8 @@ The first step is to retrieve a token.
 Open todoist website to find it :
 
 ```{r}
-library(todoist)
-todoist::open_todoist_website_profile()
+library(rtodoist)
+rtodoist::open_todoist_website_profile()
 token <- "YOURTOKEN" # copied and pasted from website
 ```
 
