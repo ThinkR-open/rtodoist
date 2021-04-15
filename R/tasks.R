@@ -146,15 +146,36 @@ add_tasks_in_project <- function(project_id,
   
   
   if (!is.null(responsible)) {
+    # browser()
     proj_id <- project_id
-    id_user <- get_user_id(mail = responsible)
-    add_user_in_project(project_id = proj_id, mail = responsible)
+    # id_user <- get_user_id(mail = responsible)
+    id_user <-  responsible %>% map(get_user_id) #%>% compact()
+    
+    
+    id_user[id_user %>% map(length) == 0 ] <- "null"
+    id_user <- id_user %>% map_chr(as.character) #%>% unlist()
+    responsible[responsible==""] <- NULL
+    responsible[responsible==" "] <- NULL
+    responsible[is.na(responsible)] <- NULL
+    
+    responsible %>% 
+      # map(get_user_id) %>%
+      # compact() %>% 
+    add_users_in_project(project_id = proj_id,list_of_users = .,verbose = TRUE)
   } else {
     id_user <- "null"
   }
   
   if(is.null(due)){
     due <- "null"
+  } else{
+
+   due <- map_chr(due,as.character) %>% stringr::str_trim()
+   due[due==""] <- NA
+   due[due==" "] <- NA
+   due <- stringr::str_replace(glue::glue('"{due}"'), 
+                               pattern = "^\"NA\"$","null")
+    
   }
   
   if(is.null(section_id)){
@@ -178,7 +199,9 @@ all_tasks <- glue::glue_collapse(
     glue('{ "type": "item_add",
             "temp_id": "<random_key()>",
             "uuid": "<random_key()>",
-            "args": { "project_id": "<project_id>", "content": "<a>",  "responsible_uid" : <b>, "due" : {"date" : "<c>"}, "section_id" : <d>  } 
+            "args": { "project_id": "<project_id>", "content": "<a>", 
+            "responsible_uid" : <b>, "due" : {"date" : <c>},
+            "section_id" : <d>  } 
           }',
          .open = "<",
          .close = ">")
@@ -195,6 +218,7 @@ all_tasks <- glue::glue_collapse(
       commands = glue("[{all_tasks}]")
     )
   )
+  print(res)
   invisible(project_id)
 }
 
