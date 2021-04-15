@@ -2,7 +2,7 @@
 % Please edit documentation in R/section.R
 \name{get_id_section}
 \alias{get_id_section}
-\title{id section}
+\title{get id section}
 \usage{
 get_id_section(project_id, section_name, token = get_todoist_api_token())
 }
@@ -10,7 +10,9 @@ get_id_section(project_id, section_name, token = get_todoist_api_token())
 \item{project_id}{num of the project id}
 
 \item{section_name}{name of the section}
+
+\item{token}{token}
 }
 \description{
-id section
+get id section
 }

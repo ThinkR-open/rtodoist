@@ -1,12 +1,11 @@
-#' Title
+#' add section
 #'
-#' @param project_id 
-#' @param section_name 
+#' @param section_name section name
+#' @param token todoist API token
+#' @param project_id project if
 #'
-#' @return
 #' @export
 #'
-#' @examples
 add_section <- function(project_id, section_name, token = get_todoist_api_token()){
   call_api(
     body = list(
@@ -26,12 +25,12 @@ add_section <- function(project_id, section_name, token = get_todoist_api_token(
   get_id_section(project_id, section_name, token)
 }
 
-#' id section
+#' get id section
 #'
 #' @param project_id num of the project id
 #' @param section_name name of the section
+#' @param token token
 #'
-
 #' @export
 get_id_section <- function(project_id, section_name, token = get_todoist_api_token()){
   call_api_project_data(

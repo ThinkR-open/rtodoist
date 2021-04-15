@@ -2,18 +2,17 @@
 % Please edit documentation in R/section.R
 \name{add_section}
 \alias{add_section}
-\title{Title}
+\title{add section}
 \usage{
 add_section(project_id, section_name, token = get_todoist_api_token())
 }
 \arguments{
-\item{project_id}{}
+\item{project_id}{project if}
 
-\item{section_name}{}
-}
-\value{
+\item{section_name}{section name}
 
+\item{token}{todoist API token}
 }
 \description{
-Title
+add section
 }

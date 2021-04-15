@@ -8,6 +8,8 @@ call_api(..., url = "https://todoist.com/api/v8/sync")
 }
 \arguments{
 \item{...}{any params of POST request}
+
+\item{url}{url to call}
 }
 \value{
 list

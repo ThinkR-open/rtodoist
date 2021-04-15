@@ -14,8 +14,6 @@
 init_project(
   project_id,
   tasks_list,
-  try_again = 3,
-  time_try_again = 3,
   verbose = TRUE,
   responsible = NULL,
   token = get_todoist_api_token()
@@ -27,8 +25,6 @@ init_presta(
     "S'assurer d'avoir un nom de projet coherent avec Slack",
     "S'assigner et mettre des dates sur certaines taches pour pas les oublier",
     "Facturer", "Rediger la reference de la mission dans {reference}", "Paye"),
-  try_again = 3,
-  time_try_again = 3,
   verbose = TRUE,
   responsible = NULL,
   token = get_todoist_api_token()
@@ -37,8 +33,6 @@ init_presta(
 init_presta_admin(
   project_id,
   tasks_list = list("Facturer", "Etre Pay\\\\u00E9"),
-  try_again = 3,
-  time_try_again = 3,
   verbose = TRUE,
   responsible = NULL,
   token = get_todoist_api_token()
@@ -63,8 +57,6 @@ init_forma_formateur(
     "f_Cr\\\\u00E9er le contenu de la formation", "f_Imprimer des feuilles d'emargement",
     "f_S'assurer d'avoir son materiel complet", "f_Remplir notes de frais",
     "f_Scanner feuille d'emargement", "f_transferer feuille d'emargement"),
-  try_again = 3,
-  time_try_again = 3,
   verbose = TRUE,
   responsible = NULL,
   token = get_todoist_api_token()
@@ -74,8 +66,6 @@ init_forma_manager(
   project_id,
   tasks_list = list("Envoi du devis + contenu",
     "Assigner au formateur les taches du formateur", "Etre Pay\\\\u00E9"),
-  try_again = 3,
-  time_try_again = 3,
   verbose = TRUE,
   responsible = NULL,
   token = get_todoist_api_token()
@@ -94,8 +84,6 @@ init_inter(
     "Enregistrer son temps de formation dans Toggl",
     "Envoyer le questionnaire de satisfaction",
     "Envoyer questionnaire de satisfaction a froid", "Facturer", "Paye"),
-  try_again = 3,
-  time_try_again = 3,
   verbose = TRUE,
   token = get_todoist_api_token()
 )
@@ -113,8 +101,6 @@ init_forma_admin(
     "plannifier l'evaluation a froid", "verifie retour eval a cahud",     
     "verifie retour eval \\\\u00E0 froid",
     "mail retour de qualit\\\\u00E9 + audt besoin"),
-  try_again = 3,
-  time_try_again = 3,
   verbose = TRUE,
   responsible = NULL,
   token = get_todoist_api_token()
@@ -125,15 +111,11 @@ init_forma_admin(
 
 \item{tasks_list}{lists of tasks}
 
-\item{try_again}{try again the http request}
-
-\item{time_try_again}{number of tries}
-
 \item{verbose}{make the function verbose}
 
 \item{responsible}{add people in project}
 
-\item{token}{token}
+\item{token}{todoist API token}
 }
 \value{
 id of project (character vector)

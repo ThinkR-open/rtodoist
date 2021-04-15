@@ -29,7 +29,6 @@ get_users <- function(token = get_todoist_api_token()) {
 
 
 
-get_user_id <- get_users_id
 
 #' Get users id
 #'

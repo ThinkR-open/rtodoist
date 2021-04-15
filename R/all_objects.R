@@ -3,7 +3,7 @@
 #' Collect all the objects in a list.
 #' This allows you to explore your to-do list.
 #'
-#' @param token token
+#' @param token todoist API token
 #'
 #' @return list of all objects
 #' @export
@@ -28,7 +28,7 @@ get_all <- function(token = get_todoist_api_token()) {
 
 #' List of projects
 #'
-#' @param token token
+#' @param token todoist API token
 #'
 #' @return list of all projects
 #' @export
@@ -52,7 +52,7 @@ get_projects <- function(token = get_todoist_api_token()) {
 }
 #' List of tasks
 #'
-#' @param token token
+#' @param token todoist API token
 #'
 #' @return list of all tasks
 #' @export

@@ -4,18 +4,18 @@
 #' 
 #' @param project_id id of project
 #' @param tasks_list lists of tasks
-#' @param try_again try again the http request
+# @param try_again try again the http request
 #' @param verbose make the function verbose
-#' @param time_try_again number of tries
+# @param time_try_again number of tries
 #' @param responsible add people in project
-#' @param token token
+#' @param token todoist API token
 #' 
 #' @return id of project (character vector)
 #' @export
 init_project <- function(project_id,
                          tasks_list,
-                         try_again = 3,
-                         time_try_again = 3,
+                         # try_again = 3,
+                         # time_try_again = 3,
                          verbose = TRUE,
                          responsible = NULL,
                          token = get_todoist_api_token()) {
@@ -26,8 +26,8 @@ init_project <- function(project_id,
   add_tasks_in_project(
     project_id = project_id,
     token = token,
-    try_again = try_again,
-    time_try_again = time_try_again,
+    # try_again = try_again,
+    # time_try_again = time_try_again,
     verbose = verbose,
     responsible = responsible,
     tasks_list = tasks_list
@@ -48,16 +48,16 @@ init_presta <- function(project_id,
                           "Rediger la reference de la mission dans {reference}",
                           "Paye"
                         ),
-                        try_again = 3,
-                        time_try_again = 3,
+                        # try_again = 3,
+                        # time_try_again = 3,
                         verbose = TRUE,
                         responsible = NULL,
                         token = get_todoist_api_token()) {
   init_project(
     project_id = project_id,
     token = token,
-    try_again = try_again,
-    time_try_again = time_try_again,
+    # try_again = try_again,
+    # time_try_again = time_try_again,
     verbose = verbose,
     tasks_list = tasks_list,
     responsible = responsible
@@ -69,16 +69,16 @@ init_presta <- function(project_id,
 #' @export
 init_presta_admin <- function(project_id,
                               tasks_list = list("Facturer", "Etre Pay\\u00E9"),
-                              try_again = 3,
-                              time_try_again = 3,
+                              # try_again = 3,
+                              # time_try_again = 3,
                               verbose = TRUE,
                               responsible = NULL,
                               token = get_todoist_api_token()) {
   init_project(
     project_id = project_id,
     token = token,
-    try_again = try_again,
-    time_try_again = time_try_again,
+    # try_again = try_again,
+    # time_try_again = time_try_again,
     verbose = verbose,
     tasks_list = tasks_list,
     responsible = responsible
@@ -104,8 +104,8 @@ init_presta_manager <- function(project_id,
   init_project(
     project_id = project_id,
     token = token,
-    time_try_again = time_try_again,
-    try_again = try_again,
+    # time_try_again = time_try_again,
+    # try_again = try_again,
     verbose = verbose,
     tasks_list = tasks_list,
     responsible = responsible
@@ -125,8 +125,8 @@ init_forma_formateur <- function(project_id,
                                    "f_Scanner feuille d'emargement",
                                    "f_transferer feuille d'emargement"
                                  ),
-                                 try_again = 3,
-                                 time_try_again = 3,
+                                 # try_again = 3,
+                                 # time_try_again = 3,
                                  verbose = TRUE,
                                  responsible = NULL,
                                  token = get_todoist_api_token()) {
@@ -134,8 +134,8 @@ init_forma_formateur <- function(project_id,
     project_id = project_id,
     token = token,
     verbose = verbose, 
-    time_try_again = time_try_again,
-    try_again = try_again,
+    # time_try_again = time_try_again,
+    # try_again = try_again,
     responsible = responsible,
     tasks_list = tasks_list
   )
@@ -150,8 +150,8 @@ init_forma_manager <- function(project_id,
                                  "Assigner au formateur les taches du formateur",
                                  "Etre Pay\\u00E9"
                                ),
-                               try_again = 3,
-                               time_try_again = 3,
+                               # try_again = 3,
+                               # time_try_again = 3,
                                verbose = TRUE,
                                responsible = NULL,
                                token = get_todoist_api_token()) {
@@ -159,8 +159,8 @@ init_forma_manager <- function(project_id,
     project_id = project_id,
     token = token, 
     verbose = verbose,
-    time_try_again = time_try_again,
-    try_again = try_again,
+    # time_try_again = time_try_again,
+    # try_again = try_again,
     responsible = responsible,
     tasks_list = tasks_list
   )
@@ -191,15 +191,16 @@ init_inter <- function(project_id,
                          "Facturer",
                          "Paye"
                        ),
-                       try_again = 3,
-                       time_try_again = 3,
+                       # try_again = 3,
+                       # time_try_again = 3,
                        verbose = TRUE,
                        token = get_todoist_api_token()) {
   init_project(
     project_id = project_id,
     token = token, 
-    verbose = verbose,time_try_again = time_try_again,
-    try_again = try_again,
+    verbose = verbose,
+    # time_try_again = time_try_again,
+    # try_again = try_again,
     tasks_list = tasks_list
   )
 }
@@ -224,8 +225,8 @@ init_forma_admin <- function(project_id,
                                                "verifie retour eval a cahud",
                                                "verifie retour eval \\u00E0 froid",
                                                "mail retour de qualit\\u00E9 + audt besoin"),
-                             try_again = 3,
-                             time_try_again = 3,
+                             # try_again = 3,
+                             # time_try_again = 3,
                              verbose = TRUE,
                              responsible = NULL,
                              token = get_todoist_api_token()) {
@@ -233,7 +234,8 @@ init_forma_admin <- function(project_id,
     project_id = project_id,
     token = token,
     verbose = verbose, 
-    try_again = try_again,time_try_again = time_try_again,
+    # try_again = try_again,
+    # time_try_again = time_try_again,
     responsible = responsible,
     tasks_list = tasks_list
   )

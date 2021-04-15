@@ -1,12 +1,13 @@
 #' Add tasks in project
 #'
-#' @param token token
+#' @param token todoist API token
 #' @param project_id id of project
 #' @param tasks_list list of tasks
-#' @param try_again start again the request
 #' @param verbose make it talk
-#' @param time_try_again number of tries
 #' @param responsible add people in project
+#' @param due due date
+#' @param section_id section id
+#' @param existing_tasks existing tasks
 #'
 #' @export
 #' 
@@ -20,8 +21,6 @@
 #' }
 add_tasks_in_project <- function(project_id,
                                  tasks_list,
-                                 try_again = 3,
-                                 time_try_again = 3,
                                  verbose = FALSE,
                                  responsible = NULL,
                                  due = NULL,
@@ -72,7 +71,7 @@ all_tasks <- glue::glue_collapse(
 #' @param project_id id of the project
 #' @param task the full name of the task
 #' @param verbose make the function verbose
-#' @param token token
+#' @param token todoist API token
 #' @param add_responsible add someone to this task with mail
 #'
 #' @return http request
@@ -94,7 +93,7 @@ add_responsible_to_task <- function(project_id,
     map_lgl(~ isTRUE(.x[["content"]]))
   my_task <- keep(tasks, get_my_taks) %>% flatten()
   id_task <- as.numeric(my_task[["id"]])
-  id_user <- get_user_id(mail = add_responsible)
+  id_user <- get_users_id(mails = add_responsible)
   res <- call_api(
     body = list(
       "token" = token,
