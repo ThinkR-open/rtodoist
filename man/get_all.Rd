@@ -7,7 +7,7 @@
 get_all(token = get_todoist_api_token())
 }
 \arguments{
-\item{token}{token}
+\item{token}{todoist API token}
 }
 \value{
 list of all objects

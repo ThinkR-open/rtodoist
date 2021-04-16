@@ -11,7 +11,7 @@ add_project(project_name, verbose = TRUE, token = get_todoist_api_token())
 
 \item{verbose}{make it talk}
 
-\item{token}{token}
+\item{token}{todoist API token}
 }
 \value{
 id of the new project

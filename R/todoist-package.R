@@ -2,6 +2,7 @@
 #' @importFrom httr POST content
 #' @import purrr
 #' @import keyring
+#' @import glue
 "_PACKAGE"
 
 # The following block is used by usethis to automatically manage

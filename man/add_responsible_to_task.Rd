@@ -21,7 +21,7 @@ add_responsible_to_task(
 
 \item{verbose}{make the function verbose}
 
-\item{token}{token}
+\item{token}{todoist API token}
 }
 \value{
 http request

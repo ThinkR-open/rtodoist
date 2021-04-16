@@ -34,7 +34,7 @@ get_id_project <- function(object, project_name) {
 
 #' Add a new project
 #'
-#' @param token token
+#' @param token todoist API token
 #' @param project_name name of the new project
 #' @param verbose make it talk
 #'
