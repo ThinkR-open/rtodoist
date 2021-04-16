@@ -1,1 +1,1 @@
-globalVariables(c("name",".","email", "id"))
+globalVariables(c("name",".","email", "id", "user_id"))
