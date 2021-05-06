@@ -11,7 +11,7 @@ session <- function(...){
 }
 
 
-dates <- get_dates_from_session(code_session = "AF9055531920")
+dates <- get_dates_from_session(code_session = session_name)
 
 users <- get_users_from_session(code_session = session_name) 
 

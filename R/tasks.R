@@ -25,7 +25,7 @@ add_tasks_in_project <- function(project_id,
                                  responsible = NULL,
                                  due = NULL,
                                  section_id = NULL,
-                                 existing_tasks = get_tasks(token = token),
+                                 # existing_tasks = get_tasks(token = token),
                                  token = get_todoist_api_token()) {
   
   id_user <- get_users_id(mails = responsible, token = token)
@@ -41,8 +41,9 @@ add_tasks_in_project <- function(project_id,
   
   
   task <-  get_tasks_to_add(tasks_list = tasks_list,
-                            existing_tasks = existing_tasks,
-                            project_id = project_id)
+                            existing_tasks = get_tasks_of_project(project_id, token),
+                            project_id = project_id,
+                            sections_id = section_id)
 
 
 
@@ -142,7 +143,7 @@ add_tasks_in_project_from_df <- function(project_id,
                                  # responsible = NULL,
                                  # due = NULL,
                                  # section_id = NULL,
-                                 existing_tasks = get_tasks(token = token),
+                                 # existing_tasks = get_tasks(token = token),
                                  token = get_todoist_api_token()) {
   
 
@@ -160,14 +161,14 @@ add_tasks_in_project_from_df <- function(project_id,
   section_id <- clean_section(tasks_list$section)
   # on fabrique les section une seule fois
   unique(clean_section(tasks_list$section)) %>% 
-    str_subset("",negate = FALSE)  %>%
+    stringr::str_subset("",negate = FALSE)  %>%
     map(add_section,project_id = project_id)
   
   
   
  # browser()
   # on consturie le vecteur des id_section, dans le bon ordre
-  id_section <-clean_section(tasks_list$section) %>% 
+  id_section <- clean_section(tasks_list$section) %>% 
     map(get_id_section,project_id = project_id) %>%
     unlist() %>% 
     as.character()
@@ -175,8 +176,9 @@ add_tasks_in_project_from_df <- function(project_id,
   
   # ici on n'autoriserais pas plusieur tache dans des sessions différentes, faudra un peu pimper la fonctio pour  autoriser cela.
   task <-  get_tasks_to_add(tasks_list = tasks_list$tasks,
-                            existing_tasks = existing_tasks,
-                            project_id = project_id)
+                            existing_tasks = get_tasks_of_project(project_id, token),
+                            project_id = project_id,
+                            sections_id = id_section)
   
   
   

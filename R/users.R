@@ -119,10 +119,10 @@ add_users_in_project <- function(project_id,
                                  list_of_users,
                                  verbose = TRUE,
                                  token = get_todoist_api_token()) {
-  if(class(list_of_users) != "list"){
-    stop("list_of_users must be a list")
-  }
-  # ici ca serait bien de pas le faire si la personne est deja enregistré.
+  # if(class(list_of_users) != "list" & !is.null(list_of_users)){
+  #   stop("list_of_users must be a list")
+  # }
+  
   clean_users <- list_of_users %>% set_as_null_if_needed()
   test <- !stringr::str_detect(clean_users, "@")
   if(any(test)){
@@ -130,18 +130,8 @@ add_users_in_project <- function(project_id,
     stop("adresse mail non valide: ", paste0(sale, collapse = ", "))
   }
   #relou!
-  id_of_project <- project_id
-  existe_deja <-  call_api(
-    body = list(
-      token = token,
-      sync_token = "*",
-      resource_types = '["collaborators"]'
-    )
-  ) %>%
-    content()%>%
-    pluck("collaborator_states") %>%
-    map_df(`[`, c("project_id", "user_id")) %>%
-    dplyr::filter(project_id == id_of_project) %>%
+  # id_of_project <- project_id
+  existe_deja <-  users_in_project(token, project_id) %>% 
     pull(user_id)
   
   test_if_present <- get_users_id(clean_users) %in% existe_deja
@@ -156,7 +146,7 @@ add_users_in_project <- function(project_id,
           .open = "<",
           .close = ">")}) , sep = ",")
   
-  if(length(mails) != 0){
+  if(length(mails) != 0 & !is.null(list_of_users)){
     message("Adding ", paste0(mails, collapse = ", "))
   }else{
     message("Users are already in this project !")
@@ -172,5 +162,25 @@ add_users_in_project <- function(project_id,
   invisible(project_id)
 }
 
-
+#' Get users in projects 
+#'
+#' @param token token
+#' @param project_id projecti id
+#'
+#' @return dataframe of users in projects
+#' @export
+#'
+users_in_project<- function(token, project_id){
+  call_api(
+    body = list(
+      token = token,
+      sync_token = "*",
+      resource_types = '["collaborators"]'
+    )
+  ) %>%
+    content()%>%
+    pluck("collaborator_states") %>%
+    map_df(`[`, c("project_id", "user_id")) %>%
+    dplyr::filter(project_id == project_id)
+}
 

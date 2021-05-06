@@ -35,16 +35,34 @@ clean_section <- function(section_id){
 }
 
 #' @import purrr
-get_tasks_to_add <- function(tasks_list,existing_tasks,project_id){
+get_tasks_to_add <- function(tasks_list,existing_tasks,project_id, sections_id = NULL){
+  
+  sections_id <- as.integer(sections_id)
+  
+  if(is.data.frame(tasks_list)){
+    
+  }else{
+    
+  }
+  
+  if(!is.null(sections_id)){
+    tasks_to_add <- map2_df(tasks_list, sections_id,~ list(content = .x, section_id = .y))
+  }else{
+    tasks_to_add <- tasks_list
+  }
+  
   tache <- existing_tasks %>%
-    flatten() %>%
-    map(`[`, c("content", "project_id"))
+    map(~ .x %>% modify_if(is.null, ~ 0)) %>% 
+    map(~ .x %>% modify_if(is.na, ~ 0)) %>% 
+    map_dfr(`[`,c("content","section_id")) 
   
-  tache_project <- map_lgl(seq_along(tache), 
-                           ~ tache[[.x]]["project_id"] == project_id)
-  tache <- keep(tache, tache_project) %>%
-    map_chr("content")
+  tasks <- tasks_to_add %>% anti_join(tache)
   
-  setdiff(unlist(tasks_list), tache)
+  if(nrow(tasks) == 0){
+    message("All tasks in the project")
+    return(NULL)
+  }else{
+    tasks
+  }
   
 }

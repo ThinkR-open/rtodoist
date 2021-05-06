@@ -75,3 +75,20 @@ get_tasks <- function(token = get_todoist_api_token()) {
     content()
 }
 
+#' List of tasks of project
+#'
+#' @param token todoist API token
+#'
+#' @return list of all tasks
+#' @export
+#'
+get_tasks_of_project <- function(project_id, token = get_todoist_api_token()) {
+  call_api_project_data(
+    body = list(
+      token = token,
+      project_id = project_id)
+  ) %>%
+    content() %>%
+    pluck("items") %>%
+    map(`[`, c("content", "project_id", "section_id"))
+}
