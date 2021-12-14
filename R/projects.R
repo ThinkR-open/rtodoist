@@ -6,7 +6,7 @@
 #' @param project_name name of the project
 #'
 #' @importFrom dplyr filter pull
-#'
+#' @importFrom purrr pluck map_dfr is_empty
 #' @return id of project (character vector)
 #' @export
 #'
@@ -40,7 +40,9 @@ get_id_project <- function(object, project_name) {
 #'
 #' @return id of the new project
 #' @export
-#'
+#' @importFrom purrr flatten map
+#' @importFrom httr content
+#' @importFrom glue glue
 #' @examples
 #' \dontrun{
 #' add_project("my_proj")
@@ -51,12 +53,15 @@ add_project <- function(project_name,
   if (verbose) {
     message(glue::glue("create the {project_name} project"))
   }
-  name <- get_projects(token = token) %>%
+  
+  object <- get_projects(token = token)
+  
+  name <- object %>%
     flatten() %>%
     map("name")
   if (project_name %in% name) {
     message("This project already exists")
-    return(get_id_project(object = get_projects(), project_name = project_name))
+    return(get_id_project(object = object, project_name = project_name,))
   } else {
     call_api(
       body = list(

@@ -16,47 +16,38 @@ clean_due <- function(due){
 }
 
 set_as_null_if_needed <- function(x){
-  # x[x==""] <- NULL
-  # x[x==" "] <- NULL
-  # x[is.na(x)] <- NULL
-  # x
   x<-x[!is.na(x)]
   x <- x[!x %in% c(""," ")]
   x
 }
 
-clean_section <- function(section_id){
+clean_section <- function(section_name){
   
-  if(is.null(section_id)){
-    section_id <- "null"
+  if(is.null(section_name)){
+    section_name <- "null"
   }
-  as.character(section_id)
+  as.character(section_name)
   
 }
 
 #' @import purrr
+#' @importFrom dplyr anti_join
 get_tasks_to_add <- function(tasks_list,existing_tasks,project_id, sections_id = NULL){
-  
-  sections_id <- as.integer(sections_id)
-  
-  if(is.data.frame(tasks_list)){
-    
-  }else{
-    
-  }
-  
-  if(!is.null(sections_id)){
-    tasks_to_add <- map2_df(tasks_list, sections_id,~ list(content = .x, section_id = .y))
+ 
+  if(!is.null(sections_id) ){ #& !is.na(sections_id)
+    tasks_to_add <- map2_df(tasks_list, sections_id,~list(content = .x, section_id = .y)   )
   }else{
     tasks_to_add <- tasks_list
   }
   
+  tasks_to_add$section_id[is.na(tasks_to_add$section_id)] <- 0
+  tasks_to_add$section_id["null" == tasks_to_add$section_id] <- 0
   tache <- existing_tasks %>%
     map(~ .x %>% modify_if(is.null, ~ 0)) %>% 
     map(~ .x %>% modify_if(is.na, ~ 0)) %>% 
     map_dfr(`[`,c("content","section_id")) 
   
-  tasks <- tasks_to_add %>% anti_join(tache)
+  tasks <- tasks_to_add %>% anti_join(tache,by = c("content", "section_id"))
   
   if(nrow(tasks) == 0){
     message("All tasks in the project")

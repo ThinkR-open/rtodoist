@@ -6,7 +6,7 @@
 #' @param verbose make it talk
 #' @param responsible add people in project
 #' @param due due date
-#' @param section_id section id
+#' @param section_name section name
 #' @param existing_tasks existing tasks
 #'
 #' @export
@@ -24,31 +24,61 @@ add_tasks_in_project <- function(project_id,
                                  verbose = FALSE,
                                  responsible = NULL,
                                  due = NULL,
-                                 section_id = NULL,
+                                 section_name = NULL,
                                  # existing_tasks = get_tasks(token = token),
                                  token = get_todoist_api_token()) {
   
+  if (!is.null(section_name)){
+  if (length(section_name) > 1 & length(tasks_list) != length(section_name)){
+    stop("erreur, pas assez ou trop de section par rapport au nombre de tache, soit une seule section, soit autant que de tache")
+    }
+  }
+  
+  if (!is.null(responsible)){
+  if (length(responsible) > 1 & length(tasks_list) != length(responsible)){
+    stop("erreur, pas assez ou trop de responsible par rapport au nombre de tache, soit une seule responsible, soit autant que de tache")
+    }
+  }
+  if (!is.null(due)){
+  if (length(due) > 1 & length(tasks_list) != length(due)){
+    stop("erreur, pas assez ou trop de due par rapport au nombre de tache, soit une seule due, soit autant que de tache")
+    }
+  }
+  
+  
   id_user <- get_users_id(mails = responsible, token = token)
+  
+  # on invite les responsable
   
   responsible %>%
     add_users_in_project(project_id = project_id,
                          list_of_users = .,
                          verbose = verbose,token = token)
   
+  # on clen un peu
   due <- clean_due(due)
-  section_id <- clean_section(section_id)
+  section_name <- clean_section(section_name)
+  
+  # on init les sections
+  unique(section_name) %>% 
+    stringr::str_subset("",negate = FALSE)  %>%
+    na.omit() %>% 
+    map(add_section,project_id = project_id)
   
   
+  section_id <- get_id_section(project_id = project_id,section_name = section_name)
   
   task <-  get_tasks_to_add(tasks_list = tasks_list,
                             existing_tasks = get_tasks_of_project(project_id, token),
                             project_id = project_id,
                             sections_id = section_id)
 
-
-
+  try(
+task$section_id[is.na(task$section_id)]<-"null"
+)
+  
 all_tasks <- glue::glue_collapse( 
-  pmap(list(task,id_user,due,section_id), function(a,b,c,d){
+  pmap(list(task$content,id_user,due,task$section_id), function(a,b,c,d){
     glue('{ "type": "item_add",
             "temp_id": "<random_key()>",
             "uuid": "<random_key()>",
@@ -138,71 +168,27 @@ add_responsible_to_task <- function(project_id,
 #' @return id of project (character vector)
 
 add_tasks_in_project_from_df <- function(project_id,
-                                 tasks_list,
+                                 tasks_list_df,
                                  verbose = FALSE,
-                                 # responsible = NULL,
-                                 # due = NULL,
-                                 # section_id = NULL,
-                                 # existing_tasks = get_tasks(token = token),
                                  token = get_todoist_api_token()) {
   
-
+  if ( !"tasks_list" %in% names(tasks_list_df)){
+    stop(" tasks_list is missing in column name")
+  }
+ 
+not_used <- setdiff(names(tasks_list_df),c("tasks_list","responsible","due","section_name"))
+   if (length(not_used)> 0){
+     message("not used : ", paste(collapse=" ",not_used))
+     message("please use : ",paste(c("tasks_list","responsible","due","section_name"),collapse=" "))
+     }
   
+  add_tasks_in_project(project_id = project_id,
+                       tasks_list = tasks_list_df$tasks_list,
+                       responsible = tasks_list_df$responsible,
+                       due = tasks_list_df$due,
+                       section_name = tasks_list_df$section_name,
+                       verbose = verbose,
+                       token = token
+                       )
   
-  id_user <- get_users_id(mails = tasks_list$responsible, token = token)
-  
-  tasks_list$responsible %>%
-    as.character() %>% 
-    add_users_in_project(project_id = project_id,
-                         list_of_users = .,
-                         verbose = verbose,token = token)
-  
-  due <- tasks_list$due
-  section_id <- clean_section(tasks_list$section)
-  # on fabrique les section une seule fois
-  unique(clean_section(tasks_list$section)) %>% 
-    stringr::str_subset("",negate = FALSE)  %>%
-    map(add_section,project_id = project_id)
-  
-  
-  
- # browser()
-  # on consturie le vecteur des id_section, dans le bon ordre
-  id_section <- clean_section(tasks_list$section) %>% 
-    map(get_id_section,project_id = project_id) %>%
-    unlist() %>% 
-    as.character()
-# id_section doit etre null si vide
-  
-  # ici on n'autoriserais pas plusieur tache dans des sessions différentes, faudra un peu pimper la fonctio pour  autoriser cela.
-  task <-  get_tasks_to_add(tasks_list = tasks_list$tasks,
-                            existing_tasks = get_tasks_of_project(project_id, token),
-                            project_id = project_id,
-                            sections_id = id_section)
-  
-  
-  
-  all_tasks <- glue::glue_collapse( 
-    pmap(list(task,id_user,due,id_section), function(a,b,c,d){
-      glue('{ "type": "item_add",
-            "temp_id": "<random_key()>",
-            "uuid": "<random_key()>",
-            "args": { "project_id": "<project_id>", "content": "<a>", 
-            "responsible_uid" : <b>, "due" : {"date" : <c>},
-            "section_id" : "<d>"  } 
-          }',
-           .open = "<",
-           .close = ">")
-    }), sep = ",")
-  
-  res <- call_api(
-    body = list(
-      "token" = token,
-      "sync_token" = "*",
-      resource_types = '["projects","items"]',
-      commands = glue("[{all_tasks}]")
-    )
-  )
-  print(res)
-  invisible(project_id)
 }

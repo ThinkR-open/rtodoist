@@ -1,22 +1,16 @@
 Package: rtodoist
 Title: Create and Manage Todolist using 'Todoist.com' API
 Version: 0.1.9000
-Authors@R: 
-    c(person(given = "Cervan",
-             family = "Girard",
-             role = c("cre", "aut"),
-             email = "cervan@thinkr.fr",
-             comment = c(ORCID = "0000-0002-4816-4624")),
-      person(given = "Vincent",
-             family = "Guyader",
-             role = "aut",
-             email = "vincent@thinkr.fr",
-             comment = c(ORCID = "0000-0003-0671-9270")),
-      person(given = "ThinkR",
-             role = c("cph", "fnd")))
-Description: Allows you to interact with the API of the
-    "Todoist" platform.  'Todoist' <https://todoist.com/> provides an
-    online task manager service for teams.
+Authors@R: c(
+    person("Cervan", "Girard", , "cervan@thinkr.fr", role = c("cre", "aut"),
+           comment = c(ORCID = "0000-0002-4816-4624")),
+    person("Vincent", "Guyader", , "vincent@thinkr.fr", role = "aut",
+           comment = c(ORCID = "0000-0003-0671-9270")),
+    person("ThinkR", role = c("cph", "fnd"))
+  )
+Description: Allows you to interact with the API of the "Todoist"
+    platform.  'Todoist' <https://todoist.com/> provides an online task
+    manager service for teams.
 License: MIT + file LICENSE
 URL: https://github.com/ThinkR-open/rtodoist
 BugReports: https://github.com/ThinkR-open/rtodoist/issues
@@ -35,9 +29,10 @@ Imports:
     utils
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    tibble
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2

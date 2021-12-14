@@ -8,8 +8,11 @@
 #'
 add_section <- function(project_id, section_name,force=FALSE, token = get_todoist_api_token()){
   
+  
+  if (section_name =="null"){return("null")}
+  
   ii <- get_id_section(project_id = project_id,section_name =  section_name,token =  token)
-  if ( ii != "null" & force == FALSE){
+  if ( (ii != "null" & force == FALSE) & ii != 0){
     return(ii)
   }
   
@@ -49,11 +52,14 @@ get_id_section <- function(project_id, section_name, token = get_todoist_api_tok
       pluck("sections") %>%
       map_dfr(`[`, c("id", "name"))
   
-  if (nrow(tab) == 0) {return("null")}
-  res  <- tab %>%
-      filter(name == section_name) %>%
-      pull(id)
-  if (length(res) == 0) {return("null")}
   
+  # to fix the order
+ tab <- tibble::tibble(name=section_name) %>%
+   left_join(tab,by = "name")
+ 
+  if (nrow(tab) == 0) {return(0)}
+   res  <-  tab %>%   pull(id)
+  if (length(res) == 0) {return(0)}
+  res[is.na(res)]<- 0
   res 
 }
