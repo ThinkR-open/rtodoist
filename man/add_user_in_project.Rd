@@ -5,16 +5,19 @@
 \title{Add one user}
 \usage{
 add_user_in_project(
-  project_id,
+  project_id = get_project_id(project_name = project_name, token = token),
   mail,
+  project_name,
   verbose = TRUE,
   token = get_todoist_api_token()
 )
 }
 \arguments{
-\item{project_id}{id of project}
+\item{project_id}{id of the project}
 
 \item{mail}{mail of the user}
+
+\item{project_name}{name of the project}
 
 \item{verbose}{boolean that make the function verbose}
 

@@ -4,10 +4,16 @@
 \alias{get_users_in_project}
 \title{Get users in projects}
 \usage{
-get_users_in_project(project_id, token = get_todoist_api_token())
+get_users_in_project(
+  project_id = get_project_id(project_name = project_name, token = token),
+  project_name,
+  token = get_todoist_api_token()
+)
 }
 \arguments{
-\item{project_id}{id of project}
+\item{project_id}{id of the project}
+
+\item{project_name}{name of the project}
 
 \item{token}{token}
 }

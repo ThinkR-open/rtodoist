@@ -4,10 +4,17 @@
 \alias{get_section_id}
 \title{get id section}
 \usage{
-get_section_id(project_id, section_name, token = get_todoist_api_token())
+get_section_id(
+  project_id = get_project_id(project_name = project_name, token = token),
+  project_name,
+  section_name,
+  token = get_todoist_api_token()
+)
 }
 \arguments{
-\item{project_id}{id of project}
+\item{project_id}{id of the project}
+
+\item{project_name}{name of the project}
 
 \item{section_name}{name of the section}
 

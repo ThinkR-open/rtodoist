@@ -78,7 +78,8 @@ get_tasks <- function(token = get_todoist_api_token()) {
 #' List of tasks of project
 #'
 #' @param token todoist API token
-#' @param project_id id of project
+#' @param project_name name of the project
+#' @param project_id id of the project
 #'
 #' @return list of all tasks
 #' @export
@@ -86,7 +87,11 @@ get_tasks <- function(token = get_todoist_api_token()) {
 #' @importFrom magrittr %>% 
 #' @importFrom purrr pluck map
 #'
-get_tasks_of_project <- function(project_id, token = get_todoist_api_token()) {
+get_tasks_of_project <- function(
+  project_id = get_project_id(project_name = project_name,token = token),
+  project_name,
+  token = get_todoist_api_token()) {
+  force(project_id)
   call_api_project_data(
     body = list(
       token = token,

@@ -33,7 +33,11 @@ clean_section <- function(section_name){
 
 #' @import purrr
 #' @importFrom dplyr anti_join
-get_tasks_to_add <- function(tasks,existing_tasks,project_id, sections_id = NULL){
+get_tasks_to_add <- function(tasks,existing_tasks,
+                             # project_id = get_project_id(project_name = project_name,token = token),
+                             # project_name,
+                             sections_id = NULL,
+                             token = get_todoist_api_token()){
  
   if(!is.null(sections_id) ){ #& !is.na(sections_id)
     tasks_to_add <- map2_df(tasks, sections_id,~list(content = .x, section_id = .y)   )

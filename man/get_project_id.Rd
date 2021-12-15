@@ -5,17 +5,23 @@
 \title{Get id of project}
 \usage{
 get_project_id(
-  all_projects = get_all_projects(token = token),
   project_name,
-  token = get_todoist_api_token()
+  all_projects = get_all_projects(token = token),
+  token = get_todoist_api_token(),
+  create = TRUE,
+  verbose = FALSE
 )
 }
 \arguments{
-\item{all_projects}{result of \link[rtodoist]{get_all_projects}}
-
 \item{project_name}{name of the project}
 
+\item{all_projects}{result of \link[rtodoist]{get_all_projects}}
+
 \item{token}{todoist API token}
+
+\item{create}{boolean create project if needed}
+
+\item{verbose}{boolean that make the function verbose}
 }
 \value{
 id of project (character vector)

@@ -1,6 +1,7 @@
 #' Add tasks in project
 #'
-#' @param project_id id of project
+#' @param project_name name of the project
+#' @param project_id id of the project
 #' @param tasks tasks to add, as character vector
 #' @param verbose boolean that make the function verbose
 #' @param responsible add people in project
@@ -17,8 +18,9 @@
 #' add_project("my_proj") %>%
 #'    add_tasks_in_project(c("First task", "Second task"))
 #' }
-add_tasks_in_project <- function(project_id,
+add_tasks_in_project <- function(project_id = get_project_id(project_name = project_name,token = token),
                                  tasks,
+                                 project_name,
                                  verbose = FALSE,
                                  responsible = NULL,
                                  due = NULL,
@@ -42,12 +44,12 @@ add_tasks_in_project <- function(project_id,
     }
   }
   
-  
+  force(project_id)
   id_user <- get_users_id(mails = responsible, token = token)
   
   # on invite les responsables
   
-  responsible %>%
+  responsible %>% unique() %>% 
     add_users_in_project(project_id = project_id,
                          users_email = .,
                          verbose = verbose,
@@ -61,15 +63,14 @@ add_tasks_in_project <- function(project_id,
   unique(section_name) %>% 
     stringr::str_subset("",negate = FALSE)  %>%
     na.omit() %>% 
-    map(add_section,project_id = project_id)
+    map(~add_section(project_id = project_id,section_name = .x, token=token))
   
   
-  section_id <- get_section_id(project_id = project_id,section_name = section_name)
+  section_id <- get_section_id(project_id = project_id,section_name = section_name,token = token)
   
   task_ok <-  get_tasks_to_add(tasks = tasks,
                             existing_tasks = get_tasks_of_project(project_id = project_id,token =  token),
-                            project_id = project_id,
-                            sections_id = section_id)
+                            sections_id = section_id,token = token)
 
   try(
     task_ok$section_id[is.na(task_ok$section_id)]<-"null"
@@ -104,19 +105,24 @@ all_tasks <- glue::glue_collapse(
 
 #' Add responsible to a task
 #'
-#' @param project_id id of project
+#' @param project_name name of the project
+#' @param project_id id of the project
 #' @param task the full name of the task
 #' @param verbose boolean that make the function verbose
 #' @param token todoist API token
-#' @param add_responsible add someone to this task with mail
+#' @param responsible add someone to this task with mail
 #'
 #' @return http request
 #' @export
-add_responsible_to_task <- function(project_id,
-                                    add_responsible,
+add_responsible_to_task <- function(project_id = get_project_id(project_name = project_name,token = token),
+                                    project_name,
+                                    responsible,
                                     task,
                                     verbose = FALSE,
                                     token = get_todoist_api_token()) {
+  
+  force(project_id)
+  
   res <- get_tasks(token = token) %>%
     pluck("items") %>%
     set_names(
@@ -129,9 +135,9 @@ add_responsible_to_task <- function(project_id,
     map_lgl(~ isTRUE(.x[["content"]]))
   my_task <- keep(tasks, get_my_taks) %>% flatten()
   id_task <- as.numeric(my_task[["id"]])
-  id_user <- get_users_id(mails = add_responsible)
+  id_user <- get_users_id(mails = responsible,token= token)
   # we need to add this user to project
-  add_responsible %>%
+  responsible %>% unique() %>% 
     add_users_in_project(project_id = project_id,
                          users_email= .,
                          verbose = verbose,
@@ -162,7 +168,8 @@ add_responsible_to_task <- function(project_id,
 #' @param tasks_as_df data.frame of tasks with
 #'  c("tasks_list","responsible","due","section_name") names
 #' @param token todoist API token
-#' @param project_id id of project
+#' @param project_name name of the project
+#' @param project_id id of the project
 #' @param verbose boolean that make the function verbose
 #'
 #' @export
@@ -171,11 +178,17 @@ add_responsible_to_task <- function(project_id,
 #' 
 #' @return id of project (character vector)
 
-add_tasks_in_project_from_df <- function(project_id,
+add_tasks_in_project_from_df <- function(project_id = get_project_id(project_name = project_name,token = token),
                                  tasks_as_df,
+                                 project_name,
                                  verbose = FALSE,
                                  token = get_todoist_api_token()) {
   
+force(project_id)
+  
+    if (verbose){
+  message("project_id ",project_id)
+  }
   if ( !"tasks" %in% names(tasks_as_df)){
     stop(" tasks is missing in column names")
   }

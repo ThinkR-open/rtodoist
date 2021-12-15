@@ -5,17 +5,20 @@
 \title{Add responsible to a task}
 \usage{
 add_responsible_to_task(
-  project_id,
-  add_responsible,
+  project_id = get_project_id(project_name = project_name, token = token),
+  project_name,
+  responsible,
   task,
   verbose = FALSE,
   token = get_todoist_api_token()
 )
 }
 \arguments{
-\item{project_id}{id of project}
+\item{project_id}{id of the project}
 
-\item{add_responsible}{add someone to this task with mail}
+\item{project_name}{name of the project}
+
+\item{responsible}{add someone to this task with mail}
 
 \item{task}{the full name of the task}
 

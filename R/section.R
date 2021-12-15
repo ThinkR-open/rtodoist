@@ -2,22 +2,25 @@
 #'
 #' @param section_name section name
 #' @param token todoist API token
-#' @param project_id id of project
+#' @param project_name name of the project
+#' @param project_id id of the project
 #' @param force boolean force section creation even if already exist
 #' @importFrom glue glue
 #' @export
 #'
-add_section <- function(project_id, section_name,force=FALSE, token = get_todoist_api_token()){
+add_section <- function(section_name,project_id = get_project_id(project_name = project_name,token = token),
+                        project_name, force=FALSE, token = get_todoist_api_token()){
+  
   
   
   if (section_name =="null"){return("null")}
-  
+  force(project_id)
   ii <- get_section_id(project_id = project_id,section_name =  section_name,token =  token)
   if ( (ii != "null" & force == FALSE) & ii != 0){
     return(ii)
   }
   
-  call_api(
+ out <-  call_api(
     body = list(
       "token" = token,
       "sync_token" = "*",
@@ -30,21 +33,24 @@ add_section <- function(project_id, section_name,force=FALSE, token = get_todois
         .close = ">"
       )
     )
-  )
+  ) %>% content() %>% print()
   
   get_section_id(project_id = project_id,section_name =  section_name,token =  token)
 }
 
 #' get id section
 #'
-#' @param project_id id of project
+#' @param project_name name of the project
+#' @param project_id id of the project
 #' @param section_name name of the section
 #' @param token token
 #' @importFrom dplyr left_join
 #' @importFrom httr content
 #' @importFrom purrr pluck map_dfr
 #' @export
-get_section_id <- function(project_id, section_name, token = get_todoist_api_token()){
+get_section_id <- function(project_id = get_project_id(project_name = project_name,token = token),
+                           project_name, section_name, token = get_todoist_api_token()){
+  force(project_id)
   tab <- call_api_project_data(
     body = list(
       token = token,

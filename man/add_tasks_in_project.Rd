@@ -5,8 +5,9 @@
 \title{Add tasks in project}
 \usage{
 add_tasks_in_project(
-  project_id,
+  project_id = get_project_id(project_name = project_name, token = token),
   tasks,
+  project_name,
   verbose = FALSE,
   responsible = NULL,
   due = NULL,
@@ -15,9 +16,11 @@ add_tasks_in_project(
 )
 }
 \arguments{
-\item{project_id}{id of project}
+\item{project_id}{id of the project}
 
 \item{tasks}{tasks to add, as character vector}
+
+\item{project_name}{name of the project}
 
 \item{verbose}{boolean that make the function verbose}
 

@@ -5,14 +5,17 @@
 \title{add section}
 \usage{
 add_section(
-  project_id,
+  project_id = get_project_id(project_name = project_name, token = token),
+  project_name,
   section_name,
   force = FALSE,
   token = get_todoist_api_token()
 )
 }
 \arguments{
-\item{project_id}{id of project}
+\item{project_id}{id of the project}
+
+\item{project_name}{name of the project}
 
 \item{section_name}{section name}
 

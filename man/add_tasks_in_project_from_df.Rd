@@ -5,17 +5,20 @@
 \title{Add tasks in project}
 \usage{
 add_tasks_in_project_from_df(
-  project_id,
+  project_id = get_project_id(project_name = project_name, token = token),
   tasks_as_df,
+  project_name,
   verbose = FALSE,
   token = get_todoist_api_token()
 )
 }
 \arguments{
-\item{project_id}{id of project}
+\item{project_id}{id of the project}
 
 \item{tasks_as_df}{data.frame of tasks with
 c("tasks_list","responsible","due","section_name") names}
+
+\item{project_name}{name of the project}
 
 \item{verbose}{boolean that make the function verbose}
 
