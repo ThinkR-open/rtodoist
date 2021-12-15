@@ -25,6 +25,7 @@ Imports:
     keyring,
     magrittr,
     purrr,
+    stats,
     stringr,
     tibble,
     utils
