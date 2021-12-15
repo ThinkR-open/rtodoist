@@ -1,6 +1,6 @@
 Package: rtodoist
 Title: Create and Manage Todolist using 'Todoist.com' API
-Version: 0.1.9000
+Version: 0.1.9001
 Authors@R: c(
     person("Cervan", "Girard", , "cervan@thinkr.fr", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0002-4816-4624")),
@@ -26,11 +26,12 @@ Imports:
     magrittr,
     purrr,
     stringr,
+    tibble,
     utils
 Suggests: 
     knitr,
-    rmarkdown,
-    tibble
+    lubridate,
+    rmarkdown
 VignetteBuilder: 
     knitr
 Encoding: UTF-8

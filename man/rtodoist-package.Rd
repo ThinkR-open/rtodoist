@@ -6,9 +6,7 @@
 \alias{rtodoist-package}
 \title{rtodoist: Create and Manage Todolist using 'Todoist.com' API}
 \description{
-Allows you to interact with the API of the
-    "Todoist" platform.  'Todoist' <https://todoist.com/> provides an
-    online task manager service for teams.
+Allows you to interact with the API of the "Todoist" platform. 'Todoist' <https://todoist.com/> provides an online task manager service for teams.
 }
 \seealso{
 Useful links:

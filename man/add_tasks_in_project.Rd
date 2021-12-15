@@ -10,8 +10,7 @@ add_tasks_in_project(
   verbose = FALSE,
   responsible = NULL,
   due = NULL,
-  section_id = NULL,
-  existing_tasks = get_tasks(token = token),
+  section_name = NULL,
   token = get_todoist_api_token()
 )
 }
@@ -26,11 +25,11 @@ add_tasks_in_project(
 
 \item{due}{due date}
 
-\item{section_id}{section id}
-
-\item{existing_tasks}{existing tasks}
+\item{section_name}{section name}
 
 \item{token}{todoist API token}
+
+\item{existing_tasks}{existing tasks}
 }
 \value{
 id of project (character vector)
@@ -45,5 +44,5 @@ add_project("my_proj") \%>\%
 }
 }
 \seealso{
-[add_task_in_project()]
+[add_tasks_in_project()]
 }

@@ -4,7 +4,12 @@
 \alias{add_section}
 \title{add section}
 \usage{
-add_section(project_id, section_name, token = get_todoist_api_token())
+add_section(
+  project_id,
+  section_name,
+  force = FALSE,
+  token = get_todoist_api_token()
+)
 }
 \arguments{
 \item{project_id}{project if}

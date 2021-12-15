@@ -6,28 +6,27 @@
 \usage{
 add_tasks_in_project_from_df(
   project_id,
-  tasks_list,
+  tasks_list_df,
   verbose = FALSE,
-  existing_tasks = get_tasks(token = token),
   token = get_todoist_api_token()
 )
 }
 \arguments{
 \item{project_id}{id of project}
 
-\item{tasks_list}{list of tasks}
-
 \item{verbose}{make it talk}
 
-\item{existing_tasks}{existing tasks}
-
 \item{token}{todoist API token}
+
+\item{tasks_list}{list of tasks}
 
 \item{responsible}{add people in project}
 
 \item{due}{due date}
 
 \item{section_id}{section id}
+
+\item{existing_tasks}{existing tasks}
 }
 \value{
 id of project (character vector)
@@ -36,5 +35,5 @@ id of project (character vector)
 Add tasks in project
 }
 \seealso{
-[add_task_in_project()]
+[add_tasks_in_project()]
 }

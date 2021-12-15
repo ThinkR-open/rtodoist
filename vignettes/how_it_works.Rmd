@@ -27,6 +27,7 @@ Open todoist website to find it :
 library(rtodoist)
 rtodoist::open_todoist_website_profile()
 token <- "YOURTOKEN" # copied and pasted from website
+library(lubridate)
 ```
 
 
@@ -55,7 +56,7 @@ id_proj <- add_project(project_name = "test",verbose = TRUE)
 
 ```{r}
 id_proj %>%
-  add_task_in_project("my_tasks")
+  add_tasks_in_project("my_tasks")
 ```
 
 #### Add users to this porject
@@ -79,10 +80,49 @@ add_project(project_name = "test",verbose = TRUE) %>%
 
 #### More specific :
 
-At ThinkR, we have a template for tasks. All functions starting with 'init' allow us to have templates for specific projects, such as service or training.
+
+
+You can set  multiple task at ones, you can set muliple responsible due date and section
+if you use vectors, the order is important. and the matching will be done term by term
+
+**multiple** tasks for **one** responsible with **one** due dates
 
 ```{r}
-add_project("my_mission") %>% 
-  init_presta()
+id_proj %>% 
+  add_tasks_in_project(tasks_list = c("t1","t2"),responsible = c("user1@mail.com"),due = today())
 ```
+
+**multiple** tasks for **one** responsible with **multiple** due dates
+
+```{r}
+
+id_proj %>% 
+  add_tasks_in_project(tasks_list = c("t1","t2"),responsible = c("user1@mail.com"),due = today() + days(1:2))
+```
+
+**multiple** tasks for **multiple** responsible with **on** due dates on many section
+
+```{r}
+id_proj %>% 
+  add_tasks_in_project(tasks_list = c("t1","t2"),responsible = c("user1@mail.com","user2@mail.com"),due = lubridate::today(),section_name = c("S1","S2"))
+```
+
+
+you can pass a data.frame using `add_tasks_in_project_from_df`
+
+```{r}
+
+tasks_list_df <- data.frame(
+  "tasks_list" = LETTERS[1:5],
+  "responsible" = glue::glue("user{1:5}@mail.com"),
+  "due" = today()+ days(1:5),
+  "section_name" = c("S1","S1","S3","S3","S3")
+  
+)
+
+add_tasks_in_project_from_df(project_id = id_proj,tasks_list_df = tasks_list_df)
+```
+
+
+
 

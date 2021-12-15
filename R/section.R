@@ -54,9 +54,9 @@ get_id_section <- function(project_id, section_name, token = get_todoist_api_tok
   
   
   # to fix the order
+  if (nrow(tab) == 0) {return(0)}
  tab <- tibble::tibble(name=section_name) %>%
    left_join(tab,by = "name")
- 
   if (nrow(tab) == 0) {return(0)}
    res  <-  tab %>%   pull(id)
   if (length(res) == 0) {return(0)}

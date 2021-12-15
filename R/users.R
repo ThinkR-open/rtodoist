@@ -149,7 +149,7 @@ add_users_in_project <- function(project_id,
   if(length(mails) != 0 & !is.null(list_of_users)){
     message("Adding ", paste0(mails, collapse = ", "))
   }else{
-    message("Users are already in this project !")
+    message("All users are already in this project")
   }
   
   res <- call_api(
@@ -158,7 +158,9 @@ add_users_in_project <- function(project_id,
       commands = glue("[{all_users}]")
     )
   )
-  print(res)
+  if (verbose) {
+    print(res)
+  }
   invisible(project_id)
 }
 
@@ -171,7 +173,7 @@ add_users_in_project <- function(project_id,
 #' @export
 #'
 users_in_project<- function(token, project_id){
-  call_api(
+call_api(
     body = list(
       token = token,
       sync_token = "*",
@@ -180,7 +182,7 @@ users_in_project<- function(token, project_id){
   ) %>%
     content()%>%
     pluck("collaborator_states") %>%
-    map_df(`[`, c("project_id", "user_id")) %>%
-    dplyr::filter(project_id == project_id)
+    map_df(`[`, c("project_id", "user_id"))  %>%
+    dplyr::filter(project_id == !!project_id)
 }
 

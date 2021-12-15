@@ -10,8 +10,8 @@
 #' @param existing_tasks existing tasks
 #'
 #' @export
-#' 
-#' @seealso [add_task_in_project()]
+#' @importFrom stats na.omit
+#' @seealso [add_tasks_in_project()]
 #' 
 #' @return id of project (character vector)
 #' @examples 
@@ -53,7 +53,8 @@ add_tasks_in_project <- function(project_id,
   responsible %>%
     add_users_in_project(project_id = project_id,
                          list_of_users = .,
-                         verbose = verbose,token = token)
+                         verbose = verbose,
+                         token = token)
   
   # on clen un peu
   due <- clean_due(due)
@@ -98,7 +99,9 @@ all_tasks <- glue::glue_collapse(
       commands = glue("[{all_tasks}]")
     )
   )
-  print(res)
+  if (verbose) {
+    print(res)
+  }
   invisible(project_id)
 }
 
@@ -163,7 +166,7 @@ add_responsible_to_task <- function(project_id,
 #'
 #' @export
 #' 
-#' @seealso [add_task_in_project()]
+#' @seealso [add_tasks_in_project()]
 #' 
 #' @return id of project (character vector)
 

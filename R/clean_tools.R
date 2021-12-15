@@ -42,6 +42,9 @@ get_tasks_to_add <- function(tasks_list,existing_tasks,project_id, sections_id =
   
   tasks_to_add$section_id[is.na(tasks_to_add$section_id)] <- 0
   tasks_to_add$section_id["null" == tasks_to_add$section_id] <- 0
+  
+  if ( length(existing_tasks) > 0){
+  
   tache <- existing_tasks %>%
     map(~ .x %>% modify_if(is.null, ~ 0)) %>% 
     map(~ .x %>% modify_if(is.na, ~ 0)) %>% 
@@ -49,8 +52,12 @@ get_tasks_to_add <- function(tasks_list,existing_tasks,project_id, sections_id =
   
   tasks <- tasks_to_add %>% anti_join(tache,by = c("content", "section_id"))
   
+  } else{
+    tasks <- tasks_to_add
+  }
+  
   if(nrow(tasks) == 0){
-    message("All tasks in the project")
+    message("All tasks are already in the project")
     return(NULL)
   }else{
     tasks

@@ -61,7 +61,7 @@ add_project <- function(project_name,
     map("name")
   if (project_name %in% name) {
     message("This project already exists")
-    return(get_id_project(object = object, project_name = project_name,))
+    return(get_id_project(object = object, project_name = project_name))
   } else {
     call_api(
       body = list(
