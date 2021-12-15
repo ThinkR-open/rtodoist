@@ -5,30 +5,30 @@
 \title{Add tasks in project}
 \usage{
 add_tasks_in_project(
-  project_id,
-  tasks_list,
+  project_id = get_project_id(project_name = project_name, token = token),
+  tasks,
+  project_name,
   verbose = FALSE,
   responsible = NULL,
   due = NULL,
-  section_id = NULL,
-  existing_tasks = get_tasks(token = token),
+  section_name = NULL,
   token = get_todoist_api_token()
 )
 }
 \arguments{
-\item{project_id}{id of project}
+\item{project_id}{id of the project}
 
-\item{tasks_list}{list of tasks}
+\item{tasks}{tasks to add, as character vector}
 
-\item{verbose}{make it talk}
+\item{project_name}{name of the project}
+
+\item{verbose}{boolean that make the function verbose}
 
 \item{responsible}{add people in project}
 
 \item{due}{due date}
 
-\item{section_id}{section id}
-
-\item{existing_tasks}{existing tasks}
+\item{section_name}{section name}
 
 \item{token}{todoist API token}
 }
@@ -41,9 +41,6 @@ Add tasks in project
 \examples{
 \dontrun{
 add_project("my_proj") \%>\%
-   add_tasks_in_project(list("First task", "Second task"))
+   add_tasks_in_project(c("First task", "Second task"))
 }
-}
-\seealso{
-[add_task_in_project()]
 }

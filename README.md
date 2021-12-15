@@ -11,6 +11,7 @@ status](https://github.com/ThinkR-open/rtodoist/workflows/R-CMD-check/badge.svg)
 stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/rtodoist)](https://CRAN.R-project.org/package=rtodoist)
+[![R-CMD-check](https://github.com/ThinkR-open/rtodoist/workflows/R-CMD-check/badge.svg)](https://github.com/ThinkR-open/rtodoist/actions)
 <!-- badges: end -->
 
 This package allows to use the todoist API. You will be able to add
@@ -40,7 +41,7 @@ remotes::install_github("ThinkR-open/rtodoist")
 library(rtodoist)
 
 add_project("test") %>%
-  add_task_in_project("my_task")
+  add_tasks_in_project("my_task")
 ```
 
 To find more details about the features, look at the ‘How it works’

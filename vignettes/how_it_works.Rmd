@@ -27,6 +27,7 @@ Open todoist website to find it :
 library(rtodoist)
 rtodoist::open_todoist_website_profile()
 token <- "YOURTOKEN" # copied and pasted from website
+library(lubridate)
 ```
 
 
@@ -55,34 +56,76 @@ id_proj <- add_project(project_name = "test",verbose = TRUE)
 
 ```{r}
 id_proj %>%
-  add_task_in_project("my_tasks")
+  add_tasks_in_project("my_tasks")
 ```
 
 #### Add users to this porject
 
 ```{r}
 id_proj %>%
-  add_users_in_project(list_of_users = "your@mail.fr")
+  add_users_in_project(users_email = "your@mail.fr")
 ```
 
 #### All in the same time 
 
 ```{r}
-add_project(project_name = "test",verbose = TRUE) %>%
-  add_tasks_in_project(tasks_list = 
-                         list("First task",
+id <-  add_project(project_name = "test",verbose = TRUE) %>%
+  add_tasks_in_project(tasks = 
+                         c("First task",
                               "Second task")
-                       ) %>%
-  add_responsible_to_task("First task", add_responsible = "jean@mail.fr")
+                       )
+id %>%
+  add_responsible_to_task("First task", add_responsible = "user2@mail.com")
+
 ```
+
 
 
 #### More specific :
 
-At ThinkR, we have a template for tasks. All functions starting with 'init' allow us to have templates for specific projects, such as service or training.
+
+
+You can set  multiple task at ones, you can set muliple responsibles, due dates and section
+if you use vectors, the order is important, and the matching will be done term by term
+
+**multiple** tasks for **one** responsible with **one** due dates
 
 ```{r}
-add_project("my_mission") %>% 
-  init_presta()
+id_proj %>% 
+  add_tasks_in_project(tasks = c("t1","t2"),responsible = c("user1@mail.com"),due = today())
 ```
+
+**multiple** tasks for **one** responsible with **multiple** due dates
+
+```{r}
+
+id_proj %>% 
+  add_tasks_in_project(tasks = c("t1","t2"),responsible = c("user1@mail.com"),due = today() + days(1:2))
+```
+
+**multiple** tasks for **multiple** responsible with **on** due dates on many section
+
+```{r}
+id_proj %>% 
+  add_tasks_in_project(tasks = c("t1","t2"),responsible = c("user1@mail.com","user2@mail.com"),due = lubridate::today(),section_name = c("S1","S2"))
+```
+
+
+you can pass a data.frame using `add_tasks_in_project_from_df`
+
+```{r}
+
+tasks_df <- data.frame(
+  "tasks" = LETTERS[1:5],
+  "responsible" = glue::glue("user{1:5}@mail.com"),
+  "due" = today()+ days(1:5),
+  "section_name" = c("S1","S1","S3","S3","S3")
+  
+)
+
+add_tasks_in_project_from_df(project_id = id_proj,tasks_as_df = tasks_df)
+```
+
+
+
 

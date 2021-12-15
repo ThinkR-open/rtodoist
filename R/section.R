@@ -2,12 +2,25 @@
 #'
 #' @param section_name section name
 #' @param token todoist API token
-#' @param project_id project if
-#'
+#' @param project_name name of the project
+#' @param project_id id of the project
+#' @param force boolean force section creation even if already exist
+#' @importFrom glue glue
 #' @export
 #'
-add_section <- function(project_id, section_name, token = get_todoist_api_token()){
-  call_api(
+add_section <- function(section_name,project_id = get_project_id(project_name = project_name,token = token),
+                        project_name, force=FALSE, token = get_todoist_api_token()){
+  
+  
+  
+  if (section_name =="null"){return("null")}
+  force(project_id)
+  ii <- get_section_id(project_id = project_id,section_name =  section_name,token =  token)
+  if ( (ii != "null" & force == FALSE) & ii != 0){
+    return(ii)
+  }
+  
+ out <-  call_api(
     body = list(
       "token" = token,
       "sync_token" = "*",
@@ -20,20 +33,25 @@ add_section <- function(project_id, section_name, token = get_todoist_api_token(
         .close = ">"
       )
     )
-  )
+  ) %>% content() %>% print()
   
-  get_id_section(project_id, section_name, token)
+  get_section_id(project_id = project_id,section_name =  section_name,token =  token)
 }
 
 #' get id section
 #'
-#' @param project_id num of the project id
+#' @param project_name name of the project
+#' @param project_id id of the project
 #' @param section_name name of the section
 #' @param token token
-#'
+#' @importFrom dplyr left_join
+#' @importFrom httr content
+#' @importFrom purrr pluck map_dfr
 #' @export
-get_id_section <- function(project_id, section_name, token = get_todoist_api_token()){
-  call_api_project_data(
+get_section_id <- function(project_id = get_project_id(project_name = project_name,token = token),
+                           project_name, section_name, token = get_todoist_api_token()){
+  force(project_id)
+  tab <- call_api_project_data(
     body = list(
       token = token,
       project_id = project_id
@@ -41,7 +59,16 @@ get_id_section <- function(project_id, section_name, token = get_todoist_api_tok
   ) %>%
     content() %>%
       pluck("sections") %>%
-      map_dfr(`[`, c("id", "name")) %>%
-      filter(name == section_name) %>%
-      pull(id)
+      map_dfr(`[`, c("id", "name"))
+  
+  
+  # to fix the order
+  if (nrow(tab) == 0) {return(0)}
+ tab <- data.frame(name=section_name) %>%
+   left_join(tab,by = "name")
+  if (nrow(tab) == 0) {return(0)}
+   res  <-  tab %>%   pull(id)
+  if (length(res) == 0) {return(0)}
+  res[is.na(res)]<- 0
+  res 
 }

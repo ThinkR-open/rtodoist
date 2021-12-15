@@ -7,7 +7,7 @@
 open_todoist_website_profile(verbose = TRUE)
 }
 \arguments{
-\item{verbose}{make it talk}
+\item{verbose}{boolean that make the function verbose}
 }
 \value{
 open integration webpage from todoist website

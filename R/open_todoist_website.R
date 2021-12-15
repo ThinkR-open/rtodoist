@@ -1,6 +1,6 @@
 #' Open todoist website
 #'
-#' @param verbose make it talk
+#' @param verbose boolean that make the function verbose
 #'
 #' @importFrom utils browseURL
 #'

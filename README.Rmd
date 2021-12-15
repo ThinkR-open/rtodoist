@@ -49,7 +49,7 @@ remotes::install_github("ThinkR-open/rtodoist")
 library(rtodoist)
 
 add_project("test") %>%
-  add_task_in_project("my_task")
+  add_tasks_in_project("my_task")
 ```
 
 To find more details about the features, look at the 'How it works' vignette.

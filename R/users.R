@@ -14,7 +14,7 @@
 #' \dontrun{
 #' get_users()
 #' }
-get_users <- function(token = get_todoist_api_token()) {
+get_all_users <- function(token = get_todoist_api_token()) {
   call_api(
     body = list(
       "token" = token,
@@ -44,8 +44,8 @@ get_users_id <- function(mails,
     return("null") 
   }
   
-tab <- get_users(token = token) %>%
-    filter(`email` %in% mails) 
+tab <- get_all_users(token = token) %>%
+    dplyr::filter(`email` %in% mails) 
   
 # pour garantir la coherence d'ordre entre mails et id
 id_user <- data.frame(email = unlist(mails)) %>% 
@@ -59,10 +59,11 @@ id_user %>% map_chr(as.character)
 
 #' Add one user
 #'
-#' @param project_id id of project
+#' @param project_name name of the project
+#' @param project_id id of the project
 #' @param token token
 #' @param mail mail of the user
-#' @param verbose make it talk
+#' @param verbose boolean that make the function verbose
 #'
 #' @export
 #' @importFrom glue glue
@@ -70,14 +71,18 @@ id_user %>% map_chr(as.character)
 #' @return id of project (character vector)
 #' @examples 
 #' \dontrun{
-#' get_id_project("test") %>% 
+#' get_project_id("test") %>% 
 #'    add_user_in_project("jean@mail.fr")
 #' }
 
-add_user_in_project <- function(project_id,
-                                mail,
+add_user_in_project <- function(
+  project_id = get_project_id(project_name = project_name,token = token),
+                                mail,project_name,
                                 verbose = TRUE,
                                 token = get_todoist_api_token()) {
+  
+  force(project_id)
+  
   if (verbose) {
     message(glue::glue("Add {mail} in the {project_id} project"))
   }
@@ -106,45 +111,38 @@ add_user_in_project <- function(project_id,
 #' Add a list of users
 #'
 #' @param token token
-#' @param project_id id of project
-#' @param list_of_users list of mails
-#' @param verbose make it talk
+#' @param project_name name of the project
+#' @param project_id id of the project
+#' @param users_email emails of user as character vector
+#' @param verbose boolean that make the function verbose
 #' 
 #' @return id of project (character vector)
 #' @export
 #'
-#' @importFrom glue glue
+#' @importFrom glue glue glue_collapse
+#' @importFrom dplyr pull
 #' @importFrom stringr str_detect
-add_users_in_project <- function(project_id,
-                                 list_of_users,
+add_users_in_project <- function(project_id = get_project_id(project_name = project_name,token = token),
+                                 users_email,
+                                 project_name,
                                  verbose = TRUE,
                                  token = get_todoist_api_token()) {
-  if(class(list_of_users) != "list"){
-    stop("list_of_users must be a list")
-  }
-  # ici ca serait bien de pas le faire si la personne est deja enregistré.
-  clean_users <- list_of_users %>% set_as_null_if_needed()
+  force(project_id)
+  clean_users <- users_email %>% set_as_null_if_needed() %>% unique()
+  if (is.null(clean_users)){
+    message("no users to add in project")
+    return(invisible(project_id))
+      }
   test <- !stringr::str_detect(clean_users, "@")
   if(any(test)){
     sale <- clean_users[!test]
     stop("adresse mail non valide: ", paste0(sale, collapse = ", "))
   }
-  #relou!
-  id_of_project <- project_id
-  existe_deja <-  call_api(
-    body = list(
-      token = token,
-      sync_token = "*",
-      resource_types = '["collaborators"]'
-    )
-  ) %>%
-    content()%>%
-    pluck("collaborator_states") %>%
-    map_df(`[`, c("project_id", "user_id")) %>%
-    dplyr::filter(project_id == id_of_project) %>%
+
+  existe_deja <-  get_users_in_project(token = token,project_id =  project_id) %>% 
     pull(user_id)
   
-  test_if_present <- get_users_id(clean_users) %in% existe_deja
+  test_if_present <- get_users_id(clean_users,token = token) %in% existe_deja
   mails <- clean_users[!test_if_present]
   
   all_users <- glue::glue_collapse( 
@@ -156,10 +154,10 @@ add_users_in_project <- function(project_id,
           .open = "<",
           .close = ">")}) , sep = ",")
   
-  if(length(mails) != 0){
+  if(length(mails) != 0 & !is.null(users_email)){
     message("Adding ", paste0(mails, collapse = ", "))
   }else{
-    message("Users are already in this project !")
+    message("All users are already in this project")
   }
   
   res <- call_api(
@@ -168,9 +166,36 @@ add_users_in_project <- function(project_id,
       commands = glue("[{all_users}]")
     )
   )
-  print(res)
+  if (verbose) {
+    print(res)
+  }
   invisible(project_id)
 }
 
-
+#' Get users in projects 
+#'
+#' @param token token
+#' @param project_name name of the project
+#' @param project_id id of the project
+#' @importFrom purrr pluck map_df
+#' @importFrom dplyr filter
+#' @importFrom httr content
+#' @return dataframe of users in projects
+#' @export
+#'
+get_users_in_project<- function( project_id = get_project_id(project_name = project_name,token = token),
+                                 project_name,token = get_todoist_api_token()){
+  force(project_id)
+call_api(
+    body = list(
+      token = token,
+      sync_token = "*",
+      resource_types = '["collaborators"]'
+    )
+  ) %>%
+    content()%>%
+    pluck("collaborator_states") %>%
+    map_df(`[`, c("project_id", "user_id"))  %>%
+    dplyr::filter(project_id == !!project_id)
+}
 
