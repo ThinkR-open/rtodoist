@@ -8,7 +8,7 @@ add_responsible_to_task(
   project_id,
   add_responsible,
   task,
-  verbose,
+  verbose = FALSE,
   token = get_todoist_api_token()
 )
 }

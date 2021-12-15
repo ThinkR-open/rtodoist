@@ -33,12 +33,12 @@ clean_section <- function(section_name){
 
 #' @import purrr
 #' @importFrom dplyr anti_join
-get_tasks_to_add <- function(tasks_list,existing_tasks,project_id, sections_id = NULL){
+get_tasks_to_add <- function(tasks,existing_tasks,project_id, sections_id = NULL){
  
   if(!is.null(sections_id) ){ #& !is.na(sections_id)
-    tasks_to_add <- map2_df(tasks_list, sections_id,~list(content = .x, section_id = .y)   )
+    tasks_to_add <- map2_df(tasks, sections_id,~list(content = .x, section_id = .y)   )
   }else{
-    tasks_to_add <- tasks_list
+    tasks_to_add <- tasks
   }
   
   tasks_to_add$section_id[is.na(tasks_to_add$section_id)] <- 0
@@ -51,17 +51,17 @@ get_tasks_to_add <- function(tasks_list,existing_tasks,project_id, sections_id =
     map(~ .x %>% modify_if(is.na, ~ 0)) %>% 
     map_dfr(`[`,c("content","section_id")) 
   
-  tasks <- tasks_to_add %>% anti_join(tache,by = c("content", "section_id"))
+  tasks_ok <- tasks_to_add %>% anti_join(tache,by = c("content", "section_id"))
   
   } else{
-    tasks <- tasks_to_add
+    tasks_ok <- tasks_to_add
   }
   
-  if(nrow(tasks) == 0){
+  if(nrow(tasks_ok) == 0){
     message("All tasks are already in the project")
     return(NULL)
   }else{
-    tasks
+    tasks_ok
   }
   
 }

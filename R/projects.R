@@ -25,6 +25,13 @@ get_project_id <- function(all_projects = get_all_projects(token = token), proje
       map_dfr(`[`, c("id", "name")) %>%
       filter(name == project_name) %>%
       pull(id)
+    
+    if (length(id)>1){
+      message("multiple project with same name ?! only the first will be used")
+      id <- id[[1]]
+    }
+    
+    
     if (is_empty(id)) {
       stop("Are you sure about the name of the project :) ?")
     } else {

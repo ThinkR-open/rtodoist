@@ -45,7 +45,7 @@ get_users_id <- function(mails,
   }
   
 tab <- get_all_users(token = token) %>%
-    filter(`email` %in% mails) 
+    dplyr::filter(`email` %in% mails) 
   
 # pour garantir la coherence d'ordre entre mails et id
 id_user <- data.frame(email = unlist(mails)) %>% 
@@ -107,7 +107,7 @@ add_user_in_project <- function(project_id,
 #'
 #' @param token token
 #' @param project_id id of project
-#' @param list_of_users list of mails
+#' @param users_email emails of user as character vector
 #' @param verbose boolean that make the function verbose
 #' 
 #' @return id of project (character vector)
@@ -117,11 +117,15 @@ add_user_in_project <- function(project_id,
 #' @importFrom dplyr pull
 #' @importFrom stringr str_detect
 add_users_in_project <- function(project_id,
-                                 list_of_users,
+                                 users_email,
                                  verbose = TRUE,
                                  token = get_todoist_api_token()) {
 
-  clean_users <- list_of_users %>% set_as_null_if_needed()
+  clean_users <- users_email %>% set_as_null_if_needed()
+  if (is.null(clean_users)){
+    message("no users to add in project")
+    return(invisible(project_id))
+      }
   test <- !stringr::str_detect(clean_users, "@")
   if(any(test)){
     sale <- clean_users[!test]
@@ -143,7 +147,7 @@ add_users_in_project <- function(project_id,
           .open = "<",
           .close = ">")}) , sep = ",")
   
-  if(length(mails) != 0 & !is.null(list_of_users)){
+  if(length(mails) != 0 & !is.null(users_email)){
     message("Adding ", paste0(mails, collapse = ", "))
   }else{
     message("All users are already in this project")

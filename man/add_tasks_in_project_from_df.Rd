@@ -6,7 +6,7 @@
 \usage{
 add_tasks_in_project_from_df(
   project_id,
-  tasks_list_df,
+  tasks_as_df,
   verbose = FALSE,
   token = get_todoist_api_token()
 )
@@ -14,7 +14,7 @@ add_tasks_in_project_from_df(
 \arguments{
 \item{project_id}{id of project}
 
-\item{tasks_list_df}{data.frame of tasks with
+\item{tasks_as_df}{data.frame of tasks with
 c("tasks_list","responsible","due","section_name") names}
 
 \item{verbose}{boolean that make the function verbose}

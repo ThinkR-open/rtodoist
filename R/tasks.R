@@ -1,12 +1,12 @@
 #' Add tasks in project
 #'
-#' @param token todoist API token
 #' @param project_id id of project
-#' @param tasks_list list of tasks
+#' @param tasks tasks to add, as character vector
 #' @param verbose boolean that make the function verbose
 #' @param responsible add people in project
 #' @param due due date
 #' @param section_name section name
+#' @param token todoist API token
 #'
 #' @export
 #' @importFrom stats na.omit
@@ -18,7 +18,7 @@
 #'    add_tasks_in_project(c("First task", "Second task"))
 #' }
 add_tasks_in_project <- function(project_id,
-                                 tasks_list,
+                                 tasks,
                                  verbose = FALSE,
                                  responsible = NULL,
                                  due = NULL,
@@ -26,18 +26,18 @@ add_tasks_in_project <- function(project_id,
                                  token = get_todoist_api_token()) {
   
   if (!is.null(section_name)){
-  if (length(section_name) > 1 & length(tasks_list) != length(section_name)){
+  if (length(section_name) > 1 & length(tasks) != length(section_name)){
     stop("error, not enough or too many section_name for the number of task, either only one section_name or as many as the number of task")
     }
   }
   
   if (!is.null(responsible)){
-  if (length(responsible) > 1 & length(tasks_list) != length(responsible)){
+  if (length(responsible) > 1 & length(tasks) != length(responsible)){
     stop("error, not enough or too many responsible for the number of task, either only one responsible or as many as the number of task")
     }
   }
   if (!is.null(due)){
-  if (length(due) > 1 & length(tasks_list) != length(due)){
+  if (length(due) > 1 & length(tasks) != length(due)){
     stop("error, not enough or too many due for the number of task, either only one due or as many as the number of task")
     }
   }
@@ -49,7 +49,7 @@ add_tasks_in_project <- function(project_id,
   
   responsible %>%
     add_users_in_project(project_id = project_id,
-                         list_of_users = .,
+                         users_email = .,
                          verbose = verbose,
                          token = token)
   
@@ -66,17 +66,17 @@ add_tasks_in_project <- function(project_id,
   
   section_id <- get_section_id(project_id = project_id,section_name = section_name)
   
-  task <-  get_tasks_to_add(tasks_list = tasks_list,
+  task_ok <-  get_tasks_to_add(tasks = tasks,
                             existing_tasks = get_tasks_of_project(project_id = project_id,token =  token),
                             project_id = project_id,
                             sections_id = section_id)
 
   try(
-task$section_id[is.na(task$section_id)]<-"null"
+    task_ok$section_id[is.na(task_ok$section_id)]<-"null"
 )
   
 all_tasks <- glue::glue_collapse( 
-  pmap(list(task$content,id_user,due,task$section_id), function(a,b,c,d){
+  pmap(list(task_ok$content,id_user,due,task_ok$section_id), function(a,b,c,d){
     glue('{ "type": "item_add",
             "temp_id": "<random_key()>",
             "uuid": "<random_key()>",
@@ -115,7 +115,7 @@ all_tasks <- glue::glue_collapse(
 add_responsible_to_task <- function(project_id,
                                     add_responsible,
                                     task,
-                                    verbose,
+                                    verbose = FALSE,
                                     token = get_todoist_api_token()) {
   res <- get_tasks(token = token) %>%
     pluck("items") %>%
@@ -130,6 +130,13 @@ add_responsible_to_task <- function(project_id,
   my_task <- keep(tasks, get_my_taks) %>% flatten()
   id_task <- as.numeric(my_task[["id"]])
   id_user <- get_users_id(mails = add_responsible)
+  # we need to add this user to project
+  add_responsible %>%
+    add_users_in_project(project_id = project_id,
+                         users_email= .,
+                         verbose = verbose,
+                         token = token)
+  
   res <- call_api(
     body = list(
       "token" = token,
@@ -152,7 +159,7 @@ add_responsible_to_task <- function(project_id,
 
 #' Add tasks in project
 #'
-#' @param tasks_list_df data.frame of tasks with
+#' @param tasks_as_df data.frame of tasks with
 #'  c("tasks_list","responsible","due","section_name") names
 #' @param token todoist API token
 #' @param project_id id of project
@@ -165,25 +172,25 @@ add_responsible_to_task <- function(project_id,
 #' @return id of project (character vector)
 
 add_tasks_in_project_from_df <- function(project_id,
-                                 tasks_list_df,
+                                 tasks_as_df,
                                  verbose = FALSE,
                                  token = get_todoist_api_token()) {
   
-  if ( !"tasks_list" %in% names(tasks_list_df)){
-    stop(" tasks_list is missing in column name")
+  if ( !"tasks" %in% names(tasks_as_df)){
+    stop(" tasks is missing in column names")
   }
  
-not_used <- setdiff(names(tasks_list_df),c("tasks_list","responsible","due","section_name"))
+not_used <- setdiff(names(tasks_as_df),c("tasks","responsible","due","section_name"))
    if (length(not_used)> 0){
      message("not used : ", paste(collapse=" ",not_used))
-     message("please use : ",paste(c("tasks_list","responsible","due","section_name"),collapse=" "))
+     message("please use : ",paste(c("tasks","responsible","due","section_name"),collapse=" "))
      }
   
   add_tasks_in_project(project_id = project_id,
-                       tasks_list = tasks_list_df$tasks_list,
-                       responsible = tasks_list_df$responsible,
-                       due = tasks_list_df$due,
-                       section_name = tasks_list_df$section_name,
+                       tasks = tasks_as_df$tasks,
+                       responsible = tasks_as_df$responsible,
+                       due = tasks_as_df$due,
+                       section_name = tasks_as_df$section_name,
                        verbose = verbose,
                        token = token
                        )
