@@ -19,7 +19,7 @@ add_tasks_in_project(
 
 \item{tasks_list}{list of tasks}
 
-\item{verbose}{make it talk}
+\item{verbose}{boolean that make the function verbose}
 
 \item{responsible}{add people in project}
 
@@ -28,8 +28,6 @@ add_tasks_in_project(
 \item{section_name}{section name}
 
 \item{token}{todoist API token}
-
-\item{existing_tasks}{existing tasks}
 }
 \value{
 id of project (character vector)
@@ -40,9 +38,6 @@ Add tasks in project
 \examples{
 \dontrun{
 add_project("my_proj") \%>\%
-   add_tasks_in_project(list("First task", "Second task"))
+   add_tasks_in_project(c("First task", "Second task"))
 }
-}
-\seealso{
-[add_tasks_in_project()]
 }

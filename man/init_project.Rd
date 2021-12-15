@@ -109,7 +109,7 @@ init_forma_admin(
 
 \item{tasks_list}{lists of tasks}
 
-\item{verbose}{make the function verbose}
+\item{verbose}{boolean that make the function verbose}
 
 \item{responsible}{add people in project}
 

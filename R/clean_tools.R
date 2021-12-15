@@ -1,5 +1,6 @@
 
 #' @importFrom stringr str_trim str_replace
+#' @importFrom glue glue
 clean_due <- function(due){
   
   if(is.null(due)){

@@ -16,7 +16,7 @@ add_users_in_project(
 
 \item{list_of_users}{list of mails}
 
-\item{verbose}{make it talk}
+\item{verbose}{boolean that make the function verbose}
 
 \item{token}{token}
 }

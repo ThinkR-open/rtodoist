@@ -27,7 +27,6 @@ Imports:
     purrr,
     stats,
     stringr,
-    tibble,
     utils
 Suggests: 
     knitr,

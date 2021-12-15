@@ -14,19 +14,12 @@ add_tasks_in_project_from_df(
 \arguments{
 \item{project_id}{id of project}
 
-\item{verbose}{make it talk}
+\item{tasks_list_df}{data.frame of tasks with
+c("tasks_list","responsible","due","section_name") names}
+
+\item{verbose}{boolean that make the function verbose}
 
 \item{token}{todoist API token}
-
-\item{tasks_list}{list of tasks}
-
-\item{responsible}{add people in project}
-
-\item{due}{due date}
-
-\item{section_id}{section id}
-
-\item{existing_tasks}{existing tasks}
 }
 \value{
 id of project (character vector)

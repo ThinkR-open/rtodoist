@@ -13,9 +13,9 @@
 #' # Set API key first
 #' set_todoist_api_token()
 #' # Get all objects
-#' objects <- get_all()
+#' objects <- get_all_data()
 #' }
-get_all <- function(token = get_todoist_api_token()) {
+get_all_data <- function(token = get_todoist_api_token()) {
   call_api(
     body = list(
       token = token,
@@ -38,9 +38,9 @@ get_all <- function(token = get_todoist_api_token()) {
 #' # Set API key first
 #' set_todoist_api_token()
 #' # Get all projects
-#' projects <- get_projects()
+#' projects <- get_all_projects()
 #' }
-get_projects <- function(token = get_todoist_api_token()) {
+get_all_projects <- function(token = get_todoist_api_token()) {
   call_api(
     body = list(
       token = token,
@@ -78,6 +78,7 @@ get_tasks <- function(token = get_todoist_api_token()) {
 #' List of tasks of project
 #'
 #' @param token todoist API token
+#' @param project_id id of project
 #'
 #' @return list of all tasks
 #' @export

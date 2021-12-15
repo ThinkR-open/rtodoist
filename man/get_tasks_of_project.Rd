@@ -7,6 +7,8 @@
 get_tasks_of_project(project_id, token = get_todoist_api_token())
 }
 \arguments{
+\item{project_id}{id of project}
+
 \item{token}{todoist API token}
 }
 \value{

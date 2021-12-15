@@ -12,9 +12,11 @@ add_section(
 )
 }
 \arguments{
-\item{project_id}{project if}
+\item{project_id}{id of project}
 
 \item{section_name}{section name}
+
+\item{force}{boolean force section creation even if already exist}
 
 \item{token}{todoist API token}
 }

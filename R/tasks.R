@@ -3,21 +3,19 @@
 #' @param token todoist API token
 #' @param project_id id of project
 #' @param tasks_list list of tasks
-#' @param verbose make it talk
+#' @param verbose boolean that make the function verbose
 #' @param responsible add people in project
 #' @param due due date
 #' @param section_name section name
-#' @param existing_tasks existing tasks
 #'
 #' @export
 #' @importFrom stats na.omit
-#' @seealso [add_tasks_in_project()]
 #' 
 #' @return id of project (character vector)
 #' @examples 
 #' \dontrun{
 #' add_project("my_proj") %>%
-#'    add_tasks_in_project(list("First task", "Second task"))
+#'    add_tasks_in_project(c("First task", "Second task"))
 #' }
 add_tasks_in_project <- function(project_id,
                                  tasks_list,
@@ -25,30 +23,29 @@ add_tasks_in_project <- function(project_id,
                                  responsible = NULL,
                                  due = NULL,
                                  section_name = NULL,
-                                 # existing_tasks = get_tasks(token = token),
                                  token = get_todoist_api_token()) {
   
   if (!is.null(section_name)){
   if (length(section_name) > 1 & length(tasks_list) != length(section_name)){
-    stop("erreur, pas assez ou trop de section par rapport au nombre de tache, soit une seule section, soit autant que de tache")
+    stop("error, not enough or too many section_name for the number of task, either only one section_name or as many as the number of task")
     }
   }
   
   if (!is.null(responsible)){
   if (length(responsible) > 1 & length(tasks_list) != length(responsible)){
-    stop("erreur, pas assez ou trop de responsible par rapport au nombre de tache, soit une seule responsible, soit autant que de tache")
+    stop("error, not enough or too many responsible for the number of task, either only one responsible or as many as the number of task")
     }
   }
   if (!is.null(due)){
   if (length(due) > 1 & length(tasks_list) != length(due)){
-    stop("erreur, pas assez ou trop de due par rapport au nombre de tache, soit une seule due, soit autant que de tache")
+    stop("error, not enough or too many due for the number of task, either only one due or as many as the number of task")
     }
   }
   
   
   id_user <- get_users_id(mails = responsible, token = token)
   
-  # on invite les responsable
+  # on invite les responsables
   
   responsible %>%
     add_users_in_project(project_id = project_id,
@@ -67,10 +64,10 @@ add_tasks_in_project <- function(project_id,
     map(add_section,project_id = project_id)
   
   
-  section_id <- get_id_section(project_id = project_id,section_name = section_name)
+  section_id <- get_section_id(project_id = project_id,section_name = section_name)
   
   task <-  get_tasks_to_add(tasks_list = tasks_list,
-                            existing_tasks = get_tasks_of_project(project_id, token),
+                            existing_tasks = get_tasks_of_project(project_id = project_id,token =  token),
                             project_id = project_id,
                             sections_id = section_id)
 
@@ -107,9 +104,9 @@ all_tasks <- glue::glue_collapse(
 
 #' Add responsible to a task
 #'
-#' @param project_id id of the project
+#' @param project_id id of project
 #' @param task the full name of the task
-#' @param verbose make the function verbose
+#' @param verbose boolean that make the function verbose
 #' @param token todoist API token
 #' @param add_responsible add someone to this task with mail
 #'
@@ -155,14 +152,11 @@ add_responsible_to_task <- function(project_id,
 
 #' Add tasks in project
 #'
+#' @param tasks_list_df data.frame of tasks with
+#'  c("tasks_list","responsible","due","section_name") names
 #' @param token todoist API token
 #' @param project_id id of project
-#' @param tasks_list list of tasks
-#' @param verbose make it talk
-#' @param responsible add people in project
-#' @param due due date
-#' @param section_id section id
-#' @param existing_tasks existing tasks
+#' @param verbose boolean that make the function verbose
 #'
 #' @export
 #' 

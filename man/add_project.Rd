@@ -9,7 +9,7 @@ add_project(project_name, verbose = TRUE, token = get_todoist_api_token())
 \arguments{
 \item{project_name}{name of the new project}
 
-\item{verbose}{make it talk}
+\item{verbose}{boolean that make the function verbose}
 
 \item{token}{todoist API token}
 }

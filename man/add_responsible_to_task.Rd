@@ -13,13 +13,13 @@ add_responsible_to_task(
 )
 }
 \arguments{
-\item{project_id}{id of the project}
+\item{project_id}{id of project}
 
 \item{add_responsible}{add someone to this task with mail}
 
 \item{task}{the full name of the task}
 
-\item{verbose}{make the function verbose}
+\item{verbose}{boolean that make the function verbose}
 
 \item{token}{todoist API token}
 }

@@ -16,7 +16,7 @@ add_user_in_project(
 
 \item{mail}{mail of the user}
 
-\item{verbose}{make it talk}
+\item{verbose}{boolean that make the function verbose}
 
 \item{token}{token}
 }
@@ -28,7 +28,7 @@ Add one user
 }
 \examples{
 \dontrun{
-get_id_project("test") \%>\% 
+get_project_id("test") \%>\% 
    add_user_in_project("jean@mail.fr")
 }
 }

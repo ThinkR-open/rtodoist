@@ -2,8 +2,9 @@
 #'
 #' @param section_name section name
 #' @param token todoist API token
-#' @param project_id project if
-#'
+#' @param project_id id of project
+#' @param force boolean force section creation even if already exist
+#' @importFrom glue glue
 #' @export
 #'
 add_section <- function(project_id, section_name,force=FALSE, token = get_todoist_api_token()){
@@ -11,7 +12,7 @@ add_section <- function(project_id, section_name,force=FALSE, token = get_todois
   
   if (section_name =="null"){return("null")}
   
-  ii <- get_id_section(project_id = project_id,section_name =  section_name,token =  token)
+  ii <- get_section_id(project_id = project_id,section_name =  section_name,token =  token)
   if ( (ii != "null" & force == FALSE) & ii != 0){
     return(ii)
   }
@@ -31,17 +32,19 @@ add_section <- function(project_id, section_name,force=FALSE, token = get_todois
     )
   )
   
-  get_id_section(project_id, section_name, token)
+  get_section_id(project_id = project_id,section_name =  section_name,token =  token)
 }
 
 #' get id section
 #'
-#' @param project_id num of the project id
+#' @param project_id id of project
 #' @param section_name name of the section
 #' @param token token
-#'
+#' @importFrom dplyr left_join
+#' @importFrom httr content
+#' @importFrom purrr pluck map_dfr
 #' @export
-get_id_section <- function(project_id, section_name, token = get_todoist_api_token()){
+get_section_id <- function(project_id, section_name, token = get_todoist_api_token()){
   tab <- call_api_project_data(
     body = list(
       token = token,
@@ -55,7 +58,7 @@ get_id_section <- function(project_id, section_name, token = get_todoist_api_tok
   
   # to fix the order
   if (nrow(tab) == 0) {return(0)}
- tab <- tibble::tibble(name=section_name) %>%
+ tab <- data.frame(name=section_name) %>%
    left_join(tab,by = "name")
   if (nrow(tab) == 0) {return(0)}
    res  <-  tab %>%   pull(id)
