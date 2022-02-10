@@ -55,7 +55,7 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
                          verbose = verbose,
                          token = token)
   
-  # on clen un peu
+  # on clean un peu
   due <- clean_due(due)
   section_name <- clean_section(section_name)
   
@@ -68,20 +68,35 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
   
   section_id <- get_section_id(project_id = project_id,section_name = section_name,token = token)
   
-  task_ok <-  get_tasks_to_add(tasks = tasks,
-                            existing_tasks = get_tasks_of_project(project_id = project_id,token =  token),
-                            sections_id = section_id,token = token)
+  # task_ok <-  get_tasks_to_add(tasks = tasks,
+  # due = due,id_user = id_user,
+  #                           existing_tasks = get_tasks_of_project(project_id = project_id,token =  token),
+  #                           sections_id = section_id,token = token)
+  # 
+  # en fait si c'est pour update ca va pas etre ca.
+  browser()
+  existing_tasks <- get_tasks_of_project(project_id = project_id,token =  token)
+  task_ok <-  get_tasks_to_update(tasks = tasks,
+                                  due = due,
+                                  id_user = id_user,
+                               existing_tasks = existing_tasks,
+                               sections_id = section_id,token = token)
+  
+  # et les due , comment elles suivent ? ca peut pas etre bon, meme si on est pas dans le cas d'un ajout
 
   try(
     task_ok$section_id[is.na(task_ok$section_id)]<-"null"
 )
   
+  
+  # au lieu de item_add il faut utiliser item_update
+  
 all_tasks <- glue::glue_collapse( 
-  pmap(list(task_ok$content,id_user,due,task_ok$section_id), function(a,b,c,d){
-    glue('{ "type": "item_add",
+  pmap(list(task_ok$content,task_ok$id_user,clean_due(lubridate::today()),task_ok$section_id,task_ok$id), function(a,b,c,d,e){
+    glue('{ "type": "item_update",
             "temp_id": "<random_key()>",
             "uuid": "<random_key()>",
-            "args": { "project_id": "<project_id>", "content": "<a>", 
+            "args": { "project_id": "<project_id>", "content": "<a>", "id": "<e>", 
             "responsible_uid" : <b>, "due" : {"date" : <c>},
             "section_id" : <d>  } 
           }',

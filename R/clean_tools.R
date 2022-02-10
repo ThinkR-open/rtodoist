@@ -34,6 +34,8 @@ clean_section <- function(section_name){
 #' @import purrr
 #' @importFrom dplyr anti_join
 get_tasks_to_add <- function(tasks,existing_tasks,
+                             due = due,
+                             id_user = id_user,
                              # project_id = get_project_id(project_name = project_name,token = token),
                              # project_name,
                              sections_id = NULL,
@@ -57,6 +59,66 @@ get_tasks_to_add <- function(tasks,existing_tasks,
   
   tasks_ok <- tasks_to_add %>% anti_join(tache,by = c("content", "section_id"))
   
+  } else{
+    tasks_ok <- tasks_to_add
+  }
+  
+  if(nrow(tasks_ok) == 0){
+    message("All tasks are already in the project")
+    return(NULL)
+  }else{
+    tasks_ok
+  }
+  
+}
+
+
+
+
+#' @import purrr
+#' @importFrom dplyr anti_join
+get_tasks_to_update <- function(tasks,
+                                due = due,
+                                id_user = id_user,
+                                existing_tasks,
+                             # project_id = get_project_id(project_name = project_name,token = token),
+                             # project_name,
+                             sections_id = NULL,
+                             token = get_todoist_api_token()){
+  
+  
+  
+  
+  
+  
+  tasks_to_add <- data.frame(
+    content = tasks,
+    section_id = sections_id, 
+    due = due,
+    id_user = id_user
+  )
+  
+  # tasks
+  # 
+  # tasks_to_add <- map2_df(tasks, due,~list(content = .x, due = .y)   )
+  # if(!is.null(sections_id) ){ #& !is.na(sections_id)
+  #   tasks_to_add <- map2_df(tasks, sections_id,~list(content = .x, section_id = .y)   )
+  # }else{
+  #   tasks_to_add <- tasks
+  # }
+  
+  tasks_to_add$section_id[is.na(tasks_to_add$section_id)] <- 0
+  tasks_to_add$section_id["null" == tasks_to_add$section_id] <- 0
+  
+  if ( length(existing_tasks) > 0){
+    
+    tache <- existing_tasks %>%
+      map(~ .x %>% modify_if(is.null, ~ 0)) %>% 
+      map(~ .x %>% modify_if(is.na, ~ 0)) %>% 
+      map_dfr(`[`,c("content","section_id")) 
+    
+    tasks_ok <- tasks_to_add %>% inner_join(tache,by = c("content", "section_id"))
+    
   } else{
     tasks_ok <- tasks_to_add
   }

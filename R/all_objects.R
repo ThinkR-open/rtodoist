@@ -99,5 +99,5 @@ get_tasks_of_project <- function(
   ) %>%
     content() %>%
     pluck("items") %>%
-    map(`[`, c("content", "project_id", "section_id"))
+    map(`[`, c("content", "project_id", "section_id","id"))
 }
