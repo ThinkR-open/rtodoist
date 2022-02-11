@@ -5,19 +5,19 @@
 \title{add section}
 \usage{
 add_section(
+  section_name,
   project_id = get_project_id(project_name = project_name, token = token),
   project_name,
-  section_name,
   force = FALSE,
   token = get_todoist_api_token()
 )
 }
 \arguments{
+\item{section_name}{section name}
+
 \item{project_id}{id of the project}
 
 \item{project_name}{name of the project}
-
-\item{section_name}{section name}
 
 \item{force}{boolean force section creation even if already exist}
 

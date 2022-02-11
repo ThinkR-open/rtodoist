@@ -69,7 +69,7 @@ get_tasks_to_update <- function(tasks,
 
 
 #' @import purrr
-#' @importFrom dplyr anti_join inner_join
+#' @importFrom dplyr anti_join inner_join mutate
 get_tasks_to_ <- function(tasks,
                           due = due,
                           responsible_uid,
