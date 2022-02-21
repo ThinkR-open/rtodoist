@@ -9,7 +9,8 @@ add_tasks_in_project_from_df(
   tasks_as_df,
   project_name,
   verbose = FALSE,
-  token = get_todoist_api_token()
+  token = get_todoist_api_token(),
+  update_only = FALSE
 )
 }
 \arguments{
@@ -23,6 +24,8 @@ c("tasks_list","responsible","due","section_name") names}
 \item{verbose}{boolean that make the function verbose}
 
 \item{token}{todoist API token}
+
+\item{update_only}{boolean if tru only update existing (not closed) todo}
 }
 \value{
 id of project (character vector)
