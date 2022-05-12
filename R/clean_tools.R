@@ -97,6 +97,14 @@ get_tasks_to_ <- function(tasks,
       map_dfr(`[`,c("content","section_id","id","responsible_uid")) %>% 
       mutate(responsible_uid = as.character(responsible_uid))
     
+    # ce qui est a "0" doit etre mis en null avant la jointure
+    
+    tache <-   tache %>%
+      mutate_if(is.character,
+                ~case_when(.x == "0"~ "null",
+                           TRUE ~.x
+                           )
+                )
     tasks_ok <- tasks_to_add %>%  join_function(tache,by = c("content", "section_id","responsible_uid"))
   } else{
     tasks_ok <- tasks_to_add
