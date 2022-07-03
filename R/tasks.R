@@ -9,6 +9,9 @@
 #' @param section_name section name
 #' @param token todoist API token
 #' @param update_only boolean if true, only update existing (not closed) todo
+#' @param all_users all_users
+#' @param check_only check_only
+#' @param que_si_necessaire que_si_necessaire
 #'
 #' @export
 #' @importFrom stats na.omit
@@ -27,7 +30,10 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
                                  due = NULL,
                                  section_name = NULL,
                                  token = get_todoist_api_token(),
-                                 update_only = FALSE) {
+                                 all_users = get_all_users(token = token),
+                                 update_only = FALSE,
+                                 check_only = FALSE,
+                                 que_si_necessaire = TRUE) {
   
   if (!is.null(section_name)){
   if (length(section_name) > 1 & length(tasks) != length(section_name)){
@@ -46,8 +52,25 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
     }
   }
   
-  force(project_id)
-  responsible_uid <- get_users_id(mails = responsible, token = token)
+  force(project_id) 
+  
+  # on clean un peu
+  due <- clean_due(due)
+  section_name <- clean_section(section_name)
+  
+  
+  
+ responsible_uid <- get_users_id(mails = responsible,
+                                  all_users = all_users,
+                                  token = token)
+  
+
+  
+  if (!update_only){# si on ne fait que mettre a jour alors on ne fait pas les section.. 
+    # voir ce qui se passe si on update avec une nouvelle section, à l'occase
+    
+    
+ 
   
   # on invite les responsables
   
@@ -57,9 +80,7 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
                          verbose = verbose,
                          token = token)
   
-  # on clean un peu
-  due <- clean_due(due)
-  section_name <- clean_section(section_name)
+  
   
   # on init les sections
   unique(section_name) %>% 
@@ -67,6 +88,7 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
     na.omit() %>% 
     map(~add_section(project_id = project_id,section_name = .x, token=token))
   
+  }
   
   section_id <- get_section_id(project_id = project_id,section_name = section_name,token = token)
   
@@ -116,10 +138,10 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
                                     due = due,
                                     responsible_uid = responsible_uid,
                                     existing_tasks = existing_tasks,
-                                    sections_id = section_id,token = token)
+                                    sections_id = section_id,token = token,que_si_necessaire=que_si_necessaire)
     try(task_ok$section_id[is.na(task_ok$section_id)]<-"null")
     if (verbose) {
-      message(nrow(task_ok),"tasks to UPDATE")
+      message(nrow(task_ok)," tasks to UPDATE")
     }
     all_tasks <- glue::glue_collapse( 
       pmap(list(task_ok$content,task_ok$responsible_uid,task_ok$due,task_ok$section_id,task_ok$id,action_to_do), function(a,b,c,d,e,action_to_do){
@@ -139,7 +161,12 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
 
   
 
-
+  if (  check_only == FALSE ){
+    
+    
+    
+if (nrow(task_ok) > 0){
+  
 
 
   res <- call_api(
@@ -150,10 +177,24 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
       commands = glue("[{all_tasks}]")
     )
   )
+  
   if (verbose) {
     print(res)
   }
-  invisible(project_id)
+}else{
+  message("rien a faire, vraiment")
+  
+}
+  out <- invisible(project_id)
+  } else{
+    
+    out <- task_ok
+    
+  }
+  
+  
+  
+  out
 }
 
 #' Add responsible to a task
@@ -164,6 +205,7 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
 #' @param verbose boolean that make the function verbose
 #' @param token todoist API token
 #' @param responsible add someone to this task with mail
+#' @param all_users all_users
 #'
 #' @return http request
 #' @export
@@ -172,6 +214,7 @@ add_responsible_to_task <- function(project_id = get_project_id(project_name = p
                                     responsible,
                                     task,
                                     verbose = FALSE,
+                                    all_users = get_all_users(token = token),
                                     token = get_todoist_api_token()) {
   
   force(project_id)
@@ -188,8 +231,11 @@ add_responsible_to_task <- function(project_id = get_project_id(project_name = p
     map_lgl(~ isTRUE(.x[["content"]]))
   my_task <- keep(tasks, get_my_taks) %>% flatten()
   id_task <- as.numeric(my_task[["id"]])
-  responsible_uid <- get_users_id(mails = responsible,token= token)
+  responsible_uid <- get_users_id(mails = responsible,token= token,  all_users = all_users)
   # we need to add this user to project
+  
+  # ici ne le faire que si necessaire TODO
+  
   responsible %>% unique() %>% 
     add_users_in_project(project_id = project_id,
                          users_email= .,
@@ -224,7 +270,10 @@ add_responsible_to_task <- function(project_id = get_project_id(project_name = p
 #' @param project_name name of the project
 #' @param project_id id of the project
 #' @param verbose boolean that make the function verbose
-#' @param update_only boolean if tru only update existing (not closed) todo
+#' @param update_only boolean if true only update existing (not closed) todo
+#' @param check_only boolean if true only return number of task to add
+#' @param que_si_necessaire que_si_necessaire
+#' @param all_users all_users
 #'
 #' @export
 #' 
@@ -237,7 +286,10 @@ add_tasks_in_project_from_df <- function(project_id = get_project_id(project_nam
                                  project_name,
                                  verbose = FALSE,
                                  token = get_todoist_api_token(),
-                                 update_only = FALSE) {
+                                 update_only = FALSE,
+                                 check_only = FALSE,
+                                 que_si_necessaire = TRUE,
+                                 all_users = get_all_users(token = token)) {
   
 force(project_id)
   
@@ -254,13 +306,15 @@ not_used <- setdiff(names(tasks_as_df),c("tasks","responsible","due","section_na
      message("please use : ",paste(c("tasks","responsible","due","section_name"),collapse=" "))
      }
   
-  add_tasks_in_project(project_id = project_id,
+ out <- add_tasks_in_project(project_id = project_id,
                        tasks = tasks_as_df$tasks,
                        responsible = tasks_as_df$responsible,
                        due = tasks_as_df$due,
                        section_name = tasks_as_df$section_name,
-                       verbose = verbose,
-                       token = token,update_only = update_only
+                       verbose = verbose,all_users=all_users,
+                       token = token,update_only = update_only,check_only =check_only,que_si_necessaire = que_si_necessaire
                        )
   
+  if (check_only) {return(out)}
+  project_id
 }
