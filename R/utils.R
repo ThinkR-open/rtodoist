@@ -25,7 +25,6 @@ random_key <- function() {
 call_api <- function(...,url= "https://todoist.com/api/v8/sync"){
   
   message("call_api")
-  message(...)
   
   POST(
     url,
