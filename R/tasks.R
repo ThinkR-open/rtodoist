@@ -30,7 +30,8 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
                                  due = NULL,
                                  section_name = NULL,
                                  token = get_todoist_api_token(),
-                                 all_users = get_all_users(token = token),
+                                 # all_users = get_all_users(token = token),
+                                 all_users = get_all_users(),
                                  update_only = FALSE,
                                  check_only = FALSE,
                                  que_si_necessaire = TRUE) {
@@ -53,7 +54,7 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
   }
   
   force(project_id) 
-  
+  force(token)
   # on clean un peu
   due <- clean_due(due)
   section_name <- clean_section(section_name)
