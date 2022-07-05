@@ -85,7 +85,7 @@ add_user_in_project <- function(
                                 token = get_todoist_api_token()) {
   
   force(project_id)
-  
+  force(token)
   if (verbose) {
     message(glue::glue("Add {mail} in the {project_id} project"))
   }
@@ -132,6 +132,7 @@ add_users_in_project <- function(project_id = get_project_id(project_name = proj
                                  verbose = TRUE,all_users = get_all_users(token = token),
                                  token = get_todoist_api_token()) {
   force(project_id)
+  force(token)
   clean_users <- users_email %>% set_as_null_if_needed() %>% unique()
   if (is.null(clean_users)){
     message("no users to add in project")
@@ -199,6 +200,7 @@ add_users_in_project <- function(project_id = get_project_id(project_name = proj
 get_users_in_project<- function( project_id = get_project_id(project_name = project_name,token = token),
                                  project_name,token = get_todoist_api_token()){
   force(project_id)
+  force(token)
 call_api(
     body = list(
       token = token,

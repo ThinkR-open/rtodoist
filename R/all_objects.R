@@ -92,6 +92,7 @@ get_tasks_of_project <- function(
   project_name,
   token = get_todoist_api_token()) {
   force(project_id)
+  force(token)
   call_api_project_data(
     body = list(
       token = token,

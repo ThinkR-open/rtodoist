@@ -30,8 +30,7 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
                                  due = NULL,
                                  section_name = NULL,
                                  token = get_todoist_api_token(),
-                                 # all_users = get_all_users(token = token),
-                                 all_users = get_all_users(),
+                                 all_users = get_all_users(token = token),
                                  update_only = FALSE,
                                  check_only = FALSE,
                                  que_si_necessaire = TRUE) {
@@ -219,6 +218,7 @@ add_responsible_to_task <- function(project_id = get_project_id(project_name = p
                                     token = get_todoist_api_token()) {
   
   force(project_id)
+  force(token)
   
   res <- get_tasks(token = token) %>%
     pluck("items") %>%
@@ -293,7 +293,7 @@ add_tasks_in_project_from_df <- function(project_id = get_project_id(project_nam
                                  all_users = get_all_users(token = token)) {
   
 force(project_id)
-  
+  force(token)
     if (verbose){
   message("project_id ",project_id)
   }

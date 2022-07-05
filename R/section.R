@@ -16,6 +16,7 @@ add_section <- function(section_name,
   
   if (section_name =="null"){return("null")}
   force(project_id)
+  force(token)
   ii <- get_section_id(project_id = project_id,section_name =  section_name,token =  token)
   if ( (ii != "null" & force == FALSE) & ii != 0){
     return(ii)
@@ -58,6 +59,7 @@ get_section_id <- function(project_id = get_project_id(project_name = project_na
                            
                            ){
   force(project_id)
+  force(token)
   # tab <- call_api_project_data(
   #   body = list(
   #     token = token,
