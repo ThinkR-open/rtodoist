@@ -70,11 +70,15 @@ get_section_id <- function(project_id = get_project_id(project_name = project_na
   #     pluck("sections") %>%
   #     map_dfr(`[`, c("id", "name"))
   tab <- all_section
-  
+  stringi::stri_trans_general(tolower(section_name),id = "Latin-ASCII")
   # to fix the order
   if (nrow(tab) == 0) {return(0)}
- tab <- data.frame(name=section_name) %>%
-   left_join(tab,by = "name")
+ tab <- data.frame(name=  stringi::stri_trans_general(tolower(section_name),id = "Latin-ASCII")) %>%
+   left_join(tab %>% mutate_if(is.character,
+                               # tolower
+                           ~    stringi::stri_trans_general(tolower(.x),id = "Latin-ASCII")
+                               
+                               ),by = "name")
   if (nrow(tab) == 0) {return(0)}
    res  <-  tab %>%   pull(id)
   if (length(res) == 0) {return(0)}
