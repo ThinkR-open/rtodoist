@@ -19,7 +19,7 @@ projects and tasks to your todoist account.
 
 To find information about todoist API :
 
-<https://developer.todoist.com/sync/v8/#getting-started>
+<https://developer.todoist.com/sync/v9/#getting-started>
 
 ## Installation
 
