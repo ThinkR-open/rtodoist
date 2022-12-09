@@ -27,7 +27,7 @@ This package allows to use the todoist API. You will be able to add projects and
 
 To find information about todoist API :
 
-<https://developer.todoist.com/sync/v8/#getting-started>
+<https://developer.todoist.com/sync/v9/#getting-started>
 
 ## Installation
 
