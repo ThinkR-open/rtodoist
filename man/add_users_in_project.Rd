@@ -9,6 +9,7 @@ add_users_in_project(
   users_email,
   project_name,
   verbose = TRUE,
+  all_users = get_all_users(token = token),
   token = get_todoist_api_token()
 )
 }
@@ -20,6 +21,8 @@ add_users_in_project(
 \item{project_name}{name of the project}
 
 \item{verbose}{boolean that make the function verbose}
+
+\item{all_users}{all_users}
 
 \item{token}{token}
 }

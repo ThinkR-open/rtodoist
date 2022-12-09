@@ -8,7 +8,8 @@ get_section_id(
   project_id = get_project_id(project_name = project_name, token = token),
   project_name,
   section_name,
-  token = get_todoist_api_token()
+  token = get_todoist_api_token(),
+  all_section = get_section_from_project(project_id = project_id, token = token)
 )
 }
 \arguments{
@@ -19,6 +20,8 @@ get_section_id(
 \item{section_name}{name of the section}
 
 \item{token}{token}
+
+\item{all_section}{all_section}
 }
 \description{
 get id section

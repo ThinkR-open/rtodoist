@@ -10,6 +10,7 @@ add_responsible_to_task(
   responsible,
   task,
   verbose = FALSE,
+  all_users = get_all_users(token = token),
   token = get_todoist_api_token()
 )
 }
@@ -23,6 +24,8 @@ add_responsible_to_task(
 \item{task}{the full name of the task}
 
 \item{verbose}{boolean that make the function verbose}
+
+\item{all_users}{all_users}
 
 \item{token}{todoist API token}
 }

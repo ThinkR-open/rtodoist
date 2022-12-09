@@ -4,10 +4,16 @@
 \alias{get_users_id}
 \title{Get users id}
 \usage{
-get_users_id(mails, token = get_todoist_api_token())
+get_users_id(
+  mails,
+  all_users = get_all_users(token = token),
+  token = get_todoist_api_token()
+)
 }
 \arguments{
 \item{mails}{mails of the person}
+
+\item{all_users}{all_users}
 
 \item{token}{token}
 }

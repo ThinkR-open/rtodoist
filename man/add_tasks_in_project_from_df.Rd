@@ -10,7 +10,10 @@ add_tasks_in_project_from_df(
   project_name,
   verbose = FALSE,
   token = get_todoist_api_token(),
-  update_only = FALSE
+  update_only = FALSE,
+  check_only = FALSE,
+  que_si_necessaire = TRUE,
+  all_users = get_all_users(token = token)
 )
 }
 \arguments{
@@ -25,7 +28,13 @@ c("tasks_list","responsible","due","section_name") names}
 
 \item{token}{todoist API token}
 
-\item{update_only}{boolean if tru only update existing (not closed) todo}
+\item{update_only}{boolean if true only update existing (not closed) todo}
+
+\item{check_only}{boolean if true only return number of task to add}
+
+\item{que_si_necessaire}{que_si_necessaire}
+
+\item{all_users}{all_users}
 }
 \value{
 id of project (character vector)

@@ -57,19 +57,23 @@ get_tasks_to_update <- function(tasks,
                                 responsible_uid,
                                 existing_tasks,
                              sections_id = NULL,
-                             token = get_todoist_api_token()){
-  get_tasks_to_(tasks = tasks,
+                             token = get_todoist_api_token(),
+                             que_si_necessaire = TRUE
+                             
+                             ){
+ out <-  get_tasks_to_(tasks = tasks,
                 due = due ,
                 responsible_uid = responsible_uid,
                 existing_tasks = existing_tasks,
                 sections_id = sections_id,
-                token = token,join_function = dplyr::inner_join)
+                token = token,join_function = dplyr::inner_join,que_si_necessaire = que_si_necessaire)
   
+ return(out)
 }
 
 
 #' @import purrr
-#' @importFrom dplyr anti_join inner_join mutate
+#' @importFrom dplyr anti_join inner_join mutate mutate_if case_when
 get_tasks_to_ <- function(tasks,
                           due = due,
                           responsible_uid,
@@ -77,9 +81,8 @@ get_tasks_to_ <- function(tasks,
                           sections_id = NULL,
                           token = get_todoist_api_token(),
                           join_function = list(dplyr::inner_join,
-                                               dplyr::anti_join)
+                                               dplyr::anti_join),que_si_necessaire = FALSE
 ){
-  
   tasks_to_add <- data.frame(
     content = tasks,
     section_id = sections_id, 
@@ -97,14 +100,34 @@ get_tasks_to_ <- function(tasks,
       map_dfr(`[`,c("content","section_id","id","responsible_uid")) %>% 
       mutate(responsible_uid = as.character(responsible_uid))
     
+    # ce qui est a "0" doit etre mis en null avant la jointure
+    
+    tache <-   tache %>%
+      mutate_if(is.character,
+                ~case_when(.x == "0"~ "null",
+                           TRUE ~.x
+                           )
+                )
+
+    
     tasks_ok <- tasks_to_add %>%  join_function(tache,by = c("content", "section_id","responsible_uid"))
+    
+    if ( que_si_necessaire) {
+      
+      tasks_ok <- tasks_ok %>%  anti_join(tache,by = c("content", "section_id","responsible_uid")) 
+      
+      
+    }
+    
+    
+    
   } else{
     tasks_ok <- tasks_to_add
   }
   
   if(nrow(tasks_ok) == 0){
     message("Nothing to do")
-    return(NULL)
+    return(data.frame())
   }else{
     tasks_ok
   }

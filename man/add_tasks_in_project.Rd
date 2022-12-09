@@ -13,7 +13,10 @@ add_tasks_in_project(
   due = NULL,
   section_name = NULL,
   token = get_todoist_api_token(),
-  update_only = FALSE
+  all_users = get_all_users(token = token),
+  update_only = FALSE,
+  check_only = FALSE,
+  que_si_necessaire = TRUE
 )
 }
 \arguments{
@@ -33,7 +36,13 @@ add_tasks_in_project(
 
 \item{token}{todoist API token}
 
+\item{all_users}{all_users}
+
 \item{update_only}{boolean if true, only update existing (not closed) todo}
+
+\item{check_only}{check_only}
+
+\item{que_si_necessaire}{que_si_necessaire}
 }
 \value{
 id of project (character vector)
