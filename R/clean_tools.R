@@ -95,8 +95,8 @@ get_tasks_to_ <- function(tasks,
   if ( length(existing_tasks) > 0){
     
     tache <- existing_tasks %>%
-      map(~ .x %>% modify_if(is.null, ~ 0)) %>% 
-      map(~ .x %>% modify_if(is.na, ~ 0)) %>% 
+      map(~ .x %>% modify_if(is.null, ~ "0")) %>% 
+      map(~ .x %>% modify_if(is.na, ~ "0")) %>% 
       map_dfr(`[`,c("content","section_id","id","responsible_uid")) %>% 
       mutate(responsible_uid = as.character(responsible_uid))
     
