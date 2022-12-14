@@ -108,7 +108,7 @@ get_tasks_to_ <- function(tasks,
                            TRUE ~.x
                            )
                 ) %>%
-      mutate(section_id = as.character(section_id))
+      mutate("section_id" = as.character(section_id))
 
     
     tasks_ok <- tasks_to_add %>%  join_function(tache,by = c("content", "section_id","responsible_uid"))

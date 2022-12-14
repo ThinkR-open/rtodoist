@@ -6,7 +6,7 @@
 \usage{
 call_api_project_data(
   ...,
-  url = "https://api.todoist.com/sync/v8/projects/get_data"
+  url = "https://api.todoist.com/sync/v9/projects/get_data"
 )
 }
 \arguments{
