@@ -1,6 +1,6 @@
 Package: rtodoist
 Title: Create and Manage Todolist using 'Todoist.com' API
-Version: 0.1.9004
+Version: 0.1.9005
 Authors@R: c(
     person("Cervan", "Girard", , "cervan@thinkr.fr", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0002-4816-4624")),
@@ -22,6 +22,7 @@ Imports:
     getPass,
     glue,
     httr,
+    httr2,
     keyring,
     magrittr,
     purrr,

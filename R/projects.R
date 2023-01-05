@@ -88,8 +88,8 @@ add_project <- function(project_name,
     return(get_project_id(all_projects = all_projects, project_name = project_name,token = token))
   } else {
     call_api(
-      body = list(
         "token" = token,
+      # body = list(
         "sync_token" = "*",
         resource_types = '["projects"]',
         commands = glue(
@@ -100,9 +100,9 @@ add_project <- function(project_name,
           .open = "<",
           .close = ">"
         )
-      )
+      # )
     ) %>%
-      content() %>%
+      # content() %>%
       get_project_id(all_projects = .,project_name = project_name,token = token)
   }
 }

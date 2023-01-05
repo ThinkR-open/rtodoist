@@ -4,7 +4,11 @@
 \alias{call_api}
 \title{Call the good version of API}
 \usage{
-call_api(..., url = "https://todoist.com/api/v9/sync")
+call_api(
+  ...,
+  url = "https://todoist.com/api/v9/sync",
+  token = get_todoist_api_token()
+)
 }
 \arguments{
 \item{...}{any params of POST request}

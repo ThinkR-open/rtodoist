@@ -22,6 +22,7 @@ random_key <- function() {
 #' @param ... any params of POST request
 #' @param url url to call
 #' @return list
+#' @importFrom httr2 request req_headers req_body_multipart req_perform resp_body_json
 call_api <- function(...,url= "https://todoist.com/api/v9/sync",token = get_todoist_api_token()){
   
   message("call_api")

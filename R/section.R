@@ -23,8 +23,8 @@ add_section <- function(section_name,
   }
   
  out <-  call_api(
-    body = list(
       "token" = token,
+    # body = list(
       "sync_token" = "*",
       commands = glue(
         '[{ "type": "section_add",
@@ -34,8 +34,10 @@ add_section <- function(section_name,
         .open = "<",
         .close = ">"
       )
-    )
-  ) %>% content() %>% print()
+    # )
+  ) %>% 
+   # content()  %>% 
+   print()
   
   get_section_id(project_id = project_id,section_name =  section_name,token =  token)
 }
@@ -92,12 +94,12 @@ get_section_from_project <- function(project_id, token = get_todoist_api_token()
   
   
   tab <- call_api_project_data(
-    body = list(
       token = token,
+    # body = list(
       project_id = project_id
-    )
+    # )
   ) %>%
-    content() %>%
+    # content() %>%
     pluck("sections") %>%
     map_dfr(`[`, c("id", "name"))
   

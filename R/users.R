@@ -16,13 +16,12 @@
 #' }
 get_all_users <- function(token = get_todoist_api_token()) {
  out<- call_api(
-    body = list(
       "token" = token,
+
       "sync_token" = "*",
       resource_types = '["collaborators"]'
-    )
+
   ) %>%
-    content() %>%
     pluck("collaborators") %>%
     map_df(`[`, c("email", "id"))
  
@@ -97,8 +96,8 @@ add_user_in_project <- function(
   }
 
   res <- call_api(
-    body = list(
       token = token,
+    # body = list(
       commands = glue(
         '[
            {"type": "share_project",
@@ -107,7 +106,7 @@ add_user_in_project <- function(
            "args": {"project_id": <project_id>, "email": "<mail>"}}]',
         .open = "<",
         .close = ">"
-      )
+      # )
     )
   ) 
   if (verbose) {
@@ -171,10 +170,10 @@ add_users_in_project <- function(project_id = get_project_id(project_name = proj
     
     
     res <- call_api(
-      body = list(
         "token" = token,
+      # body = list(
         commands = glue("[{all_users}]")
-      )
+      # )
     )
     if (verbose) {
       print(res)
@@ -208,13 +207,14 @@ get_users_in_project<- function( project_id = get_project_id(project_name = proj
                                  project_name,token = get_todoist_api_token()){
   force(project_id)
   force(token)
-    out <- call_api(body = list(
-
+    out <- call_api(
       token = token,
+      # body = list(
+
       sync_token = "*",
       resource_types = '["collaborators"]'
-    )) %>%
-      content() %>%
+    ) %>%
+      # content() %>%
       pluck("collaborator_states") %>%
       map_df(`[`, c("project_id", "user_id"))  %>%
       dplyr::filter(project_id == !!project_id)
