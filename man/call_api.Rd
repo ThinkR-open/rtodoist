@@ -14,6 +14,8 @@ call_api(
 \item{...}{any params of POST request}
 
 \item{url}{url to call}
+
+\item{token}{todoist API token}
 }
 \value{
 list
