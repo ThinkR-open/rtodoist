@@ -84,7 +84,7 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
   
   # on init les sections
   unique(section_name) %>% 
-    stringr::str_subset("",negate = FALSE)  %>%
+    stringr::str_subset(".",negate = FALSE)  %>% # passage de "" a "." 
     na.omit() %>% 
     map(~add_section(project_id = project_id,section_name = .x, token=token))
   
@@ -170,12 +170,12 @@ if (nrow(task_ok) > 0){
 
 
   res <- call_api(
-    body = list(
       "token" = token,
+    # body = list(
       "sync_token" = "*",
       resource_types = '["projects","items"]',
       commands = glue("[{all_tasks}]")
-    )
+    # )
   )
   
   if (verbose) {
@@ -244,8 +244,8 @@ add_responsible_to_task <- function(project_id = get_project_id(project_name = p
                          token = token)
   
   res <- call_api(
-    body = list(
       "token" = token,
+    # body = list(
       "sync_token" = "*",
       commands = glue(
         '[{ "type": "item_update",
@@ -255,7 +255,7 @@ add_responsible_to_task <- function(project_id = get_project_id(project_name = p
         .open = "<",
         .close = ">"
       )
-    )
+    # )
   )
   invisible(res)
 }

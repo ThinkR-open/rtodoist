@@ -20,15 +20,25 @@ random_key <- function() {
 #' Call the good version of API
 #'
 #' @param ... any params of POST request
+#' @param token todoist API token
 #' @param url url to call
+#'
 #' @return list
-call_api <- function(...,url= "https://todoist.com/api/v9/sync"){
+#' @importFrom httr2 request req_headers req_body_multipart req_perform resp_body_json
+call_api <- function(...,url= "https://todoist.com/api/v9/sync",token = get_todoist_api_token()){
   
   message("call_api")
+
   
-  POST(
-    url,
-    ...)
+  request(base_url = url) %>% 
+    req_headers(
+      Authorization = glue::glue("Bearer {token}"),
+    ) %>% 
+
+    req_body_multipart(...) %>%
+    req_perform() %>% 
+    resp_body_json()
+  
 }
 
 #' Call project data

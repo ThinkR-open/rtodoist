@@ -74,6 +74,11 @@ id <-  add_project(project_name = "test",verbose = TRUE) %>%
                          c("First task",
                               "Second task")
                        )
+id <-  add_project(project_name = "test",verbose = TRUE) %>%
+  add_tasks_in_project(tasks = 
+                         c("First task",
+                              "Second task")
+                       )
 id %>%
   add_responsible_to_task("First task", add_responsible = "user2@mail.com")
 

@@ -17,13 +17,12 @@
 #' }
 get_all_data <- function(token = get_todoist_api_token()) {
   call_api(
-    body = list(
       token = token,
+    # body = list(
       sync_token = "*",
       resource_types = '["all"]'
-    )
-  ) %>%
-    content()
+    # )
+  )
 }
 
 #' List of projects
@@ -41,14 +40,11 @@ get_all_data <- function(token = get_todoist_api_token()) {
 #' projects <- get_all_projects()
 #' }
 get_all_projects <- function(token = get_todoist_api_token()) {
-  call_api(
-    body = list(
-      token = token,
+  call_api(token = token,
       sync_token = "*",
       resource_types = '["projects"]'
-    )
-  ) %>%
-    content()
+    
+  ) 
 }
 #' List of tasks
 #'
@@ -65,14 +61,13 @@ get_all_projects <- function(token = get_todoist_api_token()) {
 #' tasks <- get_tasks()
 #' }
 get_tasks <- function(token = get_todoist_api_token()) {
-  call_api(
-    body = list(
-      token = token,
-      sync_token = "*",
-      resource_types = '["items"]'
-    )
-  ) %>%
-    content()
+
+  call_api(token = token,
+           sync_token = "*",
+           resource_types = '["items"]'
+           
+  ) 
+  
 }
 
 #' List of tasks of project
@@ -94,11 +89,10 @@ get_tasks_of_project <- function(
   force(project_id)
   force(token)
   call_api_project_data(
-    body = list(
       token = token,
-      project_id = project_id)
+      project_id = project_id
   ) %>%
-    content() %>%
+    # content() %>%
     pluck("items") %>%
     map(`[`, c("content", "project_id", "section_id","id","responsible_uid"))
 }
