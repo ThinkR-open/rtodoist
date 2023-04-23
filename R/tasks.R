@@ -178,9 +178,9 @@ if (nrow(task_ok) > 0){
     # )
   )
   
-  if (verbose) {
-    print(res)
-  }
+  # if (verbose) {
+    # print(res)
+  # }
 }else{
   message("rien a faire, vraiment")
   

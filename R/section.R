@@ -35,9 +35,7 @@ add_section <- function(section_name,
         .close = ">"
       )
     # )
-  ) %>% 
-   # content()  %>% 
-   print()
+  ) 
   
   get_section_id(project_id = project_id,section_name =  section_name,token =  token)
 }
