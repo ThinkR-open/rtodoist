@@ -100,7 +100,7 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
   existing_tasks <- get_tasks_of_project(project_id = project_id,token =  token)
   
   if (verbose) {
-    message(length(existing_tasks), "existing tasks in project")
+    message(length(existing_tasks), " existing tasks in project")
   }
   if ( ! update_only) {
  

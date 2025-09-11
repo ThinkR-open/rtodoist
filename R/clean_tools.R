@@ -110,8 +110,32 @@ get_tasks_to_ <- function(tasks,
                 ) %>%
       mutate("section_id" = as.character(section_id))
 
+    # browser()
+    tasks_ok <- tasks_to_add %>% mutate(
+      savecontent = content,
+      content = tolower(content)) %>% 
+      mutate("section_id" = as.character(section_id)) %>% 
+      join_function(tache %>% mutate(content = tolower(content)),by = c("content", "section_id","responsible_uid")) %>% 
+      mutate(content = savecontent) %>% select(-savecontent)
     
-    tasks_ok <- tasks_to_add %>% mutate("section_id" = as.character(section_id)) %>%  join_function(tache,by = c("content", "section_id","responsible_uid"))
+    # ici il ya un soucis si le responsible_ui est manquant
+   
+    
+    # on test une autre approche
+    # browser()
+    tasks_ok <- tasks_to_add %>%
+      mutate("section_id" = as.character(section_id)) %>%
+      join_function(tache %>% dplyr::select(-responsible_uid),by = c("content", "section_id"))
+
+    # A %>%  inner_join(B %>% select(-responsible_uid),by = c("content", "section_id"))
+    tasks_ok <- tasks_to_add %>% mutate(
+      savecontent = content,
+      content = tolower(content)) %>% 
+      mutate("section_id" = as.character(section_id)) %>% 
+      join_function(tache %>% mutate(content = tolower(content))%>% dplyr::select(-responsible_uid),by = c("content", "section_id"
+                                                                                                           # ,"responsible_uid"
+                                                                                                           )) %>% 
+      mutate(content = savecontent) %>% select(-savecontent)
     
     if ( que_si_necessaire) {
       
