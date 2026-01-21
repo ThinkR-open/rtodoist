@@ -25,7 +25,7 @@ random_key <- function() {
 #'
 #' @return list
 #' @importFrom httr2 request req_headers req_body_multipart req_perform resp_body_json
-call_api <- function(...,url= "https://todoist.com/api/v9/sync",token = get_todoist_api_token()){
+call_api <- function(...,url= "https://api.todoist.com/api/v1/sync",token = get_todoist_api_token()){
   
   message("call_api")
 
@@ -47,7 +47,7 @@ call_api <- function(...,url= "https://todoist.com/api/v9/sync",token = get_todo
 #' @param url url to call
 #'
 #' @return list
-call_api_project_data <- function(..., url="https://api.todoist.com/sync/v9/projects/get_data"){
+call_api_project_data <- function(..., url="https://api.todoist.com/api/v1/projects/get_data"){
   
   call_api(..., url = url)
 }

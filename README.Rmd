@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 <!-- badges: start -->
 [![R build status](https://github.com/ThinkR-open/rtodoist/workflows/R-CMD-check/badge.svg)](https://github.com/ThinkR-open/rtodoist/actions)
-[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN status](https://www.r-pkg.org/badges/version/rtodoist)](https://CRAN.R-project.org/package=rtodoist)
 [![R-CMD-check](https://github.com/ThinkR-open/rtodoist/workflows/R-CMD-check/badge.svg)](https://github.com/ThinkR-open/rtodoist/actions)
 <!-- badges: end -->
@@ -27,7 +27,7 @@ This package allows to use the todoist API. You will be able to add projects and
 
 To find information about todoist API :
 
-<https://developer.todoist.com/sync/v9/#getting-started>
+<https://developer.todoist.com/api/v1/>
 
 ## Installation
 

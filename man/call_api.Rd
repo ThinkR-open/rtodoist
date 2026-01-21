@@ -6,7 +6,7 @@
 \usage{
 call_api(
   ...,
-  url = "https://todoist.com/api/v9/sync",
+  url = "https://api.todoist.com/api/v1/sync",
   token = get_todoist_api_token()
 )
 }

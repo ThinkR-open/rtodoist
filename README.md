@@ -8,7 +8,7 @@
 [![R build
 status](https://github.com/ThinkR-open/rtodoist/workflows/R-CMD-check/badge.svg)](https://github.com/ThinkR-open/rtodoist/actions)
 [![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://www.tidyverse.org/lifecycle/#stable)
+stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/rtodoist)](https://CRAN.R-project.org/package=rtodoist)
 [![R-CMD-check](https://github.com/ThinkR-open/rtodoist/workflows/R-CMD-check/badge.svg)](https://github.com/ThinkR-open/rtodoist/actions)
@@ -19,7 +19,7 @@ projects and tasks to your todoist account.
 
 To find information about todoist API :
 
-<https://developer.todoist.com/sync/v9/#getting-started>
+<https://developer.todoist.com/api/v1/>
 
 ## Installation
 
