@@ -103,7 +103,7 @@ add_user_in_project <- function(
            {"type": "share_project",
            "temp_id": "<random_key()>",
            "uuid": "<random_key()>",
-           "args": {"project_id": <project_id>, "email": "<mail>"}}]',
+           "args": {"project_id": "<project_id>", "email": "<mail>"}}]',
         .open = "<",
         .close = ">"
       # )
@@ -159,7 +159,7 @@ add_users_in_project <- function(project_id = get_project_id(project_name = proj
       map(mails, ~ {glue('{"type": "share_project",
            "temp_id": "<random_key()>",
            "uuid": "<random_key()>",
-           "args": {"project_id": <project_id>, "email": "<.x>"}
+           "args": {"project_id": "<project_id>", "email": "<.x>"}
            }',
           .open = "<",
           .close = ">")}) , sep = ",")

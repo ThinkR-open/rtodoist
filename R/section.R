@@ -30,7 +30,7 @@ add_section <- function(section_name,
         '[{ "type": "section_add",
           "temp_id": "<random_key()>",
           "uuid": "<random_key()>",
-          "args": { "name": "<section_name>", "project_id" : <project_id>}}]',
+          "args": { "name": "<section_name>", "project_id" : "<project_id>"}}]',
         .open = "<",
         .close = ">"
       )

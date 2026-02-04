@@ -123,8 +123,8 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
             "temp_id": "<random_key()>",
             "uuid": "<random_key()>",
             "args": { "project_id": "<project_id>", "content": "<a>", 
-            "responsible_uid" : <b>, "due" : {"date" : <c>},
-            "section_id" : <d>  } 
+            "responsible_uid" : "<b>", "due" : {"date" : "<c>"},
+            "section_id" : "<d>"  } 
           }',
              .open = "<",
              .close = ">")
@@ -148,18 +148,6 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
     if (verbose) {
       message(nrow(task_ok)," tasks to UPDATE")
     }
-    # all_tasks <- glue::glue_collapse( 
-    #   pmap(list(task_ok$content,task_ok$responsible_uid,task_ok$due,task_ok$section_id,task_ok$id,action_to_do), function(a,b,c,d,e,action_to_do){
-    #     glue('{ "type": "<action_to_do>",
-    #         "temp_id": "<random_key()>",
-    #         "uuid": "<random_key()>",
-    #         "args": { "project_id": "<project_id>", "content": "<a>", "id": "<e>", 
-    #         "responsible_uid" : <b>, "due" : {"date" : <c>},
-    #         "section_id" : <d>  } 
-    #       }',
-    #          .open = "<",
-    #          .close = ">")
-    #   }), sep = ",")
     all_tasks <- glue::glue_collapse(pmap(list(task_ok$content, 
                                                task_ok$responsible_uid, to_no_date(task_ok$due), task_ok$section_id, 
                                                task_ok$id, action_to_do), function(a, b, c, d, 
@@ -171,7 +159,7 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
                                              \n            \"uuid\": \"<random_key()>\",
                                              \n            \"args\": { \"project_id\": \"<project_id>\",
                                              \"content\": \"<a>\", \"id\": \"<e>\",
-                                                  \n            \"responsible_uid\" : <b>,", 
+                                                  \n            \"responsible_uid\" : \"<b>\",", 
                                                           .open = "<", .close = ">")
                                                  
                                                  
@@ -179,11 +167,11 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
                                                
                                                
                                                b<-  glue(" \"due\" : {\"string\" : \"<c>\"},
-                                                  \n            \"section_id\" : <d>  } \n          }", 
+                                                  \n            \"section_id\" : \"<d>\"  } \n          }", 
                                                       .open = "<", .close = ">")
                                                }else{
-                                                 b<-  glue(" \"due\" : {\"date\" : <c>},
-                                                  \n            \"section_id\" : <d>  } \n          }", 
+                                                 b<-  glue(" \"due\" : {\"date\" : \"<c>\"},
+                                                  \n            \"section_id\" : \"<d>\"  } \n          }", 
                                                            .open = "<", .close = ">")
                                                  
                                                  
@@ -287,7 +275,7 @@ add_responsible_to_task <- function(project_id = get_project_id(project_name = p
         '[{ "type": "item_update",
           "temp_id": "<random_key()>",
           "uuid": "<random_key()>",
-          "args": { "id": "<id_task>", "responsible_uid" : <responsible_uid>}}]',
+          "args": { "id": "<id_task>", "responsible_uid" : "<responsible_uid>"}}]',
         .open = "<",
         .close = ">"
       )
