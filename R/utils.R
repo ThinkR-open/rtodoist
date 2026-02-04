@@ -40,3 +40,15 @@ call_api <- function(...,url= "https://api.todoist.com/api/v1/sync",token = get_
     resp_body_json()
   
 }
+
+#' @importFrom httr2 req_headers req_url_query req_perform resp_body_json request
+call_api_rest <- function(endpoint, token = get_todoist_api_token(), ...) {
+  
+  request(paste0("https://api.todoist.com/api/v1/", endpoint)) %>%
+    req_headers(
+      Authorization = glue::glue("Bearer {token}")
+    ) %>%
+    req_url_query(...) %>%
+    req_perform() %>%
+    resp_body_json()
+}

@@ -1,19 +1,34 @@
 
 #' @importFrom stringr str_trim str_replace
 #' @importFrom glue glue
+# clean_due <- function(due){
+#   
+#   if(is.null(due)){
+#     return("null")
+#   } 
+#   
+#   due <- map_chr(due,as.character) %>% stringr::str_trim()
+#   due[due==""] <- NA
+#   due[due==" "] <- NA
+#   due <- stringr::str_replace(glue::glue('"{due}"'), 
+#                               pattern = "^\"NA\"$","null")
+#   due
+#   
+# }
+
+
 clean_due <- function(due){
   
   if(is.null(due)){
     return("null")
   } 
   
-  due <- map_chr(due,as.character) %>% stringr::str_trim()
-  due[due==""] <- NA
-  due[due==" "] <- NA
-  due <- stringr::str_replace(glue::glue('"{due}"'), 
-                              pattern = "^\"NA\"$","null")
-  due
+  due <- map_chr(due, as.character) %>% stringr::str_trim()
+  due[due == ""] <- "null"
+  due[due == " "] <- "null"
+  due[is.na(due)] <- "null"
   
+  due
 }
 
 set_as_null_if_needed <- function(x){
@@ -94,12 +109,13 @@ get_tasks_to_ <- function(tasks,
   tasks_to_add$section_id["null" == tasks_to_add$section_id] <- 0
   if ( length(existing_tasks) > 0){
     
-    tache <- existing_tasks %>%
-      map(~ .x %>% modify_if(is.null, ~ "0")) %>% 
-      map(~ .x %>% modify_if(is.na, ~ "0")) %>% 
-      map_dfr(`[`,c("content","section_id","id","responsible_uid")) %>% 
-      mutate(responsible_uid = as.character(responsible_uid))
+tache <- existing_tasks$results %>%
+  map(~ .x %>% modify_if(is.null, ~ "0")) %>% 
+  map(~ .x %>% modify_if(is.na, ~ "0")) %>% 
+  map_dfr(`[`, c("content", "section_id", "id", "responsible_uid")) %>% 
+  mutate(responsible_uid = as.character(responsible_uid))
     
+
     # ce qui est a "0" doit etre mis en null avant la jointure
     
     tache <-   tache %>%

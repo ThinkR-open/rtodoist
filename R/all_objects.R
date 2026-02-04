@@ -79,7 +79,15 @@ get_tasks <- function(token = get_todoist_api_token()) {
 #' @return list of all tasks
 #' @export
 #'
-get_tasks_of_project <- function(project_id, ...) {
-  call_api_rest("tasks", project_id = project_id) %>%
+get_tasks_of_project <- function(
+    project_id = get_project_id(project_name = project_name, token = token),
+    project_name,
+    token = get_todoist_api_token()) {
+  
+  force(project_id)
+  force(token)
+  
+  call_api_rest("tasks", token = token, project_id = project_id) %>%
+    pluck("results") %>%  # <-- extraire results ici
     map(`[`, c("content", "project_id", "section_id", "id", "responsible_uid"))
 }

@@ -148,38 +148,62 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
     if (verbose) {
       message(nrow(task_ok)," tasks to UPDATE")
     }
-    all_tasks <- glue::glue_collapse(pmap(list(task_ok$content, 
-                                               task_ok$responsible_uid, to_no_date(task_ok$due), task_ok$section_id, 
-                                               task_ok$id, action_to_do), function(a, b, c, d, 
-                                                                                      e, action_to_do) {
-                                                 # browser()
-                                                 
-                                                 
-                                               a <-  glue("{ \"type\": \"<action_to_do>\",\n            \"temp_id\": \"<random_key()>\",
-                                             \n            \"uuid\": \"<random_key()>\",
-                                             \n            \"args\": { \"project_id\": \"<project_id>\",
-                                             \"content\": \"<a>\", \"id\": \"<e>\",
-                                                  \n            \"responsible_uid\" : \"<b>\",", 
-                                                          .open = "<", .close = ">")
-                                                 
-                                                 
-                                               if ( c == "no date"){
-                                               
-                                               
-                                               b<-  glue(" \"due\" : {\"string\" : \"<c>\"},
-                                                  \n            \"section_id\" : \"<d>\"  } \n          }", 
-                                                      .open = "<", .close = ">")
-                                               }else{
-                                                 b<-  glue(" \"due\" : {\"date\" : \"<c>\"},
-                                                  \n            \"section_id\" : \"<d>\"  } \n          }", 
-                                                           .open = "<", .close = ">")
-                                                 
-                                                 
-                                               }
-                                                 glue::glue("{a} {b}")
-                                                 
-                                                 
-                                                 }), sep = ",")
+    # all_tasks <- glue::glue_collapse(pmap(list(task_ok$content, 
+    #                                            task_ok$responsible_uid, to_no_date(task_ok$due), task_ok$section_id, 
+    #                                            task_ok$id, action_to_do), function(a, b, c, d, 
+    #                                                                                   e, action_to_do) {
+    #                                              # browser()
+    #                                              
+    #                                              
+    #                                            a <-  glue("{ \"type\": \"<action_to_do>\",\n            \"temp_id\": \"<random_key()>\",
+    #                                          \n            \"uuid\": \"<random_key()>\",
+    #                                          \n            \"args\": { \"project_id\": \"<project_id>\",
+    #                                          \"content\": \"<a>\", \"id\": \"<e>\",
+    #                                               \n            \"responsible_uid\" : \"<b>\",", 
+    #                                                       .open = "<", .close = ">")
+    #                                              
+    #                                              
+    #                                            if ( c == "no date"){
+    #                                            
+    #                                            
+    #                                            b<-  glue(" \"due\" : {\"string\" : \"<c>\"},
+    #                                               \n            \"section_id\" : \"<d>\"  } \n          }", 
+    #                                                   .open = "<", .close = ">")
+    #                                            }else{
+    #                                              b<-  glue(" \"due\" : {\"date\" : \"<c>\"},
+    #                                               \n            \"section_id\" : \"<d>\"  } \n          }", 
+    #                                                        .open = "<", .close = ">")
+    #                                              
+    #                                              
+    #                                            }
+    #                                              glue::glue("{a} {b}")
+    #                                              
+    #                                              
+    #                                              }), sep = ",")
+    
+    
+    
+    
+    all_tasks <- glue::glue_collapse( 
+      pmap(list(task_ok$content, task_ok$responsible_uid, task_ok$due, task_ok$section_id, action_to_do), function(a, b, c, d, action_to_do){
+        
+        # Gérer les valeurs null
+        resp_part <- if (b == "null" || is.na(b)) 'null' else glue('"<b>"', .open = "<", .close = ">")
+        due_part <- if (c == "null" || is.na(c)) 'null' else glue('{"date" : "<c>"}', .open = "<", .close = ">")
+        sect_part <- if (d == "0" || d == "null" || is.na(d)) 'null' else glue('"<d>"', .open = "<", .close = ">")
+        
+        glue('{ "type": "<action_to_do>",
+        "temp_id": "<random_key()>",
+        "uuid": "<random_key()>",
+        "args": { "project_id": "<project_id>", "content": "<a>", 
+        "responsible_uid" : <resp_part>, "due" : <due_part>,
+        "section_id" : <sect_part> } 
+      }',
+             .open = "<",
+             .close = ">")
+      }), sep = ",")
+    
+    
   }
   
 
