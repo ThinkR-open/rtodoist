@@ -88,17 +88,7 @@ get_section_id <- function(project_id = get_project_id(project_name = project_na
 
 
 
-get_section_from_project <- function(project_id, token = get_todoist_api_token()){
-  
-  
-  tab <- call_api_project_data(
-      token = token,
-    # body = list(
-      project_id = project_id
-    # )
-  ) %>%
-    # content() %>%
-    pluck("sections") %>%
+get_section_from_project <- function(project_id, token = get_todoist_api_token()) {
+  call_api_rest("sections", project_id = project_id) %>%
     map_dfr(`[`, c("id", "name"))
-  
 }

@@ -40,14 +40,3 @@ call_api <- function(...,url= "https://api.todoist.com/api/v1/sync",token = get_
     resp_body_json()
   
 }
-
-#' Call project data
-#'
-#' @param ... any params of POST request
-#' @param url url to call
-#'
-#' @return list
-call_api_project_data <- function(..., url="https://api.todoist.com/api/v1/projects/get_data"){
-  
-  call_api(..., url = url)
-}
