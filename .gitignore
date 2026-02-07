@@ -5,3 +5,5 @@ inst/doc
 .httr-oauth
 test.R
 docs/
+*.xlsx
+.claude/

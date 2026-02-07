@@ -4,14 +4,18 @@
 \alias{get_tasks_of_project}
 \title{List of tasks of project}
 \usage{
-get_tasks_of_project(project_id, ...)
+get_tasks_of_project(
+  project_id = get_project_id(project_name = project_name, token = token),
+  project_name,
+  token = get_todoist_api_token()
+)
 }
 \arguments{
 \item{project_id}{id of the project}
 
-\item{token}{todoist API token}
-
 \item{project_name}{name of the project}
+
+\item{token}{todoist API token}
 }
 \value{
 list of all tasks

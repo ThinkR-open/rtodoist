@@ -1,3 +1,17 @@
+#' Escape special characters for JSON
+#'
+#' @param x character string to escape
+#' @return escaped string
+escape_json <- function(x) {
+  x <- gsub("\\\\", "\\\\\\\\", x)  # Backslash first
+
+  x <- gsub('"', '\\\\"', x)         # Double quotes
+  x <- gsub('\n', '\\\\n', x)        # Newlines
+  x <- gsub('\r', '\\\\r', x)        # Carriage returns
+  x <- gsub('\t', '\\\\t', x)        # Tabs
+  x
+}
+
 #' Random key
 #'
 #' @return key

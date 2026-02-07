@@ -109,7 +109,7 @@ get_tasks_to_ <- function(tasks,
   tasks_to_add$section_id["null" == tasks_to_add$section_id] <- 0
   if ( length(existing_tasks) > 0){
     
-tache <- existing_tasks$results %>%
+tache <- existing_tasks %>%
   map(~ .x %>% modify_if(is.null, ~ "0")) %>% 
   map(~ .x %>% modify_if(is.na, ~ "0")) %>% 
   map_dfr(`[`, c("content", "section_id", "id", "responsible_uid")) %>% 

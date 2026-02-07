@@ -1,0 +1,38 @@
+{
+  "full_sync": true,
+  "sync_token": "efgh5678",
+  "items": [
+    {
+      "id": "6001106591",
+      "content": "Task 1",
+      "project_id": "2244736524",
+      "section_id": null,
+      "parent_id": null,
+      "order": 1,
+      "priority": 1,
+      "due": null,
+      "checked": false,
+      "is_deleted": false,
+      "added_at": "2024-01-01T10:00:00Z",
+      "responsible_uid": null
+    },
+    {
+      "id": "6001106592",
+      "content": "Task 2",
+      "project_id": "2244736524",
+      "section_id": "123456",
+      "parent_id": null,
+      "order": 2,
+      "priority": 1,
+      "due": {
+        "date": "2024-02-01",
+        "is_recurring": false,
+        "string": "Feb 1"
+      },
+      "checked": false,
+      "is_deleted": false,
+      "added_at": "2024-01-02T10:00:00Z",
+      "responsible_uid": "12345"
+    }
+  ]
+}

@@ -18,8 +18,8 @@ add_section <- function(section_name,
   force(project_id)
   force(token)
   ii <- get_section_id(project_id = project_id,section_name =  section_name,token =  token)
-  if ( (ii != "null" & force == FALSE) & ii != 0){
-    return(ii)
+  if ( (all(ii != "null") & force == FALSE) & all(ii != 0)){
+    return(ii[length(ii)])
   }
   
  out <-  call_api(
@@ -74,11 +74,7 @@ get_section_id <- function(project_id = get_project_id(project_name = project_na
   # to fix the order
   if (nrow(tab) == 0) {return(0)}
  tab <- data.frame(name=  stringi::stri_trans_general(tolower(section_name),id = "Latin-ASCII")) %>%
-   left_join(tab %>% mutate_if(is.character,
-                               # tolower
-                           ~    stringi::stri_trans_general(tolower(.x),id = "Latin-ASCII")
-                               
-                               ),by = "name")
+   left_join(tab %>% mutate(name = stringi::stri_trans_general(tolower(name),id = "Latin-ASCII")),by = "name")
   if (nrow(tab) == 0) {return(0)}
    res  <-  tab %>%   pull(id)
   if (length(res) == 0) {return(0)}
@@ -89,6 +85,18 @@ get_section_id <- function(project_id = get_project_id(project_name = project_na
 
 
 get_section_from_project <- function(project_id, token = get_todoist_api_token()) {
-  call_api_rest("sections", project_id = project_id) %>%
-    map_dfr(`[`, c("id", "name"))
+  all_results <- list()
+  cursor <- NULL
+
+  repeat {
+    response <- call_api_rest("sections", project_id = project_id, cursor = cursor)
+    all_results <- c(all_results, response$results)
+
+    if (is.null(response$next_cursor)) {
+      break
+    }
+    cursor <- response$next_cursor
+  }
+# browser()
+  map_dfr(all_results, `[`, c("id", "name"))
 }

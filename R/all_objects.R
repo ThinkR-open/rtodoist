@@ -83,11 +83,22 @@ get_tasks_of_project <- function(
     project_id = get_project_id(project_name = project_name, token = token),
     project_name,
     token = get_todoist_api_token()) {
-  
+
   force(project_id)
   force(token)
-  
-  call_api_rest("tasks", token = token, project_id = project_id) %>%
-    pluck("results") %>%  # <-- extraire results ici
-    map(`[`, c("content", "project_id", "section_id", "id", "responsible_uid"))
+
+  all_results <- list()
+  cursor <- NULL
+
+  repeat {
+    response <- call_api_rest("tasks", token = token, project_id = project_id, cursor = cursor)
+    all_results <- c(all_results, response$results)
+
+    if (is.null(response$next_cursor)) {
+      break
+    }
+    cursor <- response$next_cursor
+  }
+
+  map(all_results, `[`, c("content", "project_id", "section_id", "id", "responsible_uid"))
 }

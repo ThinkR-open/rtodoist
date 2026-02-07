@@ -117,17 +117,24 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
     
     
     try(task_ok$section_id[is.na(task_ok$section_id)]<-"null")
-    all_tasks <- glue::glue_collapse( 
+    all_tasks <- glue::glue_collapse(
       pmap(list(task_ok$content,task_ok$responsible_uid,task_ok$due,task_ok$section_id,action_to_do), function(a,b,c,d,action_to_do){
-        glue('{ "type": "<action_to_do>",
-            "temp_id": "<random_key()>",
-            "uuid": "<random_key()>",
-            "args": { "project_id": "<project_id>", "content": "<a>", 
-            "responsible_uid" : "<b>", "due" : {"date" : "<c>"},
-            "section_id" : "<d>"  } 
-          }',
-             .open = "<",
-             .close = ">")
+
+        # Échapper le contenu pour JSON
+        a_escaped <- escape_json(a)
+
+        # Gérer les valeurs null correctement pour JSON
+        assigned_part <- if (is.null(b) || is.na(b) || b == "null") 'null' else glue('"{b}"')
+        due_part <- if (is.null(c) || is.na(c) || c == "null") 'null' else glue('{{"date" : "{c}"}}')
+        sect_part <- if (is.null(d) || is.na(d) || d == "null" || d == "0") 'null' else glue('"{d}"')
+
+        glue('{{ "type": "{action_to_do}",
+            "temp_id": "{random_key()}",
+            "uuid": "{random_key()}",
+            "args": {{ "project_id": "{project_id}", "content": "{a_escaped}",
+            "responsible_uid" : {assigned_part}, "due" : {due_part},
+            "section_id" : {sect_part}  }}
+          }}')
       }), sep = ",")
     
     
@@ -184,23 +191,24 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
     
     
     
-    all_tasks <- glue::glue_collapse( 
-      pmap(list(task_ok$content, task_ok$responsible_uid, task_ok$due, task_ok$section_id, action_to_do), function(a, b, c, d, action_to_do){
-        
-        # Gérer les valeurs null
-        resp_part <- if (b == "null" || is.na(b)) 'null' else glue('"<b>"', .open = "<", .close = ">")
-        due_part <- if (c == "null" || is.na(c)) 'null' else glue('{"date" : "<c>"}', .open = "<", .close = ">")
-        sect_part <- if (d == "0" || d == "null" || is.na(d)) 'null' else glue('"<d>"', .open = "<", .close = ">")
-        
-        glue('{ "type": "<action_to_do>",
-        "temp_id": "<random_key()>",
-        "uuid": "<random_key()>",
-        "args": { "project_id": "<project_id>", "content": "<a>", 
-        "responsible_uid" : <resp_part>, "due" : <due_part>,
-        "section_id" : <sect_part> } 
-      }',
-             .open = "<",
-             .close = ">")
+    all_tasks <- glue::glue_collapse(
+      pmap(list(task_ok$content, task_ok$responsible_uid, task_ok$due, task_ok$section_id, task_ok$id, action_to_do), function(a, b, c, d, e, action_to_do){
+
+        # Échapper le contenu pour JSON
+        a_escaped <- escape_json(a)
+
+        # Gérer les valeurs null correctement pour JSON
+        assigned_part <- if (is.null(b) || is.na(b) || b == "null") 'null' else glue('"{b}"')
+        due_part <- if (is.null(c) || is.na(c) || c == "null") 'null' else glue('{{"date" : "{c}"}}')
+        sect_part <- if (is.null(d) || is.na(d) || d == "null" || d == "0") 'null' else glue('"{d}"')
+
+        glue('{{ "type": "{action_to_do}",
+        "temp_id": "{random_key()}",
+        "uuid": "{random_key()}",
+        "args": {{ "id": "{e}", "project_id": "{project_id}", "content": "{a_escaped}",
+        "responsible_uid" : {assigned_part}, "due" : {due_part},
+        "section_id" : {sect_part} }}
+      }}')
       }), sep = ",")
     
     
@@ -271,7 +279,7 @@ add_responsible_to_task <- function(project_id = get_project_id(project_name = p
   res <- get_tasks(token = token) %>%
     pluck("items") %>%
     set_names(
-      map_dbl(., "project_id")
+      map_chr(., "project_id")
     )
   tasks_of_project <- names(res) == project_id
   tasks <- keep(res, tasks_of_project)
@@ -279,7 +287,7 @@ add_responsible_to_task <- function(project_id = get_project_id(project_name = p
     map(~ .x == task) %>%
     map_lgl(~ isTRUE(.x[["content"]]))
   my_task <- keep(tasks, get_my_taks) %>% flatten()
-  id_task <- as.numeric(my_task[["id"]])
+  id_task <- my_task[["id"]]
   responsible_uid <- get_users_id(mails = responsible,token= token,  all_users = all_users)
   # we need to add this user to project
   
@@ -293,17 +301,13 @@ add_responsible_to_task <- function(project_id = get_project_id(project_name = p
   
   res <- call_api(
       "token" = token,
-    # body = list(
       "sync_token" = "*",
       commands = glue(
-        '[{ "type": "item_update",
-          "temp_id": "<random_key()>",
-          "uuid": "<random_key()>",
-          "args": { "id": "<id_task>", "responsible_uid" : "<responsible_uid>"}}]',
-        .open = "<",
-        .close = ">"
+        '[{{ "type": "item_update",
+          "temp_id": "{random_key()}",
+          "uuid": "{random_key()}",
+          "args": {{ "id": "{id_task}", "responsible_uid" : "{responsible_uid}"}}}}]'
       )
-    # )
   )
   invisible(res)
 }
