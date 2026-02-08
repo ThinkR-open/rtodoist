@@ -1,3 +1,6 @@
+# Null coalescing operator
+`%||%` <- function(a, b) if (is.null(a)) b else a
+
 #' Escape special characters for JSON
 #'
 #' @param x character string to escape

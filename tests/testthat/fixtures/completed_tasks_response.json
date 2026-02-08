@@ -1,0 +1,17 @@
+{
+  "items": [
+    {
+      "id": "7001106591",
+      "content": "Completed Task 1",
+      "project_id": "2244736524",
+      "completed_at": "2024-01-15T10:00:00Z"
+    },
+    {
+      "id": "7001106592",
+      "content": "Completed Task 2",
+      "project_id": "2244736524",
+      "completed_at": "2024-01-14T15:30:00Z"
+    }
+  ],
+  "next_cursor": null
+}

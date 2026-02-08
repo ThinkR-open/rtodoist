@@ -1,0 +1,26 @@
+{
+  "results": [
+    {
+      "id": "2156154810",
+      "name": "urgent",
+      "color": "red",
+      "order": 1,
+      "is_favorite": true
+    },
+    {
+      "id": "2156154811",
+      "name": "work",
+      "color": "blue",
+      "order": 2,
+      "is_favorite": false
+    },
+    {
+      "id": "2156154812",
+      "name": "personal",
+      "color": "green",
+      "order": 3,
+      "is_favorite": false
+    }
+  ],
+  "next_cursor": null
+}

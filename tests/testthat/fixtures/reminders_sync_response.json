@@ -1,0 +1,23 @@
+{
+  "full_sync": true,
+  "sync_token": "abc789",
+  "reminders": [
+    {
+      "id": "9876543",
+      "item_id": "6001106591",
+      "type": "absolute",
+      "due": {
+        "date": "2024-12-25T09:00:00",
+        "is_recurring": false
+      },
+      "minute_offset": null
+    },
+    {
+      "id": "9876544",
+      "item_id": "6001106592",
+      "type": "relative",
+      "due": null,
+      "minute_offset": 30
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "full_sync": true,
+  "sync_token": "user123",
+  "user": {
+    "id": "12345678",
+    "email": "user@example.com",
+    "full_name": "Test User",
+    "inbox_project_id": "2203306141",
+    "team_inbox_id": null,
+    "karma": 1500,
+    "karma_trend": "up",
+    "completed_today": 5,
+    "days_items": [
+      {"date": "2024-01-15", "count": 10},
+      {"date": "2024-01-14", "count": 8}
+    ],
+    "week_items": [
+      {"date": "2024-01-15", "count": 45}
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "full_sync": true,
+  "sync_token": "xyz123",
+  "filters": [
+    {
+      "id": "1234567",
+      "name": "Urgent Today",
+      "query": "today & p1",
+      "color": "red",
+      "order": 1,
+      "is_favorite": true
+    },
+    {
+      "id": "1234568",
+      "name": "Work Tasks",
+      "query": "#Work",
+      "color": "blue",
+      "order": 2,
+      "is_favorite": false
+    }
+  ]
+}
