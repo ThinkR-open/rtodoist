@@ -34,38 +34,47 @@ random_key <- function() {
   digest(glue("{Sys.time()}{mdp}"))
 }
 
-#' Call the good version of API
+# API Base URLs
+TODOIST_SYNC_URL <- "https://api.todoist.com/api/v1/sync"
+TODOIST_REST_URL <- "https://api.todoist.com/api/v1/"
+
+#' Call the Sync API
 #'
 #' @param ... any params of POST request
 #' @param token todoist API token
 #' @param url url to call
 #'
 #' @return list
-#' @importFrom httr2 request req_headers req_body_multipart req_perform resp_body_json
-call_api <- function(...,url= "https://api.todoist.com/api/v1/sync",token = get_todoist_api_token()){
-  
-  message("call_api")
+#' @importFrom httr2 request req_headers req_body_multipart req_perform resp_body_json req_error resp_status
+call_api <- function(..., url = TODOIST_SYNC_URL, token = get_todoist_api_token()) {
 
-  
-  request(base_url = url) %>% 
+  request(base_url = url) %>%
     req_headers(
-      Authorization = glue::glue("Bearer {token}"),
-    ) %>% 
-
+      Authorization = glue::glue("Bearer {token}")
+    ) %>%
     req_body_multipart(...) %>%
-    req_perform() %>% 
+    req_error(is_error = function(resp) resp_status(resp) >= 400) %>%
+    req_perform() %>%
     resp_body_json()
-  
+
 }
 
-#' @importFrom httr2 req_headers req_url_query req_perform resp_body_json request
+#' Call the REST API
+#'
+#' @param endpoint API endpoint (e.g., "projects", "tasks")
+#' @param token todoist API token
+#' @param ... query parameters
+#'
+#' @return list
+#' @importFrom httr2 req_headers req_url_query req_perform resp_body_json request req_error resp_status
 call_api_rest <- function(endpoint, token = get_todoist_api_token(), ...) {
-  
-  request(paste0("https://api.todoist.com/api/v1/", endpoint)) %>%
+
+  request(paste0(TODOIST_REST_URL, endpoint)) %>%
     req_headers(
       Authorization = glue::glue("Bearer {token}")
     ) %>%
     req_url_query(...) %>%
+    req_error(is_error = function(resp) resp_status(resp) >= 400) %>%
     req_perform() %>%
     resp_body_json()
 }

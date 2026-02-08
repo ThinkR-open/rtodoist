@@ -12,6 +12,7 @@ test_that("get_tasks returns a list", {
 test_that("add_tasks_in_project adds simple tasks", {
   skip_on_cran()
   skip_if_no_token()
+  skip_if_test_project_missing()
 
   proj_id <- get_project_id(TEST_PROJECT_NAME, create = FALSE)
   unique_task <- paste0("Test_Task_", format(Sys.time(), "%H%M%S"))
@@ -33,6 +34,7 @@ test_that("add_tasks_in_project adds simple tasks", {
 test_that("add_tasks_in_project adds tasks with responsible and assigns correctly", {
   skip_on_cran()
   skip_if_no_token()
+  skip_if_test_project_missing()
 
   proj_id <- get_project_id(TEST_PROJECT_NAME, create = FALSE)
   unique_task <- paste0("Task_With_Responsible_", format(Sys.time(), "%H%M%S"))
@@ -72,6 +74,7 @@ test_that("add_tasks_in_project adds tasks with responsible and assigns correctl
 test_that("add_tasks_in_project adds tasks with due date", {
   skip_on_cran()
   skip_if_no_token()
+  skip_if_test_project_missing()
 
   proj_id <- get_project_id(TEST_PROJECT_NAME, create = FALSE)
   unique_task <- paste0("Task_With_Due_", format(Sys.time(), "%H%M%S"))
@@ -90,6 +93,7 @@ test_that("add_tasks_in_project adds tasks with due date", {
 test_that("add_tasks_in_project adds tasks with section", {
   skip_on_cran()
   skip_if_no_token()
+  skip_if_test_project_missing()
 
   proj_id <- get_project_id(TEST_PROJECT_NAME, create = FALSE)
   unique_task <- paste0("Task_With_Section_", format(Sys.time(), "%H%M%S"))
@@ -107,6 +111,7 @@ test_that("add_tasks_in_project adds tasks with section", {
 test_that("add_tasks_in_project check_only returns dataframe without creating tasks", {
   skip_on_cran()
   skip_if_no_token()
+  skip_if_test_project_missing()
 
   proj_id <- get_project_id(TEST_PROJECT_NAME, create = FALSE)
   unique_task <- paste0("Check_Only_Task_", format(Sys.time(), "%H%M%S"))
@@ -134,6 +139,7 @@ test_that("add_tasks_in_project check_only returns dataframe without creating ta
 test_that("add_tasks_in_project_from_df adds tasks from dataframe", {
   skip_on_cran()
   skip_if_no_token()
+  skip_if_test_project_missing()
 
   proj_id <- get_project_id(TEST_PROJECT_NAME, create = FALSE)
   timestamp <- format(Sys.time(), "%H%M%S")
@@ -164,6 +170,7 @@ test_that("add_tasks_in_project_from_df adds tasks from dataframe", {
 test_that("get_tasks_of_project returns tasks for specific project", {
   skip_on_cran()
   skip_if_no_token()
+  skip_if_test_project_missing()
 
   proj_id <- get_project_id(TEST_PROJECT_NAME, create = FALSE)
 
@@ -184,6 +191,7 @@ test_that("get_tasks_of_project returns tasks for specific project", {
 test_that("add_responsible_to_task assigns user to existing task", {
   skip_on_cran()
   skip_if_no_token()
+  skip_if_test_project_missing()
 
   proj_id <- get_project_id(TEST_PROJECT_NAME, create = FALSE)
   unique_task <- paste0("Task_For_Assignment_", format(Sys.time(), "%H%M%S"))

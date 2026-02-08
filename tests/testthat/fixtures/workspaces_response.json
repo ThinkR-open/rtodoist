@@ -1,0 +1,15 @@
+{
+  "workspaces": [
+    {
+      "id": "ws_123456",
+      "name": "My Workspace",
+      "is_default": true
+    },
+    {
+      "id": "ws_789012",
+      "name": "Team Workspace",
+      "is_default": false
+    }
+  ],
+  "sync_token": "abc123"
+}

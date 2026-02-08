@@ -31,7 +31,7 @@ import_template <- function(project_id = get_project_id(project_name = project_n
     message(glue::glue("Importing template into project {project_id}"))
   }
 
-  request(glue("https://api.todoist.com/api/v1/templates/import_into_project?project_id={project_id}")) %>%
+  request(as.character(glue("https://api.todoist.com/api/v1/templates/import_into_project?project_id={project_id}"))) %>%
     req_headers(
       Authorization = glue::glue("Bearer {token}")
     ) %>%
@@ -70,7 +70,7 @@ export_template <- function(project_id = get_project_id(project_name = project_n
     message(glue::glue("Exporting project {project_id} as template"))
   }
 
-  response <- request(glue("https://api.todoist.com/api/v1/templates/export_as_file?project_id={project_id}")) %>%
+  response <- request(as.character(glue("https://api.todoist.com/api/v1/templates/export_as_file?project_id={project_id}"))) %>%
     req_headers(
       Authorization = glue::glue("Bearer {token}")
     ) %>%

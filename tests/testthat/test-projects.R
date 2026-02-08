@@ -14,6 +14,7 @@ test_that("get_all_projects returns a list with projects", {
 test_that("get_project_id returns project ID for existing project", {
   skip_on_cran()
   skip_if_no_token()
+  skip_if_test_project_missing()
 
   # Use the test project
   proj_id <- get_project_id(
@@ -29,6 +30,7 @@ test_that("get_project_id returns project ID for existing project", {
 test_that("get_project_id with create=TRUE returns same ID for existing project", {
   skip_on_cran()
   skip_if_no_token()
+  skip_if_test_project_missing()
 
   proj_id1 <- get_project_id(
     project_name = TEST_PROJECT_NAME,

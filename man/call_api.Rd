@@ -2,13 +2,9 @@
 % Please edit documentation in R/utils.R
 \name{call_api}
 \alias{call_api}
-\title{Call the good version of API}
+\title{Call the Sync API}
 \usage{
-call_api(
-  ...,
-  url = "https://api.todoist.com/api/v1/sync",
-  token = get_todoist_api_token()
-)
+call_api(..., url = TODOIST_SYNC_URL, token = get_todoist_api_token())
 }
 \arguments{
 \item{...}{any params of POST request}
@@ -21,5 +17,5 @@ call_api(
 list
 }
 \description{
-Call the good version of API
+Call the Sync API
 }
