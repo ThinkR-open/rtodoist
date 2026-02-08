@@ -1,0 +1,508 @@
+## ----setup, include = FALSE---------------------------------------------------
+knitr::opts_chunk$set(
+  eval = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+
+## -----------------------------------------------------------------------------
+# library(rtodoist)
+# 
+# # Open the website to find your token
+# open_todoist_website_profile()
+# 
+# # Set your token (only needs to be done once per computer)
+# set_todoist_api_token("YOUR_API_TOKEN")
+# 
+# # Retrieve your stored token
+# token <- get_todoist_api_token()
+# 
+# # Update your token if needed
+# update_todoist_api_token()
+# 
+# # Delete your stored token
+# delete_todoist_api_token()
+
+## -----------------------------------------------------------------------------
+# # Create a new project
+# project_id <- add_project("My New Project")
+# 
+# # Get all projects
+# projects <- get_all_projects()
+# 
+# # Get project ID by name
+# project_id <- get_project_id("My New Project")
+# 
+# # Get a single project by ID
+# project <- get_project(project_id)
+# 
+# # Update a project
+# update_project(
+#   project_id = project_id,
+#   new_name = "Renamed Project",
+#   color = "blue",
+#   is_favorite = TRUE,
+#   view_style = "board"
+# )
+# 
+# # Archive a project
+# archive_project(project_id = project_id)
+# 
+# # Unarchive a project
+# unarchive_project(project_id = project_id)
+# 
+# # Get archived projects
+# archived <- get_archived_projects()
+# 
+# # Delete a project (use with caution!)
+# delete_project(project_id = project_id)
+
+## -----------------------------------------------------------------------------
+# # Add a single task to a project
+# project_id %>%
+#   add_tasks_in_project("My first task")
+# 
+# # Add multiple tasks
+# project_id %>%
+#   add_tasks_in_project(
+#     tasks = c("Task 1", "Task 2", "Task 3")
+#   )
+# 
+# # Add tasks with due dates and assignees
+# project_id %>%
+#   add_tasks_in_project(
+#     tasks = c("Task 1", "Task 2"),
+#     responsible = c("user1@email.com", "user2@email.com"),
+#     due = c("2024-12-25", "2024-12-31"),
+#     section_name = c("Section A", "Section B")
+#   )
+# 
+# # Add tasks from a data frame
+# tasks_df <- data.frame(
+#   tasks = c("Task A", "Task B", "Task C"),
+#   responsible = c("user@email.com", "user@email.com", "user@email.com"),
+#   due = c("2024-12-01", "2024-12-02", "2024-12-03"),
+#   section_name = c("Section 1", "Section 1", "Section 2")
+# )
+# 
+# add_tasks_in_project_from_df(
+#   project_id = project_id,
+#   tasks_as_df = tasks_df
+# )
+# 
+# # Quick add a task using natural language
+# quick_add_task("Buy groceries tomorrow at 5pm #Shopping")
+
+## -----------------------------------------------------------------------------
+# # Get all tasks
+# tasks <- get_tasks()
+# 
+# # Get tasks of a specific project
+# project_tasks <- get_tasks_of_project(project_id = project_id)
+# 
+# # Get a single task by ID
+# task <- get_task("task_id")
+# 
+# # Update a task
+# update_task(
+#   task_id = "task_id",
+#   content = "Updated task content",
+#   description = "Task description",
+#   priority = 4,  # 4 = highest priority
+#   due_string = "tomorrow",
+#   labels = c("urgent", "work")
+# )
+# 
+# # Add a responsible person to a task
+# add_responsible_to_task(
+#   project_id = project_id,
+#   task = "Task 1",
+#   responsible = "user@email.com"
+# )
+# 
+# # Close (complete) a task
+# close_task("task_id")
+# 
+# # Reopen a task
+# reopen_task("task_id")
+# 
+# # Move a task to another project or section
+# move_task(
+#   task_id = "task_id",
+#   project_id = "new_project_id",
+#   section_id = "new_section_id"
+# )
+# 
+# # Delete a task
+# delete_task("task_id")
+# 
+# # Get completed tasks
+# completed <- get_completed_tasks(
+#   project_id = project_id,
+#   since = "2024-01-01T00:00:00",
+#   limit = 100
+# )
+
+## -----------------------------------------------------------------------------
+# # Get tasks by filter query
+# today_tasks <- get_tasks_by_filter("today")
+# urgent_tasks <- get_tasks_by_filter("p1")
+# work_tasks <- get_tasks_by_filter("#Work")
+# overdue_tasks <- get_tasks_by_filter("overdue")
+# combined_filter <- get_tasks_by_filter("today & p1 & #Work")
+
+## -----------------------------------------------------------------------------
+# # Create a section
+# section_id <- add_section(
+#   section_name = "New Section",
+#   project_id = project_id
+# )
+# 
+# # Get all sections
+# all_sections <- get_all_sections()
+# 
+# # Get sections from a specific project
+# project_sections <- get_section_from_project(project_id = project_id)
+# 
+# # Get section ID by name
+# section_id <- get_section_id(
+#   project_id = project_id,
+#   section_name = "New Section"
+# )
+# 
+# # Get a single section by ID
+# section <- get_section("section_id")
+# 
+# # Update a section
+# update_section(
+#   section_id = section_id,
+#   new_name = "Renamed Section"
+# )
+# 
+# # Move a section to another project
+# move_section(
+#   section_id = section_id,
+#   project_id = "target_project_id"
+# )
+# 
+# # Archive a section
+# archive_section(section_id = section_id)
+# 
+# # Unarchive a section
+# unarchive_section(section_id = section_id)
+# 
+# # Delete a section
+# delete_section(section_id = section_id)
+
+## -----------------------------------------------------------------------------
+# # Create a label
+# label_id <- add_label(
+#   name = "urgent",
+#   color = "red",
+#   is_favorite = TRUE
+# )
+# 
+# # Get all labels
+# labels <- get_all_labels()
+# 
+# # Get a single label by ID
+# label <- get_label("label_id")
+# 
+# # Get label ID by name
+# label_id <- get_label_id("urgent")
+# 
+# # Update a label
+# update_label(
+#   label_id = label_id,
+#   new_name = "very_urgent",
+#   color = "orange"
+# )
+# 
+# # Delete a label
+# delete_label(label_id = label_id)
+# 
+# # Get shared labels (in workspaces)
+# shared_labels <- get_shared_labels()
+# 
+# # Rename a shared label
+# rename_shared_label("old_name", "new_name")
+# 
+# # Remove a shared label
+# remove_shared_label("label_name")
+
+## -----------------------------------------------------------------------------
+# # Add a comment to a task
+# comment_id <- add_comment(
+#   content = "This is a comment",
+#   task_id = "task_id"
+# )
+# 
+# # Add a comment to a project
+# comment_id <- add_comment(
+#   content = "Project-level comment",
+#   project_id = project_id
+# )
+# 
+# # Get comments on a task
+# task_comments <- get_comments(task_id = "task_id")
+# 
+# # Get comments on a project
+# project_comments <- get_comments(project_id = project_id)
+# 
+# # Get a single comment by ID
+# comment <- get_comment("comment_id")
+# 
+# # Update a comment
+# update_comment(
+#   comment_id = "comment_id",
+#   content = "Updated comment content"
+# )
+# 
+# # Delete a comment
+# delete_comment("comment_id")
+
+## -----------------------------------------------------------------------------
+# # Create a filter
+# filter_id <- add_filter(
+#   name = "Urgent Today",
+#   query = "today & p1",
+#   color = "red",
+#   is_favorite = TRUE
+# )
+# 
+# # Get all filters
+# filters <- get_all_filters()
+# 
+# # Get a single filter by ID
+# filter <- get_filter("filter_id")
+# 
+# # Get filter ID by name
+# filter_id <- get_filter_id("Urgent Today")
+# 
+# # Update a filter
+# update_filter(
+#   filter_id = filter_id,
+#   query = "today & (p1 | p2)",
+#   new_name = "Urgent & Important Today"
+# )
+# 
+# # Delete a filter
+# delete_filter(filter_id = filter_id)
+
+## -----------------------------------------------------------------------------
+# # Add an absolute reminder
+# reminder_id <- add_reminder(
+#   task_id = "task_id",
+#   due_datetime = "2024-12-25T09:00:00",
+#   type = "absolute"
+# )
+# 
+# # Add a relative reminder (30 minutes before)
+# reminder_id <- add_reminder(
+#   task_id = "task_id",
+#   minute_offset = 30,
+#   type = "relative"
+# )
+# 
+# # Get all reminders
+# reminders <- get_all_reminders()
+# 
+# # Update a reminder
+# update_reminder(
+#   reminder_id = reminder_id,
+#   due_datetime = "2024-12-25T10:00:00"
+# )
+# 
+# # Delete a reminder
+# delete_reminder(reminder_id)
+
+## -----------------------------------------------------------------------------
+# # Get all collaborators
+# users <- get_all_users()
+# 
+# # Get user IDs by email
+# user_ids <- get_users_id(mails = c("user1@email.com", "user2@email.com"))
+# 
+# # Add a single user to a project
+# add_user_in_project(
+#   project_id = project_id,
+#   mail = "user@email.com"
+# )
+# 
+# # Add multiple users to a project
+# add_users_in_project(
+#   project_id = project_id,
+#   users_email = c("user1@email.com", "user2@email.com")
+# )
+# 
+# # Get users in a project
+# project_users <- get_users_in_project(project_id = project_id)
+# 
+# # Remove a collaborator from a project
+# delete_collaborator(
+#   project_id = project_id,
+#   email = "user@email.com"
+# )
+
+## -----------------------------------------------------------------------------
+# # Get current user info
+# user_info <- get_user_info()
+# 
+# # Get productivity stats
+# stats <- get_productivity_stats()
+
+## -----------------------------------------------------------------------------
+# # Accept an invitation
+# accept_invitation(
+#   invitation_id = "invitation_id",
+#   invitation_secret = "secret"
+# )
+# 
+# # Reject an invitation
+# reject_invitation(
+#   invitation_id = "invitation_id",
+#   invitation_secret = "secret"
+# )
+# 
+# # Delete an invitation
+# delete_invitation("invitation_id")
+
+## -----------------------------------------------------------------------------
+# # Get all workspaces
+# workspaces <- get_all_workspaces()
+# 
+# # Get workspace users
+# workspace_users <- get_workspace_users()
+# 
+# # Invite user to workspace
+# invite_to_workspace(
+#   workspace_id = "workspace_id",
+#   email = "user@email.com",
+#   role = "member"
+# )
+# 
+# # Update workspace
+# update_workspace(
+#   workspace_id = "workspace_id",
+#   name = "New Workspace Name"
+# )
+# 
+# # Leave a workspace
+# leave_workspace("workspace_id")
+
+## -----------------------------------------------------------------------------
+# # Get activity logs
+# activity <- get_activity_logs(
+#   object_type = "item",
+#   event_type = "completed",
+#   limit = 50
+# )
+
+## -----------------------------------------------------------------------------
+# # Export a project as a template
+# export_template(
+#   project_id = project_id,
+#   output_file = "my_template.csv"
+# )
+# 
+# # Import a template into a project
+# import_template(
+#   project_id = project_id,
+#   file_path = "my_template.csv"
+# )
+
+## -----------------------------------------------------------------------------
+# # Get list of available backups
+# backups <- get_backups()
+# 
+# # Download a backup
+# download_backup(
+#   version = backups$version[1],
+#   output_file = "todoist_backup.zip"
+# )
+
+## -----------------------------------------------------------------------------
+# # Upload a file
+# upload_result <- upload_file("document.pdf")
+# 
+# # The upload result contains a file_url that can be used in comments
+# add_comment(
+#   content = paste("Attached file:", upload_result$file_url),
+#   task_id = "task_id"
+# )
+# 
+# # Delete an uploaded file
+# delete_upload(file_url = upload_result$file_url)
+
+## -----------------------------------------------------------------------------
+# library(rtodoist)
+# library(lubridate)
+# 
+# # Create a new project
+# project_id <- add_project("Q1 2024 Goals")
+# 
+# # Add sections
+# add_section("Personal", project_id = project_id)
+# add_section("Work", project_id = project_id)
+# add_section("Health", project_id = project_id)
+# 
+# # Create labels
+# add_label("high-priority", color = "red")
+# add_label("quick-win", color = "green")
+# 
+# # Add tasks with sections and due dates
+# project_id %>%
+#   add_tasks_in_project(
+#     tasks = c(
+#       "Complete project proposal",
+#       "Review team performance",
+#       "Plan Q2 roadmap"
+#     ),
+#     due = c(
+#       as.character(today() + days(7)),
+#       as.character(today() + days(14)),
+#       as.character(today() + months(1))
+#     ),
+#     section_name = c("Work", "Work", "Work")
+#   )
+# 
+# project_id %>%
+#   add_tasks_in_project(
+#     tasks = c(
+#       "Run 5K",
+#       "Meal prep Sunday",
+#       "Schedule annual checkup"
+#     ),
+#     section_name = c("Health", "Health", "Health")
+#   )
+# 
+# # Create a filter for important work tasks
+# add_filter(
+#   name = "Important Work",
+#   query = "#Work & (p1 | p2)",
+#   is_favorite = TRUE
+# )
+# 
+# # Add a reminder for the first task
+# tasks <- get_tasks_of_project(project_id = project_id)
+# first_task_id <- tasks[[1]]$id
+# 
+# add_reminder(
+#   task_id = first_task_id,
+#   due_datetime = paste0(today() + days(6), "T09:00:00"),
+#   type = "absolute"
+# )
+# 
+# # Export as template for future use
+# export_template(
+#   project_id = project_id,
+#   output_file = "quarterly_goals_template.csv"
+# )
+# 
+# # View today's tasks
+# today_tasks <- get_tasks_by_filter("today")
+# print(today_tasks)
+
+## ----eval=TRUE----------------------------------------------------------------
+sessionInfo()
+
