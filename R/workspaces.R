@@ -114,7 +114,7 @@ invite_to_workspace <- function(workspace_id,
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "workspace_invite", "uuid": "{random_key()}", "args": {{"workspace_id": "{workspace_id}", "email": "{email}", "role": "{role}"}}}}]')
+    commands = glue('[{{"type": "workspace_invite", "uuid": "{random_key()}", "args": {{"workspace_id": "{escape_json(workspace_id)}", "email": "{escape_json(email)}", "role": "{escape_json(role)}"}}}}]')
   )
 
   invisible(NULL)
@@ -180,7 +180,7 @@ leave_workspace <- function(workspace_id,
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "workspace_leave", "uuid": "{random_key()}", "args": {{"id": "{workspace_id}"}}}}]')
+    commands = glue('[{{"type": "workspace_leave", "uuid": "{random_key()}", "args": {{"id": "{escape_json(workspace_id)}"}}}}]')
   )
 
   invisible(NULL)

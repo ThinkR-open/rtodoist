@@ -30,12 +30,12 @@ add_reminder <- function(task_id,
     message(glue::glue("Adding reminder to task {task_id}"))
   }
 
-  args_parts <- c(glue('"item_id": "{task_id}"'), glue('"type": "{type}"'))
+  args_parts <- c(glue('"item_id": "{escape_json(task_id)}"'), glue('"type": "{escape_json(type)}"'))
 
   if (!is.null(due_datetime)) {
-    args_parts <- c(args_parts, glue('"due": {{"date": "{due_datetime}"}}'))
+    args_parts <- c(args_parts, glue('"due": {{"date": "{escape_json(due_datetime)}"}}'))
   } else if (!is.null(due_date)) {
-    args_parts <- c(args_parts, glue('"due": {{"date": "{due_date}"}}'))
+    args_parts <- c(args_parts, glue('"due": {{"date": "{escape_json(due_date)}"}}'))
   }
 
   if (!is.null(minute_offset)) {
@@ -132,12 +132,12 @@ update_reminder <- function(reminder_id,
     message(glue::glue("Updating reminder {reminder_id}"))
   }
 
-  args_parts <- c(glue('"id": "{reminder_id}"'))
+  args_parts <- c(glue('"id": "{escape_json(reminder_id)}"'))
 
   if (!is.null(due_datetime)) {
-    args_parts <- c(args_parts, glue('"due": {{"date": "{due_datetime}"}}'))
+    args_parts <- c(args_parts, glue('"due": {{"date": "{escape_json(due_datetime)}"}}'))
   } else if (!is.null(due_date)) {
-    args_parts <- c(args_parts, glue('"due": {{"date": "{due_date}"}}'))
+    args_parts <- c(args_parts, glue('"due": {{"date": "{escape_json(due_date)}"}}'))
   }
 
   if (!is.null(minute_offset)) {
@@ -145,7 +145,7 @@ update_reminder <- function(reminder_id,
   }
 
   if (!is.null(type)) {
-    args_parts <- c(args_parts, glue('"type": "{type}"'))
+    args_parts <- c(args_parts, glue('"type": "{escape_json(type)}"'))
   }
 
   args_json <- paste(args_parts, collapse = ", ")
@@ -185,7 +185,7 @@ delete_reminder <- function(reminder_id,
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "reminder_delete", "uuid": "{random_key()}", "args": {{"id": "{reminder_id}"}}}}]')
+    commands = glue('[{{"type": "reminder_delete", "uuid": "{random_key()}", "args": {{"id": "{escape_json(reminder_id)}"}}}}]')
   )
 
   invisible(NULL)

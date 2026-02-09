@@ -86,8 +86,8 @@ delete_todoist_api_token <- function() {
 #' @export
 ask_todoist_api_token <- function(msg = "Register Todoist Api Token") {
   passwd <- tryCatch({
-    newpass <- getPass(msg)
-  }, interrupt = NULL)
+    getPass(msg)
+  }, interrupt = function(e) NULL)
   if (!length(passwd) || !nchar(passwd)) {
     return(NULL)
   }

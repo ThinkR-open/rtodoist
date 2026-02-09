@@ -9,7 +9,7 @@
 #' @return id of the new comment
 #' @export
 #' @importFrom glue glue
-#' @importFrom httr2 request req_headers req_body_json req_perform resp_body_json
+#' @importFrom httr2 request req_headers req_body_json req_perform resp_body_json req_error resp_status
 #'
 #' @examples
 #' \dontrun{
@@ -43,12 +43,13 @@ add_comment <- function(content,
     body$project_id <- project_id
   }
 
-  result <- request("https://api.todoist.com/api/v1/comments") %>%
+  result <- request(paste0(TODOIST_REST_URL, "comments")) %>%
     req_headers(
       Authorization = glue::glue("Bearer {token}"),
       "Content-Type" = "application/json"
     ) %>%
     req_body_json(body) %>%
+    req_error(is_error = function(resp) resp_status(resp) >= 400) %>%
     req_perform() %>%
     resp_body_json()
 
@@ -144,7 +145,7 @@ get_comment <- function(comment_id, token = get_todoist_api_token()) {
 #'
 #' @return id of the updated comment (invisible)
 #' @export
-#' @importFrom httr2 request req_headers req_body_json req_perform req_method
+#' @importFrom httr2 request req_headers req_body_json req_perform req_method req_error resp_status
 #'
 #' @examples
 #' \dontrun{
@@ -160,13 +161,14 @@ update_comment <- function(comment_id,
     message(glue::glue("Updating comment {comment_id}"))
   }
 
-  request(glue("https://api.todoist.com/api/v1/comments/{comment_id}")) %>%
+  request(glue("{TODOIST_REST_URL}comments/{comment_id}")) %>%
     req_method("POST") %>%
     req_headers(
       Authorization = glue::glue("Bearer {token}"),
       "Content-Type" = "application/json"
     ) %>%
     req_body_json(list(content = content)) %>%
+    req_error(is_error = function(resp) resp_status(resp) >= 400) %>%
     req_perform()
 
   invisible(comment_id)
@@ -180,7 +182,7 @@ update_comment <- function(comment_id,
 #'
 #' @return NULL (invisible)
 #' @export
-#' @importFrom httr2 request req_headers req_perform req_method
+#' @importFrom httr2 request req_headers req_perform req_method req_error resp_status
 #'
 #' @examples
 #' \dontrun{
@@ -195,11 +197,12 @@ delete_comment <- function(comment_id,
     message(glue::glue("Deleting comment {comment_id}"))
   }
 
-  request(glue("https://api.todoist.com/api/v1/comments/{comment_id}")) %>%
+  request(glue("{TODOIST_REST_URL}comments/{comment_id}")) %>%
     req_method("DELETE") %>%
     req_headers(
       Authorization = glue::glue("Bearer {token}")
     ) %>%
+    req_error(is_error = function(resp) resp_status(resp) >= 400) %>%
     req_perform()
 
   invisible(NULL)

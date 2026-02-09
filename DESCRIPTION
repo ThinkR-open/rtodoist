@@ -3,7 +3,7 @@ Title: Create and Manage Todolist using 'Todoist.com' API
 Version: 0.4.0
 Authors@R: c(
     person("Cervan", "Girard", , "cervan@thinkr.fr", role = "aut",
-           comment = c(ORCID = "0000-0002-4816-4624","previous maintainer")),
+           comment = c(ORCID = "0000-0002-4816-4624", note = "previous maintainer")),
     person("Vincent", "Guyader", , "vincent@thinkr.fr", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0003-0671-9270")),
     person("ThinkR", role = c("cph", "fnd"))

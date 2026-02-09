@@ -29,7 +29,7 @@ upload_file <- function(file_path,
     message(glue::glue("Uploading file: {file_name}"))
   }
 
-  result <- request("https://api.todoist.com/api/v1/uploads") %>%
+  result <- request(paste0(TODOIST_REST_URL, "uploads")) %>%
     req_headers(
       Authorization = glue::glue("Bearer {token}")
     ) %>%
@@ -71,7 +71,7 @@ delete_upload <- function(file_url,
     message(glue::glue("Deleting uploaded file"))
   }
 
-  request("https://api.todoist.com/api/v1/uploads") %>%
+  request(paste0(TODOIST_REST_URL, "uploads")) %>%
     req_method("DELETE") %>%
     req_headers(
       Authorization = glue::glue("Bearer {token}"),
