@@ -30,7 +30,9 @@ add_label <- function(name,
   # Check if label already exists
   existing_labels <- get_all_labels(token = token)
   if (name %in% existing_labels$name) {
-    message("This label already exists")
+    if (verbose) {
+      message("This label already exists")
+    }
     return(existing_labels$id[existing_labels$name == name][1])
   }
 
