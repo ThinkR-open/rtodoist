@@ -48,7 +48,7 @@ TODOIST_REST_URL <- "https://api.todoist.com/api/v1/"
 #' @importFrom httr2 request req_headers req_body_multipart req_perform resp_body_json req_error resp_status
 call_api <- function(..., url = TODOIST_SYNC_URL, token = get_todoist_api_token()) {
 
-  request(base_url = url) %>%
+  request(url) %>%
     req_headers(
       Authorization = glue::glue("Bearer {token}")
     ) %>%
