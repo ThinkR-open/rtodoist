@@ -150,7 +150,7 @@ update_workspace <- function(workspace_id,
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "workspace_update", "uuid": "{random_key()}", "args": {{"id": "{workspace_id}", "name": "{escape_json(name)}"}}}}]')
+    commands = glue('[{{"type": "workspace_update", "uuid": "{random_key()}", "args": {{"id": "{escape_json(workspace_id)}", "name": "{escape_json(name)}"}}}}]')
   )
 
   invisible(workspace_id)
