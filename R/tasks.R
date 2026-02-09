@@ -671,7 +671,7 @@ update_task <- function(task_id,
                         token = get_todoist_api_token()) {
   force(token)
 
-  args_parts <- c(glue('"id": "{task_id}"'))
+  args_parts <- c(glue('"id": "{escape_json(task_id)}"'))
 
   if (!is.null(content)) {
     args_parts <- c(args_parts, glue('"content": "{escape_json(content)}"'))
@@ -685,7 +685,7 @@ update_task <- function(task_id,
   if (!is.null(due_string)) {
     args_parts <- c(args_parts, glue('"due": {{"string": "{escape_json(due_string)}"}}'))
   } else if (!is.null(due_date)) {
-    args_parts <- c(args_parts, glue('"due": {{"date": "{due_date}"}}'))
+    args_parts <- c(args_parts, glue('"due": {{"date": "{escape_json(due_date)}"}}'))
   }
   if (!is.null(labels)) {
     labels_escaped <- vapply(labels, escape_json, character(1), USE.NAMES = FALSE)
