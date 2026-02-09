@@ -595,7 +595,7 @@ get_completed_tasks <- function(project_id = NULL,
 #'
 #' @return task object
 #' @export
-#' @importFrom httr2 request req_headers req_body_json req_perform resp_body_json
+#' @importFrom httr2 request req_headers req_body_json req_perform resp_body_json req_error resp_status
 #'
 #' @examples
 #' \dontrun{
@@ -610,12 +610,13 @@ quick_add_task <- function(text,
     message(glue::glue("Quick adding task: {text}"))
   }
 
-  result <- request("https://api.todoist.com/api/v1/tasks/quick") %>%
+  result <- request(paste0(TODOIST_REST_URL, "tasks/quick")) %>%
     req_headers(
       Authorization = glue::glue("Bearer {token}"),
       "Content-Type" = "application/json"
     ) %>%
     req_body_json(list(text = text)) %>%
+    req_error(is_error = function(resp) resp_status(resp) >= 400) %>%
     req_perform() %>%
     resp_body_json()
 

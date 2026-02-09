@@ -309,7 +309,13 @@ get_all_sections <- function(token = get_todoist_api_token()) {
   }
 
   if (length(all_results) == 0) {
-    return(data.frame(id = character(), name = character(), project_id = character(), stringsAsFactors = FALSE))
+    return(data.frame(
+      id = character(),
+      name = character(),
+      project_id = character(),
+      order = integer(),
+      stringsAsFactors = FALSE
+    ))
   }
 
   map_dfr(all_results, `[`, c("id", "name", "project_id", "order"))

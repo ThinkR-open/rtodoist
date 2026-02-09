@@ -300,6 +300,7 @@ get_tasks_by_filter <- function(query,
       project_id = character(),
       section_id = character(),
       priority = integer(),
+      due_date = character(),
       stringsAsFactors = FALSE
     ))
   }

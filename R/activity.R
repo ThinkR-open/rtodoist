@@ -58,6 +58,9 @@ get_activity_logs <- function(object_type = NULL,
       object_id = character(),
       event_type = character(),
       event_date = character(),
+      initiator_id = character(),
+      parent_project_id = character(),
+      parent_item_id = character(),
       stringsAsFactors = FALSE
     ))
   }

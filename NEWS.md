@@ -25,6 +25,14 @@
 * Fixed templates export/import functions failing due to glue object type issue
 * Fixed `get_comments()` empty result missing `task_id` and `project_id` columns
 * Fixed `get_all_reminders()` empty result missing `due_date` and `minute_offset` columns
+* Fixed `get_activity_logs()` empty result missing `initiator_id`, `parent_project_id`, `parent_item_id` columns
+* Fixed `get_tasks_by_filter()` empty result missing `due_date` column
+* Fixed `get_archived_projects()` empty result missing `color` and `is_favorite` columns
+* Fixed `get_all_sections()` empty result missing `order` column
+* Fixed `get_all_workspaces()` empty result missing `is_default` column
+* Fixed `get_workspace_users()` empty result missing `role` column
+* Fixed `quick_add_task()` using hardcoded URL instead of `TODOIST_REST_URL`
+* Added missing `req_error()` to `quick_add_task()` and `upload_file()`
 
 # rtodoist 0.3.0
 

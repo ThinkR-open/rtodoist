@@ -25,6 +25,7 @@ get_all_workspaces <- function(token = get_todoist_api_token()) {
     return(data.frame(
       id = character(),
       name = character(),
+      is_default = logical(),
       stringsAsFactors = FALSE
     ))
   }
@@ -68,6 +69,7 @@ get_workspace_users <- function(token = get_todoist_api_token()) {
       workspace_id = character(),
       name = character(),
       email = character(),
+      role = character(),
       stringsAsFactors = FALSE
     ))
   }

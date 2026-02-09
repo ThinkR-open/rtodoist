@@ -298,7 +298,13 @@ get_archived_projects <- function(token = get_todoist_api_token()) {
   }
 
   if (length(all_results) == 0) {
-    return(data.frame(id = character(), name = character(), stringsAsFactors = FALSE))
+    return(data.frame(
+      id = character(),
+      name = character(),
+      color = character(),
+      is_favorite = logical(),
+      stringsAsFactors = FALSE
+    ))
   }
 
   map_dfr(all_results, `[`, c("id", "name", "color", "is_favorite"))

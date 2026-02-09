@@ -7,7 +7,7 @@
 #'
 #' @return upload object with file_url
 #' @export
-#' @importFrom httr2 request req_headers req_body_multipart req_perform resp_body_json
+#' @importFrom httr2 request req_headers req_body_multipart req_perform resp_body_json req_error resp_status
 #' @importFrom glue glue
 #'
 #' @examples
@@ -37,6 +37,7 @@ upload_file <- function(file_path,
       file = curl::form_file(file_path),
       file_name = file_name
     ) %>%
+    req_error(is_error = function(resp) resp_status(resp) >= 400) %>%
     req_perform() %>%
     resp_body_json()
 
