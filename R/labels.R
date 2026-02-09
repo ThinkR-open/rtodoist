@@ -317,7 +317,7 @@ get_shared_labels <- function(token = get_todoist_api_token()) {
 #'
 #' @return NULL (invisible)
 #' @export
-#' @importFrom httr2 request req_headers req_body_json req_perform
+#' @importFrom httr2 request req_headers req_body_json req_perform req_error resp_status
 #'
 #' @examples
 #' \dontrun{
@@ -333,12 +333,13 @@ rename_shared_label <- function(old_name,
     message(glue::glue("Renaming shared label from '{old_name}' to '{new_name}'"))
   }
 
-  request("https://api.todoist.com/api/v1/labels/shared/rename") %>%
+  request(paste0(TODOIST_REST_URL, "labels/shared/rename")) %>%
     req_headers(
       Authorization = glue::glue("Bearer {token}"),
       "Content-Type" = "application/json"
     ) %>%
     req_body_json(list(name = old_name, new_name = new_name)) %>%
+    req_error(is_error = function(resp) resp_status(resp) >= 400) %>%
     req_perform()
 
   invisible(NULL)
@@ -352,7 +353,7 @@ rename_shared_label <- function(old_name,
 #'
 #' @return NULL (invisible)
 #' @export
-#' @importFrom httr2 request req_headers req_body_json req_perform
+#' @importFrom httr2 request req_headers req_body_json req_perform req_error resp_status
 #'
 #' @examples
 #' \dontrun{
@@ -367,12 +368,13 @@ remove_shared_label <- function(name,
     message(glue::glue("Removing shared label: {name}"))
   }
 
-  request("https://api.todoist.com/api/v1/labels/shared/remove") %>%
+  request(paste0(TODOIST_REST_URL, "labels/shared/remove")) %>%
     req_headers(
       Authorization = glue::glue("Bearer {token}"),
       "Content-Type" = "application/json"
     ) %>%
     req_body_json(list(name = name)) %>%
+    req_error(is_error = function(resp) resp_status(resp) >= 400) %>%
     req_perform()
 
   invisible(NULL)

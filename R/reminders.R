@@ -84,6 +84,8 @@ get_all_reminders <- function(token = get_todoist_api_token()) {
       id = character(),
       item_id = character(),
       type = character(),
+      due_date = character(),
+      minute_offset = integer(),
       stringsAsFactors = FALSE
     ))
   }

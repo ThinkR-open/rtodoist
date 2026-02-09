@@ -102,6 +102,8 @@ get_comments <- function(task_id = NULL,
     return(data.frame(
       id = character(),
       content = character(),
+      task_id = character(),
+      project_id = character(),
       posted_at = character(),
       stringsAsFactors = FALSE
     ))

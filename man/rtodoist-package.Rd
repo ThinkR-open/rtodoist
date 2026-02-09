@@ -21,7 +21,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Cervan Girard \email{cervan@thinkr.fr} (\href{https://orcid.org/0000-0002-4816-4624}{ORCID})
+  \item Cervan Girard \email{cervan@thinkr.fr} (\href{https://orcid.org/0000-0002-4816-4624}{ORCID}) (previous maintainer)
 }
 
 Other contributors:

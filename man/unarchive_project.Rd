@@ -4,17 +4,10 @@
 \alias{unarchive_project}
 \title{Unarchive a project}
 \usage{
-unarchive_project(
-  project_id,
-  project_name,
-  verbose = TRUE,
-  token = get_todoist_api_token()
-)
+unarchive_project(project_id, verbose = TRUE, token = get_todoist_api_token())
 }
 \arguments{
 \item{project_id}{id of the project}
-
-\item{project_name}{name of the project (for lookup if project_id not provided)}
 
 \item{verbose}{boolean that make the function verbose}
 

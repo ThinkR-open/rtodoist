@@ -46,7 +46,7 @@ get_backups <- function(token = get_todoist_api_token()) {
 #'
 #' @return path to the saved file (invisible)
 #' @export
-#' @importFrom httr2 request req_headers req_perform resp_body_raw
+#' @importFrom httr2 request req_headers req_perform resp_body_raw req_error resp_status
 #' @importFrom glue glue
 #'
 #' @examples
@@ -78,6 +78,7 @@ download_backup <- function(version,
     req_headers(
       Authorization = glue::glue("Bearer {token}")
     ) %>%
+    req_error(is_error = function(resp) resp_status(resp) >= 400) %>%
     req_perform()
 
   content <- resp_body_raw(response)

@@ -241,7 +241,6 @@ archive_project <- function(project_id = get_project_id(project_name = project_n
 #' Unarchive a project
 #'
 #' @param project_id id of the project
-#' @param project_name name of the project (for lookup if project_id not provided)
 #' @param verbose boolean that make the function verbose
 #' @param token todoist API token
 #'
@@ -254,7 +253,6 @@ archive_project <- function(project_id = get_project_id(project_name = project_n
 #' unarchive_project(project_id = "12345")
 #' }
 unarchive_project <- function(project_id,
-                              project_name,
                               verbose = TRUE,
                               token = get_todoist_api_token()) {
   force(project_id)

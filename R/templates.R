@@ -8,7 +8,7 @@
 #'
 #' @return NULL (invisible)
 #' @export
-#' @importFrom httr2 request req_headers req_body_multipart req_perform
+#' @importFrom httr2 request req_headers req_body_multipart req_perform req_error resp_status
 #' @importFrom glue glue
 #'
 #' @examples
@@ -31,11 +31,12 @@ import_template <- function(project_id = get_project_id(project_name = project_n
     message(glue::glue("Importing template into project {project_id}"))
   }
 
-  request(as.character(glue("https://api.todoist.com/api/v1/templates/import_into_project?project_id={project_id}"))) %>%
+  request(as.character(glue("{TODOIST_REST_URL}templates/import_into_project?project_id={project_id}"))) %>%
     req_headers(
       Authorization = glue::glue("Bearer {token}")
     ) %>%
     req_body_multipart(file = curl::form_file(file_path)) %>%
+    req_error(is_error = function(resp) resp_status(resp) >= 400) %>%
     req_perform()
 
   invisible(NULL)
@@ -51,7 +52,7 @@ import_template <- function(project_id = get_project_id(project_name = project_n
 #'
 #' @return path to the saved file (invisible)
 #' @export
-#' @importFrom httr2 request req_headers req_perform resp_body_string
+#' @importFrom httr2 request req_headers req_perform resp_body_string req_error resp_status
 #' @importFrom glue glue
 #'
 #' @examples
@@ -70,10 +71,11 @@ export_template <- function(project_id = get_project_id(project_name = project_n
     message(glue::glue("Exporting project {project_id} as template"))
   }
 
-  response <- request(as.character(glue("https://api.todoist.com/api/v1/templates/export_as_file?project_id={project_id}"))) %>%
+  response <- request(as.character(glue("{TODOIST_REST_URL}templates/export_as_file?project_id={project_id}"))) %>%
     req_headers(
       Authorization = glue::glue("Bearer {token}")
     ) %>%
+    req_error(is_error = function(resp) resp_status(resp) >= 400) %>%
     req_perform()
 
   content <- resp_body_string(response)

@@ -3,6 +3,7 @@
 ## Breaking changes
 
 * API functions now use `req_error()` from httr2 for proper HTTP error handling
+* `unarchive_project()` no longer accepts unused `project_name` parameter
 
 ## New features
 
@@ -16,10 +17,14 @@
 * API base URLs now defined as package constants (`TODOIST_SYNC_URL`, `TODOIST_REST_URL`)
 * Fixed `glue()` to character conversion in `templates.R` for httr2 compatibility
 * Improved test robustness by skipping tests when required resources are unavailable
+* Standardized error handling with `req_error()` across all REST endpoints
+* Empty data.frames now return consistent column structure with non-empty results
 
 ## Bug fixes
 
 * Fixed templates export/import functions failing due to glue object type issue
+* Fixed `get_comments()` empty result missing `task_id` and `project_id` columns
+* Fixed `get_all_reminders()` empty result missing `due_date` and `minute_offset` columns
 
 # rtodoist 0.3.0
 

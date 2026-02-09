@@ -55,7 +55,7 @@ upload_file <- function(file_path,
 #'
 #' @return NULL (invisible)
 #' @export
-#' @importFrom httr2 request req_headers req_body_json req_perform req_method
+#' @importFrom httr2 request req_headers req_body_json req_perform req_method req_error resp_status
 #' @importFrom glue glue
 #'
 #' @examples
@@ -78,6 +78,7 @@ delete_upload <- function(file_url,
       "Content-Type" = "application/json"
     ) %>%
     req_body_json(list(file_url = file_url)) %>%
+    req_error(is_error = function(resp) resp_status(resp) >= 400) %>%
     req_perform()
 
   invisible(NULL)
