@@ -317,7 +317,7 @@ delete_collaborator <- function(project_id = get_project_id(project_name = proje
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "collaborator_delete", "uuid": "{random_key()}", "args": {{"project_id": "{project_id}", "email": "{email}"}}}}]')
+    commands = glue('[{{"type": "collaborator_delete", "uuid": "{random_key()}", "args": {{"project_id": "{escape_json(project_id)}", "email": "{escape_json(email)}"}}}}]')
   )
 
   invisible(project_id)
@@ -351,7 +351,7 @@ accept_invitation <- function(invitation_id,
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "accept_invitation", "uuid": "{random_key()}", "args": {{"invitation_id": "{invitation_id}", "invitation_secret": "{invitation_secret}"}}}}]')
+    commands = glue('[{{"type": "accept_invitation", "uuid": "{random_key()}", "args": {{"invitation_id": "{escape_json(invitation_id)}", "invitation_secret": "{escape_json(invitation_secret)}"}}}}]')
   )
 
   invisible(NULL)
@@ -385,7 +385,7 @@ reject_invitation <- function(invitation_id,
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "reject_invitation", "uuid": "{random_key()}", "args": {{"invitation_id": "{invitation_id}", "invitation_secret": "{invitation_secret}"}}}}]')
+    commands = glue('[{{"type": "reject_invitation", "uuid": "{random_key()}", "args": {{"invitation_id": "{escape_json(invitation_id)}", "invitation_secret": "{escape_json(invitation_secret)}"}}}}]')
   )
 
   invisible(NULL)
@@ -417,7 +417,7 @@ delete_invitation <- function(invitation_id,
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "delete_invitation", "uuid": "{random_key()}", "args": {{"invitation_id": "{invitation_id}"}}}}]')
+    commands = glue('[{{"type": "delete_invitation", "uuid": "{random_key()}", "args": {{"invitation_id": "{escape_json(invitation_id)}"}}}}]')
   )
 
   invisible(NULL)

@@ -398,7 +398,7 @@ delete_task <- function(task_id,
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "item_delete", "uuid": "{random_key()}", "args": {{"id": "{task_id}"}}}}]')
+    commands = glue('[{{"type": "item_delete", "uuid": "{random_key()}", "args": {{"id": "{escape_json(task_id)}"}}}}]')
   )
 
   invisible(NULL)
@@ -430,7 +430,7 @@ close_task <- function(task_id,
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "item_close", "uuid": "{random_key()}", "args": {{"id": "{task_id}"}}}}]')
+    commands = glue('[{{"type": "item_close", "uuid": "{random_key()}", "args": {{"id": "{escape_json(task_id)}"}}}}]')
   )
 
   invisible(task_id)
@@ -462,7 +462,7 @@ reopen_task <- function(task_id,
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "item_uncomplete", "uuid": "{random_key()}", "args": {{"id": "{task_id}"}}}}]')
+    commands = glue('[{{"type": "item_uncomplete", "uuid": "{random_key()}", "args": {{"id": "{escape_json(task_id)}"}}}}]')
   )
 
   invisible(task_id)
@@ -688,7 +688,8 @@ update_task <- function(task_id,
     args_parts <- c(args_parts, glue('"due": {{"date": "{due_date}"}}'))
   }
   if (!is.null(labels)) {
-    labels_json <- paste0('"', labels, '"', collapse = ", ")
+    labels_escaped <- vapply(labels, escape_json, character(1), USE.NAMES = FALSE)
+    labels_json <- paste0('"', labels_escaped, '"', collapse = ", ")
     args_parts <- c(args_parts, glue('"labels": [{labels_json}]'))
   }
 
