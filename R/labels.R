@@ -252,7 +252,7 @@ delete_label <- function(label_id = get_label_id(label_name = label_name, token 
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "label_delete", "uuid": "{random_key()}", "args": {{"id": "{label_id}"}}}}]')
+    commands = glue('[{{"type": "label_delete", "uuid": "{random_key()}", "args": {{"id": "{escape_json(label_id)}"}}}}]')
   )
 
   invisible(NULL)

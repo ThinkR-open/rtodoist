@@ -205,7 +205,7 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
         glue('{{ "type": "{action_to_do}",
         "temp_id": "{random_key()}",
         "uuid": "{random_key()}",
-        "args": {{ "id": "{e}", "project_id": "{project_id}", "content": "{a_escaped}",
+        "args": {{ "id": "{escape_json(e)}", "project_id": "{escape_json(project_id)}", "content": "{a_escaped}",
         "responsible_uid" : {assigned_part}, "due" : {due_part},
         "section_id" : {sect_part} }}
       }}')
@@ -306,7 +306,7 @@ add_responsible_to_task <- function(project_id = get_project_id(project_name = p
         '[{{ "type": "item_update",
           "temp_id": "{random_key()}",
           "uuid": "{random_key()}",
-          "args": {{ "id": "{id_task}", "responsible_uid" : "{responsible_uid}"}}}}]'
+          "args": {{ "id": "{escape_json(id_task)}", "responsible_uid" : "{escape_json(responsible_uid)}"}}}}]'
       )
   )
   invisible(res)

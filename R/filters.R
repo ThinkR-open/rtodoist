@@ -256,7 +256,7 @@ delete_filter <- function(filter_id = get_filter_id(filter_name = filter_name, t
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "filter_delete", "uuid": "{random_key()}", "args": {{"id": "{filter_id}"}}}}]')
+    commands = glue('[{{"type": "filter_delete", "uuid": "{random_key()}", "args": {{"id": "{escape_json(filter_id)}"}}}}]')
   )
 
   invisible(NULL)
