@@ -161,7 +161,7 @@ delete_section <- function(section_id,
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "section_delete", "uuid": "{random_key()}", "args": {{"id": "{section_id}"}}}}]')
+    commands = glue('[{{"type": "section_delete", "uuid": "{random_key()}", "args": {{"id": "{escape_json(section_id)}"}}}}]')
   )
 
   invisible(NULL)
@@ -195,7 +195,7 @@ move_section <- function(section_id,
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "section_move", "uuid": "{random_key()}", "args": {{"id": "{section_id}", "project_id": "{project_id}"}}}}]')
+    commands = glue('[{{"type": "section_move", "uuid": "{random_key()}", "args": {{"id": "{escape_json(section_id)}", "project_id": "{escape_json(project_id)}"}}}}]')
   )
 
   invisible(section_id)
@@ -227,7 +227,7 @@ archive_section <- function(section_id,
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "section_archive", "uuid": "{random_key()}", "args": {{"id": "{section_id}"}}}}]')
+    commands = glue('[{{"type": "section_archive", "uuid": "{random_key()}", "args": {{"id": "{escape_json(section_id)}"}}}}]')
   )
 
   invisible(section_id)
@@ -259,7 +259,7 @@ unarchive_section <- function(section_id,
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "section_unarchive", "uuid": "{random_key()}", "args": {{"id": "{section_id}"}}}}]')
+    commands = glue('[{{"type": "section_unarchive", "uuid": "{random_key()}", "args": {{"id": "{escape_json(section_id)}"}}}}]')
   )
 
   invisible(section_id)

@@ -197,7 +197,7 @@ delete_project <- function(project_id = get_project_id(project_name = project_na
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "project_delete", "uuid": "{random_key()}", "args": {{"id": "{project_id}"}}}}]')
+    commands = glue('[{{"type": "project_delete", "uuid": "{random_key()}", "args": {{"id": "{escape_json(project_id)}"}}}}]')
   )
 
   invisible(NULL)
@@ -232,7 +232,7 @@ archive_project <- function(project_id = get_project_id(project_name = project_n
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "project_archive", "uuid": "{random_key()}", "args": {{"id": "{project_id}"}}}}]')
+    commands = glue('[{{"type": "project_archive", "uuid": "{random_key()}", "args": {{"id": "{escape_json(project_id)}"}}}}]')
   )
 
   invisible(project_id)
@@ -265,7 +265,7 @@ unarchive_project <- function(project_id,
   call_api(
     token = token,
     sync_token = "*",
-    commands = glue('[{{"type": "project_unarchive", "uuid": "{random_key()}", "args": {{"id": "{project_id}"}}}}]')
+    commands = glue('[{{"type": "project_unarchive", "uuid": "{random_key()}", "args": {{"id": "{escape_json(project_id)}"}}}}]')
   )
 
   invisible(project_id)
