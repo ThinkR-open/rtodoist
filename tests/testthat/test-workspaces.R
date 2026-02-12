@@ -59,14 +59,12 @@ test_that("workspace users dataframe has correct structure from fixture", {
 test_that("empty workspaces returns empty dataframe", {
   empty_response <- list(workspaces = list())
 
-  if (length(empty_response$workspaces) == 0) {
-    result <- data.frame(
-      id = character(),
-      name = character(),
-      is_default = logical(),
-      stringsAsFactors = FALSE
-    )
-  }
+  result <- data.frame(
+    id = character(),
+    name = character(),
+    is_default = logical(),
+    stringsAsFactors = FALSE
+  )
 
   expect_equal(nrow(result), 0)
   expect_true("id" %in% names(result))

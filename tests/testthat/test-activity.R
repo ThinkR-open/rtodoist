@@ -61,19 +61,17 @@ test_that("activity logs contain expected object types", {
 test_that("empty activity logs returns empty dataframe", {
   empty_response <- list(events = list())
 
-  if (length(empty_response$events) == 0) {
-    result <- data.frame(
-      id = character(),
-      object_type = character(),
-      object_id = character(),
-      event_type = character(),
-      event_date = character(),
-      initiator_id = character(),
-      parent_project_id = character(),
-      parent_item_id = character(),
-      stringsAsFactors = FALSE
-    )
-  }
+  result <- data.frame(
+    id = character(),
+    object_type = character(),
+    object_id = character(),
+    event_type = character(),
+    event_date = character(),
+    initiator_id = character(),
+    parent_project_id = character(),
+    parent_item_id = character(),
+    stringsAsFactors = FALSE
+  )
 
   expect_equal(nrow(result), 0)
   expect_true("id" %in% names(result))
