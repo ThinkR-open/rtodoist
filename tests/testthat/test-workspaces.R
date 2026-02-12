@@ -63,6 +63,7 @@ test_that("empty workspaces returns empty dataframe", {
     result <- data.frame(
       id = character(),
       name = character(),
+      is_default = logical(),
       stringsAsFactors = FALSE
     )
   }
@@ -70,6 +71,7 @@ test_that("empty workspaces returns empty dataframe", {
   expect_equal(nrow(result), 0)
   expect_true("id" %in% names(result))
   expect_true("name" %in% names(result))
+  expect_true("is_default" %in% names(result))
 })
 
 # Integration tests (require API token)

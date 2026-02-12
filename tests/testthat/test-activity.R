@@ -68,6 +68,9 @@ test_that("empty activity logs returns empty dataframe", {
       object_id = character(),
       event_type = character(),
       event_date = character(),
+      initiator_id = character(),
+      parent_project_id = character(),
+      parent_item_id = character(),
       stringsAsFactors = FALSE
     )
   }
@@ -75,6 +78,9 @@ test_that("empty activity logs returns empty dataframe", {
   expect_equal(nrow(result), 0)
   expect_true("id" %in% names(result))
   expect_true("event_type" %in% names(result))
+  expect_true("initiator_id" %in% names(result))
+  expect_true("parent_project_id" %in% names(result))
+  expect_true("parent_item_id" %in% names(result))
 })
 
 # Integration tests (require API token and premium account)
