@@ -492,6 +492,11 @@ move_task <- function(task_id,
                       verbose = TRUE,
                       token = get_todoist_api_token()) {
   force(token)
+  
+  # Validate that at least one destination argument is provided
+  if (is.null(project_id) && is.null(section_id) && is.null(parent_id)) {
+    stop("At least one of project_id, section_id, or parent_id must be provided")
+  }
 
   args_parts <- c(glue('"id": "{task_id}"'))
 

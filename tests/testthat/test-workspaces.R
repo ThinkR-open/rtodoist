@@ -59,17 +59,17 @@ test_that("workspace users dataframe has correct structure from fixture", {
 test_that("empty workspaces returns empty dataframe", {
   empty_response <- list(workspaces = list())
 
-  if (length(empty_response$workspaces) == 0) {
-    result <- data.frame(
-      id = character(),
-      name = character(),
-      stringsAsFactors = FALSE
-    )
-  }
+  result <- data.frame(
+    id = character(),
+    name = character(),
+    is_default = logical(),
+    stringsAsFactors = FALSE
+  )
 
   expect_equal(nrow(result), 0)
   expect_true("id" %in% names(result))
   expect_true("name" %in% names(result))
+  expect_true("is_default" %in% names(result))
 })
 
 # Integration tests (require API token)

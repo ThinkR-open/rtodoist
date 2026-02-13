@@ -8,7 +8,7 @@
 #'
 #' @return NULL (invisible)
 #' @export
-#' @importFrom httr2 request req_headers req_body_multipart req_perform req_error resp_status
+#' @importFrom httr2 request req_headers req_body_multipart req_perform req_error req_url_query resp_status
 #' @importFrom glue glue
 #'
 #' @examples
@@ -31,7 +31,8 @@ import_template <- function(project_id = get_project_id(project_name = project_n
     message(glue::glue("Importing template into project {project_id}"))
   }
 
-  request(as.character(glue("{TODOIST_REST_URL}templates/import_into_project?project_id={project_id}"))) %>%
+  request(as.character(glue("{TODOIST_REST_URL}templates/import_into_project"))) %>%
+    req_url_query(project_id = project_id) %>%
     req_headers(
       Authorization = glue::glue("Bearer {token}")
     ) %>%
