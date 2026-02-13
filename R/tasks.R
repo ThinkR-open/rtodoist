@@ -498,16 +498,16 @@ move_task <- function(task_id,
     stop("At least one of project_id, section_id, or parent_id must be provided")
   }
 
-  args_parts <- c(glue('"id": "{task_id}"'))
+  args_parts <- c(glue('"id": "{escape_json(task_id)}"'))
 
   if (!is.null(project_id)) {
-    args_parts <- c(args_parts, glue('"project_id": "{project_id}"'))
+    args_parts <- c(args_parts, glue('"project_id": "{escape_json(project_id)}"'))
   }
   if (!is.null(section_id)) {
-    args_parts <- c(args_parts, glue('"section_id": "{section_id}"'))
+    args_parts <- c(args_parts, glue('"section_id": "{escape_json(section_id)}"'))
   }
   if (!is.null(parent_id)) {
-    args_parts <- c(args_parts, glue('"parent_id": "{parent_id}"'))
+    args_parts <- c(args_parts, glue('"parent_id": "{escape_json(parent_id)}"'))
   }
 
   args_json <- paste(args_parts, collapse = ", ")

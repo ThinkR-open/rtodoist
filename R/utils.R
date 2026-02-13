@@ -47,6 +47,9 @@ TODOIST_REST_URL <- "https://api.todoist.com/api/v1/"
 #' @return list
 #' @importFrom httr2 request req_headers req_body_multipart req_perform resp_body_json req_error resp_status
 call_api <- function(..., url = TODOIST_SYNC_URL, token = get_todoist_api_token()) {
+  if (is.null(token) || !nzchar(token)) {
+    stop("API token is required. Use set_todoist_api_token() to configure it.")
+  }
 
   request(url) %>%
     req_headers(
@@ -68,6 +71,9 @@ call_api <- function(..., url = TODOIST_SYNC_URL, token = get_todoist_api_token(
 #' @return list
 #' @importFrom httr2 req_headers req_url_query req_perform resp_body_json request req_error resp_status
 call_api_rest <- function(endpoint, token = get_todoist_api_token(), ...) {
+  if (is.null(token) || !nzchar(token)) {
+    stop("API token is required. Use set_todoist_api_token() to configure it.")
+  }
 
   request(paste0(TODOIST_REST_URL, endpoint)) %>%
     req_headers(

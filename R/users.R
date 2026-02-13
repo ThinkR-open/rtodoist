@@ -110,7 +110,7 @@ add_user_in_project <- function(
     )
   ) 
   if (verbose) {
-    print(res)
+    message(res)
   }
   invisible(project_id)
 }
@@ -176,13 +176,8 @@ add_users_in_project <- function(project_id = get_project_id(project_name = proj
       # )
     )
     if (verbose) {
-      print(res)
+      message(res)
     }
-    
-    
-    
-    
-    
   }else{
     message("All users are already in this project")
   }
