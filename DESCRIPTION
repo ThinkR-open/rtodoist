@@ -33,11 +33,9 @@ Imports:
     utils
 Suggests:
     covr,
-    httptest2,
     jsonlite,
     knitr,
     lubridate,
-    mockery,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

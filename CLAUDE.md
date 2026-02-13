@@ -72,7 +72,7 @@ R CMD build .
 
 Uses testthat v3 with two test strategies:
 
-1. **Mocked tests** (`test-api-mocked.R`): Uses httptest2 with fixtures in `tests/testthat/fixtures/`. No API token required.
+1. **Unit tests** (`test-unit-logic.R`): Tests pure logic functions using fixture data from `tests/testthat/fixtures/`. No API token required.
 
 2. **Integration tests**: Require a valid API token. Skip automatically on CI/CRAN via helpers in `tests/testthat/helper.R`.
 
