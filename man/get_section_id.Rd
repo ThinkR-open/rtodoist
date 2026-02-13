@@ -2,7 +2,7 @@
 % Please edit documentation in R/section.R
 \name{get_section_id}
 \alias{get_section_id}
-\title{get id section}
+\title{Get section id}
 \usage{
 get_section_id(
   project_id = get_project_id(project_name = project_name, token = token),
@@ -23,6 +23,9 @@ get_section_id(
 
 \item{all_section}{all_section}
 }
+\value{
+section id (character). Returns 0 if section not found.
+}
 \description{
-get id section
+Get section id
 }

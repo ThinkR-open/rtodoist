@@ -1,10 +1,12 @@
-#' add section
+#' Add section
 #'
 #' @param section_name section name
 #' @param token todoist API token
 #' @param project_name name of the project
 #' @param project_id id of the project
 #' @param force boolean force section creation even if already exist
+#'
+#' @return section id (character)
 #' @importFrom glue glue
 #' @export
 #'
@@ -40,7 +42,7 @@ add_section <- function(section_name,
   get_section_id(project_id = project_id,section_name =  section_name,token =  token)
 }
 
-#' get id section
+#' Get section id
 #'
 #' @param project_name name of the project
 #' @param project_id id of the project
@@ -48,8 +50,8 @@ add_section <- function(section_name,
 #' @param all_section all_section
 #' @param token token
 #'
+#' @return section id (character). Returns 0 if section not found.
 #' @importFrom dplyr left_join
-#' @importFrom httr content
 #' @importFrom purrr pluck map_dfr
 #' @export
 get_section_id <- function(project_id = get_project_id(project_name = project_name,token = token),
@@ -97,7 +99,6 @@ get_section_from_project <- function(project_id, token = get_todoist_api_token()
     }
     cursor <- response$next_cursor
   }
-# browser()
   map_dfr(all_results, `[`, c("id", "name"))
 }
 

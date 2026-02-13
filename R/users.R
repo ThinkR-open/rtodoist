@@ -198,7 +198,6 @@ add_users_in_project <- function(project_id = get_project_id(project_name = proj
 #' @param project_id id of the project
 #' @importFrom purrr pluck map_df
 #' @importFrom dplyr filter
-#' @importFrom httr content
 #' @return dataframe of users in projects
 #' @export
 #'

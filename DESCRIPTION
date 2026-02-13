@@ -22,7 +22,6 @@ Imports:
     dplyr,
     getPass,
     glue,
-    httr,
     httr2,
     keyring,
     magrittr,
@@ -35,7 +34,6 @@ Suggests:
     covr,
     jsonlite,
     knitr,
-    lubridate,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

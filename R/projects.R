@@ -65,7 +65,6 @@ get_project_id <- function(
 #' @return id of the new project
 #' @export
 #' @importFrom purrr flatten map
-#' @importFrom httr content
 #' @importFrom glue glue
 #' @examples
 #' \dontrun{
