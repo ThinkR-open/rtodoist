@@ -542,7 +542,6 @@ Here's a complete example showing a typical workflow:
 
 ```{r}
 library(rtodoist)
-library(lubridate)
 
 # Create a new project
 project_id <- add_project("Q1 2024 Goals")
@@ -565,9 +564,9 @@ project_id %>%
       "Plan Q2 roadmap"
     ),
     due = c(
-      as.character(today() + days(7)),
-      as.character(today() + days(14)),
-      as.character(today() + months(1))
+      as.character(Sys.Date() + 7),
+      as.character(Sys.Date() + 14),
+      as.character(Sys.Date() + 30)
     ),
     section_name = c("Work", "Work", "Work")
   )
@@ -595,7 +594,7 @@ first_task_id <- tasks[[1]]$id
 
 add_reminder(
   task_id = first_task_id,
-  due_datetime = paste0(today() + days(6), "T09:00:00"),
+  due_datetime = paste0(Sys.Date() + 6, "T09:00:00"),
   type = "absolute"
 )
 
