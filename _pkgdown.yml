@@ -1,2 +1,175 @@
+url: https://thinkr-open.github.io/rtodoist/
+
 template:
-  package: thinkrtemplate
+  bootstrap: 5
+
+navbar:
+  structure:
+    left:  [intro, reference, articles, news]
+    right: [search, github]
+
+reference:
+  - title: "Token Management"
+    desc: "Functions for managing your Todoist API token"
+    contents:
+      - get_todoist_api_token
+      - set_todoist_api_token
+      - update_todoist_api_token
+      - delete_todoist_api_token
+      - ask_todoist_api_token
+
+  - title: "Projects"
+    desc: "Create, read, update, and delete projects"
+    contents:
+      - add_project
+      - get_project
+      - get_project_id
+      - get_all_projects
+      - get_archived_projects
+      - update_project
+      - archive_project
+      - unarchive_project
+      - delete_project
+
+  - title: "Tasks"
+    desc: "Manage tasks in your projects"
+    contents:
+      - add_tasks_in_project
+      - add_tasks_in_project_from_df
+      - add_responsible_to_task
+      - get_task
+      - get_tasks
+      - get_tasks_of_project
+      - get_tasks_by_filter
+      - get_completed_tasks
+      - update_task
+      - move_task
+      - close_task
+      - reopen_task
+      - delete_task
+      - quick_add_task
+
+  - title: "Sections"
+    desc: "Organize tasks with sections"
+    contents:
+      - add_section
+      - get_section
+      - get_section_id
+      - get_all_sections
+      - update_section
+      - move_section
+      - archive_section
+      - unarchive_section
+      - delete_section
+
+  - title: "Labels"
+    desc: "Tag tasks with labels"
+    contents:
+      - add_label
+      - get_label
+      - get_label_id
+      - get_all_labels
+      - get_shared_labels
+      - update_label
+      - rename_shared_label
+      - remove_shared_label
+      - delete_label
+
+  - title: "Comments"
+    desc: "Add comments to tasks and projects"
+    contents:
+      - add_comment
+      - get_comment
+      - get_comments
+      - update_comment
+      - delete_comment
+
+  - title: "Filters"
+    desc: "Create and manage custom filters"
+    contents:
+      - add_filter
+      - get_filter
+      - get_filter_id
+      - get_all_filters
+      - update_filter
+      - delete_filter
+
+  - title: "Reminders"
+    desc: "Set reminders for tasks"
+    contents:
+      - add_reminder
+      - get_all_reminders
+      - update_reminder
+      - delete_reminder
+
+  - title: "Collaboration"
+    desc: "Share projects and manage collaborators"
+    contents:
+      - add_user_in_project
+      - add_users_in_project
+      - get_all_users
+      - get_users_in_project
+      - delete_collaborator
+      - accept_invitation
+      - reject_invitation
+      - delete_invitation
+
+  - title: "User & Stats"
+    desc: "Get user information and productivity stats"
+    contents:
+      - get_user_info
+      - get_productivity_stats
+
+  - title: "Workspaces"
+    desc: "Manage workspaces (team features)"
+    contents:
+      - get_all_workspaces
+      - get_workspace_users
+      - update_workspace
+      - invite_to_workspace
+      - leave_workspace
+
+  - title: "Activity Logs"
+    desc: "View activity history"
+    contents:
+      - get_activity_logs
+
+  - title: "Backups"
+    desc: "Download account backups"
+    contents:
+      - get_backups
+      - download_backup
+
+  - title: "Templates"
+    desc: "Import and export project templates"
+    contents:
+      - export_template
+      - import_template
+
+  - title: "File Uploads"
+    desc: "Attach files to comments"
+    contents:
+      - upload_file
+      - delete_upload
+
+  - title: "Utilities"
+    desc: "Helper functions"
+    contents:
+      - get_all_data
+      - open_todoist_website_profile
+
+  - title: "Internal"
+    desc: "Internal functions (not for direct use)"
+    contents:
+      - call_api
+      - call_api_rest
+      - escape_json
+      - get_users_id
+      - random_key
+
+articles:
+  - title: "Getting Started"
+    navbar: ~
+    contents:
+      - how_it_works
+      - complete_guide
