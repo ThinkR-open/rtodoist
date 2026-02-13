@@ -1,0 +1,107 @@
+# How it works
+
+## 1 - Get the token
+
+The first step is to retrieve a token.
+
+Open todoist website to find it :
+
+``` r
+library(rtodoist)
+rtodoist::open_todoist_website_profile()
+token <- "YOURTOKEN" # copied and pasted from website
+```
+
+### Now save your token securly into R (one time per computer)
+
+We use {keyring} features to do it.
+
+``` r
+set_todoist_api_token(token)
+```
+
+## 2 - Now, let’s play !
+
+### Create new project, add tasks and users
+
+##### Add new project
+
+Don’t forget to store the result to reuse the identifier of the new
+project.
+
+``` r
+id_proj <- add_project(project_name = "test",verbose = TRUE) 
+```
+
+##### Add task to this project
+
+``` r
+id_proj %>%
+  add_tasks_in_project("my_tasks")
+```
+
+##### Add users to this porject
+
+``` r
+id_proj %>%
+  add_users_in_project(users_email = "your@mail.fr")
+```
+
+##### All in the same time
+
+``` r
+id <-  add_project(project_name = "test",verbose = TRUE) %>%
+  add_tasks_in_project(tasks = 
+                         c("First task",
+                              "Second task")
+                       )
+id <-  add_project(project_name = "test",verbose = TRUE) %>%
+  add_tasks_in_project(tasks = 
+                         c("First task",
+                              "Second task")
+                       )
+id %>%
+  add_responsible_to_task("First task", add_responsible = "user2@mail.com")
+```
+
+##### More specific :
+
+You can set multiple task at ones, you can set muliple responsibles, due
+dates and section if you use vectors, the order is important, and the
+matching will be done term by term
+
+**multiple** tasks for **one** responsible with **one** due dates
+
+``` r
+id_proj %>%
+  add_tasks_in_project(tasks = c("t1","t2"),responsible = c("user1@mail.com"),due = Sys.Date())
+```
+
+**multiple** tasks for **one** responsible with **multiple** due dates
+
+``` r
+id_proj %>%
+  add_tasks_in_project(tasks = c("t1","t2"),responsible = c("user1@mail.com"),due = Sys.Date() + 1:2)
+```
+
+**multiple** tasks for **multiple** responsible with **on** due dates on
+many section
+
+``` r
+id_proj %>%
+  add_tasks_in_project(tasks = c("t1","t2"),responsible = c("user1@mail.com","user2@mail.com"),due = Sys.Date(),section_name = c("S1","S2"))
+```
+
+you can pass a data.frame using `add_tasks_in_project_from_df`
+
+``` r
+
+tasks_df <- data.frame(
+  "tasks" = LETTERS[1:5],
+  "responsible" = glue::glue("user{1:5}@mail.com"),
+  "due" = Sys.Date() + 1:5,
+  "section_name" = c("S1","S1","S3","S3","S3")
+)
+
+add_tasks_in_project_from_df(project_id = id_proj,tasks_as_df = tasks_df)
+```

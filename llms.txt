@@ -1,0 +1,310 @@
+# rtodoist ![](reference/figures/logo.png)
+
+This package allows to use the todoist API. You will be able to add
+projects and tasks to your todoist account.
+
+To find information about todoist API :
+
+<https://developer.todoist.com/api/v1/>
+
+## Installation
+
+You can install from CRAN :
+
+``` r
+install.packages("rtodoist")
+```
+
+You can install the development version of rtodoist with:
+
+``` r
+remotes::install_github("ThinkR-open/rtodoist")
+```
+
+## Example
+
+``` r
+library(rtodoist)
+
+add_project("test") %>%
+  add_tasks_in_project("my_task")
+```
+
+To find more details about the features, look at the ‘How it works’
+vignette.
+
+# Package index
+
+## Token Management
+
+Functions for managing your Todoist API token
+
+- [`get_todoist_api_token()`](https://thinkr-open.github.io/rtodoist/reference/get_todoist_api_token.md)
+  : Get token stored by keyring
+- [`set_todoist_api_token()`](https://thinkr-open.github.io/rtodoist/reference/set_todoist_api_token.md)
+  : Set todoist API token
+- [`update_todoist_api_token()`](https://thinkr-open.github.io/rtodoist/reference/update_todoist_api_token.md)
+  : Update Todoist Api Token
+- [`delete_todoist_api_token()`](https://thinkr-open.github.io/rtodoist/reference/delete_todoist_api_token.md)
+  : Delete todoist api token
+- [`ask_todoist_api_token()`](https://thinkr-open.github.io/rtodoist/reference/ask_todoist_api_token.md)
+  : Pop-up to save the token
+
+## Projects
+
+Create, read, update, and delete projects
+
+- [`add_project()`](https://thinkr-open.github.io/rtodoist/reference/add_project.md)
+  : Add a new project
+- [`get_project()`](https://thinkr-open.github.io/rtodoist/reference/get_project.md)
+  : Get a single project by ID
+- [`get_project_id()`](https://thinkr-open.github.io/rtodoist/reference/get_project_id.md)
+  : Get id of project
+- [`get_all_projects()`](https://thinkr-open.github.io/rtodoist/reference/get_all_projects.md)
+  : List of projects
+- [`get_archived_projects()`](https://thinkr-open.github.io/rtodoist/reference/get_archived_projects.md)
+  : Get archived projects
+- [`update_project()`](https://thinkr-open.github.io/rtodoist/reference/update_project.md)
+  : Update a project
+- [`archive_project()`](https://thinkr-open.github.io/rtodoist/reference/archive_project.md)
+  : Archive a project
+- [`unarchive_project()`](https://thinkr-open.github.io/rtodoist/reference/unarchive_project.md)
+  : Unarchive a project
+- [`delete_project()`](https://thinkr-open.github.io/rtodoist/reference/delete_project.md)
+  : Delete a project
+
+## Tasks
+
+Manage tasks in your projects
+
+- [`add_tasks_in_project()`](https://thinkr-open.github.io/rtodoist/reference/add_tasks_in_project.md)
+  : Add tasks in project
+- [`add_tasks_in_project_from_df()`](https://thinkr-open.github.io/rtodoist/reference/add_tasks_in_project_from_df.md)
+  : Add tasks in project
+- [`add_responsible_to_task()`](https://thinkr-open.github.io/rtodoist/reference/add_responsible_to_task.md)
+  : Add responsible to a task
+- [`get_task()`](https://thinkr-open.github.io/rtodoist/reference/get_task.md)
+  : Get a single task by ID
+- [`get_tasks()`](https://thinkr-open.github.io/rtodoist/reference/get_tasks.md)
+  : List of tasks
+- [`get_tasks_of_project()`](https://thinkr-open.github.io/rtodoist/reference/get_tasks_of_project.md)
+  : List of tasks of project
+- [`get_tasks_by_filter()`](https://thinkr-open.github.io/rtodoist/reference/get_tasks_by_filter.md)
+  : Get tasks by filter query
+- [`get_completed_tasks()`](https://thinkr-open.github.io/rtodoist/reference/get_completed_tasks.md)
+  : Get completed tasks
+- [`update_task()`](https://thinkr-open.github.io/rtodoist/reference/update_task.md)
+  : Update a task
+- [`move_task()`](https://thinkr-open.github.io/rtodoist/reference/move_task.md)
+  : Move a task to another project or section
+- [`close_task()`](https://thinkr-open.github.io/rtodoist/reference/close_task.md)
+  : Close (complete) a task
+- [`reopen_task()`](https://thinkr-open.github.io/rtodoist/reference/reopen_task.md)
+  : Reopen (uncomplete) a task
+- [`delete_task()`](https://thinkr-open.github.io/rtodoist/reference/delete_task.md)
+  : Delete a task
+- [`quick_add_task()`](https://thinkr-open.github.io/rtodoist/reference/quick_add_task.md)
+  : Quick add a task using natural language
+
+## Sections
+
+Organize tasks with sections
+
+- [`add_section()`](https://thinkr-open.github.io/rtodoist/reference/add_section.md)
+  : Add section
+- [`get_section()`](https://thinkr-open.github.io/rtodoist/reference/get_section.md)
+  : Get a single section by ID
+- [`get_section_id()`](https://thinkr-open.github.io/rtodoist/reference/get_section_id.md)
+  : Get section id
+- [`get_all_sections()`](https://thinkr-open.github.io/rtodoist/reference/get_all_sections.md)
+  : Get all sections
+- [`update_section()`](https://thinkr-open.github.io/rtodoist/reference/update_section.md)
+  : Update a section
+- [`move_section()`](https://thinkr-open.github.io/rtodoist/reference/move_section.md)
+  : Move a section to another project
+- [`archive_section()`](https://thinkr-open.github.io/rtodoist/reference/archive_section.md)
+  : Archive a section
+- [`unarchive_section()`](https://thinkr-open.github.io/rtodoist/reference/unarchive_section.md)
+  : Unarchive a section
+- [`delete_section()`](https://thinkr-open.github.io/rtodoist/reference/delete_section.md)
+  : Delete a section
+
+## Labels
+
+Tag tasks with labels
+
+- [`add_label()`](https://thinkr-open.github.io/rtodoist/reference/add_label.md)
+  : Add a new label
+- [`get_label()`](https://thinkr-open.github.io/rtodoist/reference/get_label.md)
+  : Get a single label by ID
+- [`get_label_id()`](https://thinkr-open.github.io/rtodoist/reference/get_label_id.md)
+  : Get label id by name
+- [`get_all_labels()`](https://thinkr-open.github.io/rtodoist/reference/get_all_labels.md)
+  : Get all labels
+- [`get_shared_labels()`](https://thinkr-open.github.io/rtodoist/reference/get_shared_labels.md)
+  : Get shared labels
+- [`update_label()`](https://thinkr-open.github.io/rtodoist/reference/update_label.md)
+  : Update a label
+- [`rename_shared_label()`](https://thinkr-open.github.io/rtodoist/reference/rename_shared_label.md)
+  : Rename a shared label
+- [`remove_shared_label()`](https://thinkr-open.github.io/rtodoist/reference/remove_shared_label.md)
+  : Remove a shared label
+- [`delete_label()`](https://thinkr-open.github.io/rtodoist/reference/delete_label.md)
+  : Delete a label
+
+## Comments
+
+Add comments to tasks and projects
+
+- [`add_comment()`](https://thinkr-open.github.io/rtodoist/reference/add_comment.md)
+  : Add a comment to a task or project
+- [`get_comment()`](https://thinkr-open.github.io/rtodoist/reference/get_comment.md)
+  : Get a single comment by ID
+- [`get_comments()`](https://thinkr-open.github.io/rtodoist/reference/get_comments.md)
+  : Get comments
+- [`update_comment()`](https://thinkr-open.github.io/rtodoist/reference/update_comment.md)
+  : Update a comment
+- [`delete_comment()`](https://thinkr-open.github.io/rtodoist/reference/delete_comment.md)
+  : Delete a comment
+
+## Filters
+
+Create and manage custom filters
+
+- [`add_filter()`](https://thinkr-open.github.io/rtodoist/reference/add_filter.md)
+  : Add a new filter
+- [`get_filter()`](https://thinkr-open.github.io/rtodoist/reference/get_filter.md)
+  : Get a single filter by ID
+- [`get_filter_id()`](https://thinkr-open.github.io/rtodoist/reference/get_filter_id.md)
+  : Get filter id by name
+- [`get_all_filters()`](https://thinkr-open.github.io/rtodoist/reference/get_all_filters.md)
+  : Get all filters
+- [`update_filter()`](https://thinkr-open.github.io/rtodoist/reference/update_filter.md)
+  : Update a filter
+- [`delete_filter()`](https://thinkr-open.github.io/rtodoist/reference/delete_filter.md)
+  : Delete a filter
+
+## Reminders
+
+Set reminders for tasks
+
+- [`add_reminder()`](https://thinkr-open.github.io/rtodoist/reference/add_reminder.md)
+  : Add a reminder to a task
+- [`get_all_reminders()`](https://thinkr-open.github.io/rtodoist/reference/get_all_reminders.md)
+  : Get all reminders
+- [`update_reminder()`](https://thinkr-open.github.io/rtodoist/reference/update_reminder.md)
+  : Update a reminder
+- [`delete_reminder()`](https://thinkr-open.github.io/rtodoist/reference/delete_reminder.md)
+  : Delete a reminder
+
+## Collaboration
+
+Share projects and manage collaborators
+
+- [`add_user_in_project()`](https://thinkr-open.github.io/rtodoist/reference/add_user_in_project.md)
+  : Add one user
+- [`add_users_in_project()`](https://thinkr-open.github.io/rtodoist/reference/add_users_in_project.md)
+  : Add a list of users
+- [`get_all_users()`](https://thinkr-open.github.io/rtodoist/reference/get_all_users.md)
+  : Get users
+- [`get_users_in_project()`](https://thinkr-open.github.io/rtodoist/reference/get_users_in_project.md)
+  : Get users in projects
+- [`delete_collaborator()`](https://thinkr-open.github.io/rtodoist/reference/delete_collaborator.md)
+  : Delete a collaborator from a project
+- [`accept_invitation()`](https://thinkr-open.github.io/rtodoist/reference/accept_invitation.md)
+  : Accept a project invitation
+- [`reject_invitation()`](https://thinkr-open.github.io/rtodoist/reference/reject_invitation.md)
+  : Reject a project invitation
+- [`delete_invitation()`](https://thinkr-open.github.io/rtodoist/reference/delete_invitation.md)
+  : Delete an invitation
+
+## User & Stats
+
+Get user information and productivity stats
+
+- [`get_user_info()`](https://thinkr-open.github.io/rtodoist/reference/get_user_info.md)
+  : Get current user info
+- [`get_productivity_stats()`](https://thinkr-open.github.io/rtodoist/reference/get_productivity_stats.md)
+  : Get productivity stats
+
+## Workspaces
+
+Manage workspaces (team features)
+
+- [`get_all_workspaces()`](https://thinkr-open.github.io/rtodoist/reference/get_all_workspaces.md)
+  : Get all workspaces
+- [`get_workspace_users()`](https://thinkr-open.github.io/rtodoist/reference/get_workspace_users.md)
+  : Get workspace users
+- [`update_workspace()`](https://thinkr-open.github.io/rtodoist/reference/update_workspace.md)
+  : Update a workspace
+- [`invite_to_workspace()`](https://thinkr-open.github.io/rtodoist/reference/invite_to_workspace.md)
+  : Invite user to workspace
+- [`leave_workspace()`](https://thinkr-open.github.io/rtodoist/reference/leave_workspace.md)
+  : Leave a workspace
+
+## Activity Logs
+
+View activity history
+
+- [`get_activity_logs()`](https://thinkr-open.github.io/rtodoist/reference/get_activity_logs.md)
+  : Get activity logs
+
+## Backups
+
+Download account backups
+
+- [`get_backups()`](https://thinkr-open.github.io/rtodoist/reference/get_backups.md)
+  : Get list of backups
+- [`download_backup()`](https://thinkr-open.github.io/rtodoist/reference/download_backup.md)
+  : Download a backup
+
+## Templates
+
+Import and export project templates
+
+- [`export_template()`](https://thinkr-open.github.io/rtodoist/reference/export_template.md)
+  : Export a project as a template
+- [`import_template()`](https://thinkr-open.github.io/rtodoist/reference/import_template.md)
+  : Import a template into a project
+
+## File Uploads
+
+Attach files to comments
+
+- [`upload_file()`](https://thinkr-open.github.io/rtodoist/reference/upload_file.md)
+  : Upload a file
+- [`delete_upload()`](https://thinkr-open.github.io/rtodoist/reference/delete_upload.md)
+  : Delete an uploaded file
+
+## Utilities
+
+Helper functions
+
+- [`get_all_data()`](https://thinkr-open.github.io/rtodoist/reference/get_all_data.md)
+  : Get all objects inside a list
+- [`open_todoist_website_profile()`](https://thinkr-open.github.io/rtodoist/reference/open_todoist_website_profile.md)
+  : Open todoist website
+
+## Internal
+
+Internal functions (not for direct use)
+
+- [`call_api()`](https://thinkr-open.github.io/rtodoist/reference/call_api.md)
+  : Call the Sync API
+- [`call_api_rest()`](https://thinkr-open.github.io/rtodoist/reference/call_api_rest.md)
+  : Call the REST API
+- [`escape_json()`](https://thinkr-open.github.io/rtodoist/reference/escape_json.md)
+  : Escape special characters for JSON
+- [`get_users_id()`](https://thinkr-open.github.io/rtodoist/reference/get_users_id.md)
+  : Get users id
+- [`random_key()`](https://thinkr-open.github.io/rtodoist/reference/random_key.md)
+  : Random key
+
+# Articles
+
+### Getting Started
+
+- [How it
+  works](https://thinkr-open.github.io/rtodoist/articles/how_it_works.md):
+- [Complete Guide to
+  rtodoist](https://thinkr-open.github.io/rtodoist/articles/complete_guide.md):
