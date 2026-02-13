@@ -3,6 +3,7 @@
 test_that("add_section creates a section and returns ID", {
   skip_on_cran()
   skip_if_no_token()
+  skip_if_test_project_missing()
 
   proj_id <- get_project_id(TEST_PROJECT_NAME, create = FALSE)
   unique_section <- paste0("Test_Section_", format(Sys.time(), "%H%M%S"))
@@ -19,6 +20,7 @@ test_that("add_section creates a section and returns ID", {
 test_that("add_section with force=FALSE returns existing section ID", {
   skip_on_cran()
   skip_if_no_token()
+  skip_if_test_project_missing()
 
   proj_id <- get_project_id(TEST_PROJECT_NAME, create = FALSE)
   section_name <- "Section A - Preparation"
@@ -41,6 +43,7 @@ test_that("add_section with force=FALSE returns existing section ID", {
 test_that("get_section_id returns correct ID for existing section", {
   skip_on_cran()
   skip_if_no_token()
+  skip_if_test_project_missing()
 
   proj_id <- get_project_id(TEST_PROJECT_NAME, create = FALSE)
 
@@ -64,6 +67,7 @@ test_that("get_section_id returns correct ID for existing section", {
 test_that("get_section_id returns vector for multiple sections", {
   skip_on_cran()
   skip_if_no_token()
+  skip_if_test_project_missing()
 
   proj_id <- get_project_id(TEST_PROJECT_NAME, create = FALSE)
 
@@ -79,6 +83,7 @@ test_that("get_section_id returns vector for multiple sections", {
 test_that("get_section_id returns 0 for non-existent section", {
   skip_on_cran()
   skip_if_no_token()
+  skip_if_test_project_missing()
 
   proj_id <- get_project_id(TEST_PROJECT_NAME, create = FALSE)
 

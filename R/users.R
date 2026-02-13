@@ -110,7 +110,7 @@ add_user_in_project <- function(
     )
   ) 
   if (verbose) {
-    print(res)
+    message(res)
   }
   invisible(project_id)
 }
@@ -176,13 +176,8 @@ add_users_in_project <- function(project_id = get_project_id(project_name = proj
       # )
     )
     if (verbose) {
-      print(res)
+      message(res)
     }
-    
-    
-    
-    
-    
   }else{
     message("All users are already in this project")
   }
@@ -198,7 +193,6 @@ add_users_in_project <- function(project_id = get_project_id(project_name = proj
 #' @param project_id id of the project
 #' @importFrom purrr pluck map_df
 #' @importFrom dplyr filter
-#' @importFrom httr content
 #' @return dataframe of users in projects
 #' @export
 #'
@@ -218,12 +212,208 @@ get_users_in_project<- function( project_id = get_project_id(project_name = proj
       pluck("collaborator_states") %>%
       map_df(`[`, c("project_id", "user_id"))  %>%
       dplyr::filter(project_id == !!project_id)
-    
-    
+
+
     if (nrow(out) == 0) {
       out <- data.frame(project_id = character(), user_id = character())
-      
+
     }
     out
   }
+
+#' Get current user info
+#'
+#' @param token todoist API token
+#'
+#' @return list with user information
+#' @export
+#' @importFrom purrr pluck
+#'
+#' @examples
+#' \dontrun{
+#' get_user_info()
+#' }
+get_user_info <- function(token = get_todoist_api_token()) {
+  force(token)
+
+  result <- call_api(
+    token = token,
+    sync_token = "*",
+    resource_types = '["user"]'
+  )
+
+  result %>% pluck("user")
+}
+
+#' Get productivity stats
+#'
+#' @param token todoist API token
+#'
+#' @return list with productivity statistics
+#' @export
+#' @importFrom purrr pluck
+#'
+#' @examples
+#' \dontrun{
+#' get_productivity_stats()
+#' }
+get_productivity_stats <- function(token = get_todoist_api_token()) {
+  force(token)
+
+  result <- call_api(
+    token = token,
+    sync_token = "*",
+    resource_types = '["user"]'
+  )
+
+  user <- result %>% pluck("user")
+  if (is.null(user)) {
+    return(list())
+  }
+
+  list(
+    karma = user$karma,
+    karma_trend = user$karma_trend,
+    completed_today = user$completed_today,
+    days_items = user$days_items,
+    week_items = user$week_items
+  )
+}
+
+#' Delete a collaborator from a project
+#'
+#' @param project_id id of the project
+#' @param project_name name of the project (for lookup if project_id not provided)
+#' @param email email of the collaborator to remove
+#' @param verbose boolean that make the function verbose
+#' @param token todoist API token
+#'
+#' @return id of the project (invisible)
+#' @export
+#' @importFrom glue glue
+#'
+#' @examples
+#' \dontrun{
+#' delete_collaborator(project_name = "my_proj", email = "user@example.com")
+#' }
+delete_collaborator <- function(project_id = get_project_id(project_name = project_name, token = token, create = FALSE),
+                                project_name,
+                                email,
+                                verbose = TRUE,
+                                token = get_todoist_api_token()) {
+  force(project_id)
+  force(token)
+
+  if (verbose) {
+    message(glue::glue("Removing {email} from project {project_id}"))
+  }
+
+  call_api(
+    token = token,
+    sync_token = "*",
+    commands = glue('[{{"type": "collaborator_delete", "uuid": "{random_key()}", "args": {{"project_id": "{escape_json(project_id)}", "email": "{escape_json(email)}"}}}}]')
+  )
+
+  invisible(project_id)
+}
+
+#' Accept a project invitation
+#'
+#' @param invitation_id id of the invitation
+#' @param invitation_secret secret of the invitation
+#' @param verbose boolean that make the function verbose
+#' @param token todoist API token
+#'
+#' @return NULL (invisible)
+#' @export
+#' @importFrom glue glue
+#'
+#' @examples
+#' \dontrun{
+#' accept_invitation("12345", "secret123")
+#' }
+accept_invitation <- function(invitation_id,
+                              invitation_secret,
+                              verbose = TRUE,
+                              token = get_todoist_api_token()) {
+  force(token)
+
+  if (verbose) {
+    message(glue::glue("Accepting invitation {invitation_id}"))
+  }
+
+  call_api(
+    token = token,
+    sync_token = "*",
+    commands = glue('[{{"type": "accept_invitation", "uuid": "{random_key()}", "args": {{"invitation_id": "{escape_json(invitation_id)}", "invitation_secret": "{escape_json(invitation_secret)}"}}}}]')
+  )
+
+  invisible(NULL)
+}
+
+#' Reject a project invitation
+#'
+#' @param invitation_id id of the invitation
+#' @param invitation_secret secret of the invitation
+#' @param verbose boolean that make the function verbose
+#' @param token todoist API token
+#'
+#' @return NULL (invisible)
+#' @export
+#' @importFrom glue glue
+#'
+#' @examples
+#' \dontrun{
+#' reject_invitation("12345", "secret123")
+#' }
+reject_invitation <- function(invitation_id,
+                              invitation_secret,
+                              verbose = TRUE,
+                              token = get_todoist_api_token()) {
+  force(token)
+
+  if (verbose) {
+    message(glue::glue("Rejecting invitation {invitation_id}"))
+  }
+
+  call_api(
+    token = token,
+    sync_token = "*",
+    commands = glue('[{{"type": "reject_invitation", "uuid": "{random_key()}", "args": {{"invitation_id": "{escape_json(invitation_id)}", "invitation_secret": "{escape_json(invitation_secret)}"}}}}]')
+  )
+
+  invisible(NULL)
+}
+
+#' Delete an invitation
+#'
+#' @param invitation_id id of the invitation
+#' @param verbose boolean that make the function verbose
+#' @param token todoist API token
+#'
+#' @return NULL (invisible)
+#' @export
+#' @importFrom glue glue
+#'
+#' @examples
+#' \dontrun{
+#' delete_invitation("12345")
+#' }
+delete_invitation <- function(invitation_id,
+                              verbose = TRUE,
+                              token = get_todoist_api_token()) {
+  force(token)
+
+  if (verbose) {
+    message(glue::glue("Deleting invitation {invitation_id}"))
+  }
+
+  call_api(
+    token = token,
+    sync_token = "*",
+    commands = glue('[{{"type": "delete_invitation", "uuid": "{random_key()}", "args": {{"invitation_id": "{escape_json(invitation_id)}"}}}}]')
+  )
+
+  invisible(NULL)
+}
 

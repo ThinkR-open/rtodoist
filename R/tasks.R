@@ -205,7 +205,7 @@ add_tasks_in_project <- function(project_id = get_project_id(project_name = proj
         glue('{{ "type": "{action_to_do}",
         "temp_id": "{random_key()}",
         "uuid": "{random_key()}",
-        "args": {{ "id": "{e}", "project_id": "{project_id}", "content": "{a_escaped}",
+        "args": {{ "id": "{escape_json(e)}", "project_id": "{escape_json(project_id)}", "content": "{a_escaped}",
         "responsible_uid" : {assigned_part}, "due" : {due_part},
         "section_id" : {sect_part} }}
       }}')
@@ -306,7 +306,7 @@ add_responsible_to_task <- function(project_id = get_project_id(project_name = p
         '[{{ "type": "item_update",
           "temp_id": "{random_key()}",
           "uuid": "{random_key()}",
-          "args": {{ "id": "{id_task}", "responsible_uid" : "{responsible_uid}"}}}}]'
+          "args": {{ "id": "{escape_json(id_task)}", "responsible_uid" : "{escape_json(responsible_uid)}"}}}}]'
       )
   )
   invisible(res)
@@ -370,4 +370,345 @@ not_used <- setdiff(names(tasks_as_df),c("tasks","responsible","due","section_na
   
   if (check_only) {return(out)}
   project_id
+}
+
+#' Delete a task
+#'
+#' @param task_id id of the task to delete
+#' @param verbose boolean that make the function verbose
+#' @param token todoist API token
+#'
+#' @return NULL (invisible)
+#' @export
+#' @importFrom glue glue
+#'
+#' @examples
+#' \dontrun{
+#' delete_task("12345")
+#' }
+delete_task <- function(task_id,
+                        verbose = TRUE,
+                        token = get_todoist_api_token()) {
+  force(token)
+
+  if (verbose) {
+    message(glue::glue("Deleting task {task_id}"))
+  }
+
+  call_api(
+    token = token,
+    sync_token = "*",
+    commands = glue('[{{"type": "item_delete", "uuid": "{random_key()}", "args": {{"id": "{escape_json(task_id)}"}}}}]')
+  )
+
+  invisible(NULL)
+}
+
+#' Close (complete) a task
+#'
+#' @param task_id id of the task to close
+#' @param verbose boolean that make the function verbose
+#' @param token todoist API token
+#'
+#' @return id of the closed task (invisible)
+#' @export
+#' @importFrom glue glue
+#'
+#' @examples
+#' \dontrun{
+#' close_task("12345")
+#' }
+close_task <- function(task_id,
+                       verbose = TRUE,
+                       token = get_todoist_api_token()) {
+  force(token)
+
+  if (verbose) {
+    message(glue::glue("Closing task {task_id}"))
+  }
+
+  call_api(
+    token = token,
+    sync_token = "*",
+    commands = glue('[{{"type": "item_close", "uuid": "{random_key()}", "args": {{"id": "{escape_json(task_id)}"}}}}]')
+  )
+
+  invisible(task_id)
+}
+
+#' Reopen (uncomplete) a task
+#'
+#' @param task_id id of the task to reopen
+#' @param verbose boolean that make the function verbose
+#' @param token todoist API token
+#'
+#' @return id of the reopened task (invisible)
+#' @export
+#' @importFrom glue glue
+#'
+#' @examples
+#' \dontrun{
+#' reopen_task("12345")
+#' }
+reopen_task <- function(task_id,
+                        verbose = TRUE,
+                        token = get_todoist_api_token()) {
+  force(token)
+
+  if (verbose) {
+    message(glue::glue("Reopening task {task_id}"))
+  }
+
+  call_api(
+    token = token,
+    sync_token = "*",
+    commands = glue('[{{"type": "item_uncomplete", "uuid": "{random_key()}", "args": {{"id": "{escape_json(task_id)}"}}}}]')
+  )
+
+  invisible(task_id)
+}
+
+#' Move a task to another project or section
+#'
+#' @param task_id id of the task to move
+#' @param project_id new project id (optional)
+#' @param section_id new section id (optional)
+#' @param parent_id new parent task id (optional)
+#' @param verbose boolean that make the function verbose
+#' @param token todoist API token
+#'
+#' @return id of the moved task (invisible)
+#' @export
+#' @importFrom glue glue
+#'
+#' @examples
+#' \dontrun{
+#' move_task("12345", project_id = "67890")
+#' }
+move_task <- function(task_id,
+                      project_id = NULL,
+                      section_id = NULL,
+                      parent_id = NULL,
+                      verbose = TRUE,
+                      token = get_todoist_api_token()) {
+  force(token)
+  
+  # Validate that at least one destination argument is provided
+  if (is.null(project_id) && is.null(section_id) && is.null(parent_id)) {
+    stop("At least one of project_id, section_id, or parent_id must be provided")
+  }
+
+  args_parts <- c(glue('"id": "{escape_json(task_id)}"'))
+
+  if (!is.null(project_id)) {
+    args_parts <- c(args_parts, glue('"project_id": "{escape_json(project_id)}"'))
+  }
+  if (!is.null(section_id)) {
+    args_parts <- c(args_parts, glue('"section_id": "{escape_json(section_id)}"'))
+  }
+  if (!is.null(parent_id)) {
+    args_parts <- c(args_parts, glue('"parent_id": "{escape_json(parent_id)}"'))
+  }
+
+  args_json <- paste(args_parts, collapse = ", ")
+
+  if (verbose) {
+    message(glue::glue("Moving task {task_id}"))
+  }
+
+  call_api(
+    token = token,
+    sync_token = "*",
+    commands = glue('[{{"type": "item_move", "uuid": "{random_key()}", "args": {{{args_json}}}}}]')
+  )
+
+  invisible(task_id)
+}
+
+#' Get completed tasks
+#'
+#' @param project_id project id to filter by (optional)
+#' @param since return tasks completed since this date (optional, format: YYYY-MM-DDTHH:MM:SS)
+#' @param until return tasks completed until this date (optional, format: YYYY-MM-DDTHH:MM:SS)
+#' @param limit maximum number of tasks to return (default 50, max 200)
+#' @param token todoist API token
+#'
+#' @return tibble of completed tasks
+#' @export
+#' @importFrom purrr map_dfr
+#'
+#' @examples
+#' \dontrun{
+#' get_completed_tasks()
+#' get_completed_tasks(project_id = "12345")
+#' }
+get_completed_tasks <- function(project_id = NULL,
+                                since = NULL,
+                                until = NULL,
+                                limit = 50,
+                                token = get_todoist_api_token()) {
+  force(token)
+
+  params <- list(limit = limit)
+  if (!is.null(project_id)) params$project_id <- project_id
+  if (!is.null(since)) params$since <- since
+  if (!is.null(until)) params$until <- until
+
+  all_results <- list()
+  cursor <- NULL
+
+  repeat {
+    params$cursor <- cursor
+    response <- do.call(call_api_rest, c(list("tasks/completed/by_completion_date", token = token), params))
+
+    if (!is.null(response$items)) {
+      all_results <- c(all_results, response$items)
+    }
+
+    if (is.null(response$next_cursor)) {
+      break
+    }
+    cursor <- response$next_cursor
+  }
+
+  if (length(all_results) == 0) {
+    return(data.frame(
+      id = character(),
+      content = character(),
+      project_id = character(),
+      completed_at = character(),
+      stringsAsFactors = FALSE
+    ))
+  }
+
+  map_dfr(all_results, function(x) {
+    data.frame(
+      id = x$id %||% NA_character_,
+      content = x$content %||% NA_character_,
+      project_id = x$project_id %||% NA_character_,
+      completed_at = x$completed_at %||% NA_character_,
+      stringsAsFactors = FALSE
+    )
+  })
+}
+
+#' Quick add a task using natural language
+#'
+#' @param text natural language text for the task
+#' @param verbose boolean that make the function verbose
+#' @param token todoist API token
+#'
+#' @return task object
+#' @export
+#' @importFrom httr2 request req_headers req_body_json req_perform resp_body_json req_error resp_status
+#'
+#' @examples
+#' \dontrun{
+#' quick_add_task("Buy milk tomorrow at 5pm #Shopping")
+#' }
+quick_add_task <- function(text,
+                           verbose = TRUE,
+                           token = get_todoist_api_token()) {
+  force(token)
+
+  if (verbose) {
+    message(glue::glue("Quick adding task: {text}"))
+  }
+
+  result <- request(paste0(TODOIST_REST_URL, "tasks/quick")) %>%
+    req_headers(
+      Authorization = glue::glue("Bearer {token}"),
+      "Content-Type" = "application/json"
+    ) %>%
+    req_body_json(list(text = text)) %>%
+    req_error(is_error = function(resp) resp_status(resp) >= 400) %>%
+    req_perform() %>%
+    resp_body_json()
+
+  result
+}
+
+#' Get a single task by ID
+#'
+#' @param task_id id of the task
+#' @param token todoist API token
+#'
+#' @return list with task details
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' get_task("12345")
+#' }
+get_task <- function(task_id, token = get_todoist_api_token()) {
+  force(token)
+  call_api_rest(glue("tasks/{task_id}"), token = token)
+}
+
+#' Update a task
+#'
+#' @param task_id id of the task to update
+#' @param content new content/title for the task
+#' @param description new description for the task
+#' @param priority priority (1-4, 4 being highest)
+#' @param due_string due date as string (e.g., "tomorrow", "every monday")
+#' @param due_date due date as date (format: YYYY-MM-DD)
+#' @param labels vector of label names
+#' @param verbose boolean that make the function verbose
+#' @param token todoist API token
+#'
+#' @return id of the updated task (invisible)
+#' @export
+#' @importFrom glue glue
+#'
+#' @examples
+#' \dontrun{
+#' update_task("12345", content = "Updated task name")
+#' }
+update_task <- function(task_id,
+                        content = NULL,
+                        description = NULL,
+                        priority = NULL,
+                        due_string = NULL,
+                        due_date = NULL,
+                        labels = NULL,
+                        verbose = TRUE,
+                        token = get_todoist_api_token()) {
+  force(token)
+
+  args_parts <- c(glue('"id": "{escape_json(task_id)}"'))
+
+  if (!is.null(content)) {
+    args_parts <- c(args_parts, glue('"content": "{escape_json(content)}"'))
+  }
+  if (!is.null(description)) {
+    args_parts <- c(args_parts, glue('"description": "{escape_json(description)}"'))
+  }
+  if (!is.null(priority)) {
+    args_parts <- c(args_parts, glue('"priority": {priority}'))
+  }
+  if (!is.null(due_string)) {
+    args_parts <- c(args_parts, glue('"due": {{"string": "{escape_json(due_string)}"}}'))
+  } else if (!is.null(due_date)) {
+    args_parts <- c(args_parts, glue('"due": {{"date": "{escape_json(due_date)}"}}'))
+  }
+  if (!is.null(labels)) {
+    labels_escaped <- vapply(labels, escape_json, character(1), USE.NAMES = FALSE)
+    labels_json <- paste0('"', labels_escaped, '"', collapse = ", ")
+    args_parts <- c(args_parts, glue('"labels": [{labels_json}]'))
+  }
+
+  args_json <- paste(args_parts, collapse = ", ")
+
+  if (verbose) {
+    message(glue::glue("Updating task {task_id}"))
+  }
+
+  call_api(
+    token = token,
+    sync_token = "*",
+    commands = glue('[{{"type": "item_update", "uuid": "{random_key()}", "args": {{{args_json}}}}}]')
+  )
+
+  invisible(task_id)
 }

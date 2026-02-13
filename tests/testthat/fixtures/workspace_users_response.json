@@ -1,0 +1,19 @@
+{
+  "workspace_users": [
+    {
+      "user_id": "user_001",
+      "workspace_id": "ws_123456",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "role": "admin"
+    },
+    {
+      "user_id": "user_002",
+      "workspace_id": "ws_123456",
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "role": "member"
+    }
+  ],
+  "sync_token": "def456"
+}

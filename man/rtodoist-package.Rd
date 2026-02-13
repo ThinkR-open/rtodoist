@@ -6,7 +6,7 @@
 \alias{rtodoist-package}
 \title{rtodoist: Create and Manage Todolist using 'Todoist.com' API}
 \description{
-Allows you to interact with the API of the "Todoist" platform. 'Todoist' \url{https://todoist.com/} provides an online task manager service for teams.
+Allows you to interact with the API of the "Todoist" platform. 'Todoist' \url{https://www.todoist.com/} provides an online task manager service for teams.
 }
 \seealso{
 Useful links:
@@ -21,7 +21,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Cervan Girard \email{cervan@thinkr.fr} (\href{https://orcid.org/0000-0002-4816-4624}{ORCID})
+  \item Cervan Girard \email{cervan@thinkr.fr} (\href{https://orcid.org/0000-0002-4816-4624}{ORCID}) (previous maintainer)
 }
 
 Other contributors:

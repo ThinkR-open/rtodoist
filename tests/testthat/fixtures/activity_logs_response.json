@@ -1,0 +1,34 @@
+{
+  "events": [
+    {
+      "id": "evt_001",
+      "object_type": "item",
+      "object_id": "task_123",
+      "event_type": "added",
+      "event_date": "2024-01-15T10:30:00Z",
+      "initiator_id": "user_001",
+      "parent_project_id": "proj_456",
+      "parent_item_id": null
+    },
+    {
+      "id": "evt_002",
+      "object_type": "item",
+      "object_id": "task_123",
+      "event_type": "completed",
+      "event_date": "2024-01-15T14:00:00Z",
+      "initiator_id": "user_001",
+      "parent_project_id": "proj_456",
+      "parent_item_id": null
+    },
+    {
+      "id": "evt_003",
+      "object_type": "project",
+      "object_id": "proj_456",
+      "event_type": "updated",
+      "event_date": "2024-01-16T09:00:00Z",
+      "initiator_id": "user_002",
+      "parent_project_id": null,
+      "parent_item_id": null
+    }
+  ]
+}

@@ -1,27 +1,27 @@
 Package: rtodoist
 Title: Create and Manage Todolist using 'Todoist.com' API
-Version: 0.3
+Version: 0.4.0
 Authors@R: c(
     person("Cervan", "Girard", , "cervan@thinkr.fr", role = "aut",
-           comment = c(ORCID = "0000-0002-4816-4624")),
+           comment = c(ORCID = "0000-0002-4816-4624", note = "previous maintainer")),
     person("Vincent", "Guyader", , "vincent@thinkr.fr", role = c("cre", "aut"),
            comment = c(ORCID = "0000-0003-0671-9270")),
     person("ThinkR", role = c("cph", "fnd"))
   )
 Description: Allows you to interact with the API of the "Todoist"
-    platform.  'Todoist' <https://todoist.com/> provides an online task
+    platform.  'Todoist' <https://www.todoist.com/> provides an online task
     manager service for teams.
 License: MIT + file LICENSE
 URL: https://github.com/ThinkR-open/rtodoist
 BugReports: https://github.com/ThinkR-open/rtodoist/issues
 Depends: 
     R (>= 3.5.0)
-Imports: 
+Imports:
+    curl,
     digest,
     dplyr,
     getPass,
     glue,
-    httr,
     httr2,
     keyring,
     magrittr,
@@ -31,11 +31,9 @@ Imports:
     stringr,
     utils
 Suggests:
-    httptest2,
+    covr,
     jsonlite,
     knitr,
-    lubridate,
-    mockery,
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3

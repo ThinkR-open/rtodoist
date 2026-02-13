@@ -11,7 +11,7 @@
 #' open_todoist_website_profile()
 open_todoist_website_profile <- function(verbose = TRUE) {
   if (verbose) {
-    message("opening https://todoist.com/prefs/integrations")
+    message("opening https://www.todoist.com/prefs/integrations")
   }
-  browseURL("https://todoist.com/prefs/integrations")
+  browseURL("https://www.todoist.com/prefs/integrations")
 }

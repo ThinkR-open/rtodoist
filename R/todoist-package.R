@@ -1,5 +1,4 @@
 #' @keywords internal
-#' @importFrom httr POST content
 #' @import purrr
 #' @import keyring
 #' @import glue

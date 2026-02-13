@@ -2,7 +2,7 @@
 % Please edit documentation in R/section.R
 \name{add_section}
 \alias{add_section}
-\title{add section}
+\title{Add section}
 \usage{
 add_section(
   section_name,
@@ -23,6 +23,9 @@ add_section(
 
 \item{token}{todoist API token}
 }
+\value{
+section id (character)
+}
 \description{
-add section
+Add section
 }

@@ -1,16 +1,7 @@
-# Tests with mocked API responses
+# Unit tests for pure logic functions using fixture data
+# These tests verify function behavior without making HTTP calls
 
 library(rtodoist)
-
-# Helper to create mock responses
-mock_response <- function(body, status_code = 200L) {
-  httptest2::httptest2_response(
-    url = "https://api.todoist.com/",
-    status_code = status_code,
-    headers = list("Content-Type" = "application/json"),
-    body = body
-  )
-}
 
 # Load fixtures
 projects_json <- jsonlite::read_json(
