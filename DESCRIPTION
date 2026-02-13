@@ -9,7 +9,7 @@ Authors@R: c(
     person("ThinkR", role = c("cph", "fnd"))
   )
 Description: Allows you to interact with the API of the "Todoist"
-    platform.  'Todoist' <https://todoist.com/> provides an online task
+    platform.  'Todoist' <https://www.todoist.com/> provides an online task
     manager service for teams.
 License: MIT + file LICENSE
 URL: https://github.com/ThinkR-open/rtodoist

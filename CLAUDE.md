@@ -85,7 +85,7 @@ skip_on_ci_or_cran()   # Skip on CI environments
 
 ## API Token Setup
 
-For testing, get your token from https://todoist.com/prefs/integrations/developer then:
+For testing, get your token from https://www.todoist.com/prefs/integrations/developer then:
 ```r
 rtodoist::set_todoist_api_token("your_token")
 ```
